@@ -1,0 +1,73 @@
+.show-order-num-wrapper {
+  width: 100%;
+  height: 102px;
+  border: 1px solid #d8d6d6;
+  margin: 0 auto;
+  margin-top: 14px;
+}
+
+.show-order-num-header {
+  font-size: 18px;
+  padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 7px;
+  color: #484848;
+  text-align: center;
+  font-weight: bold;
+}
+
+.show-order-num-contents {
+  // font-size: 16px;
+  padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 7px;
+  color: #484848;
+  text-align: center;
+
+    // phone
+    @media screen and (min-width: 320px) {
+      font-size: 12px;
+    }
+    // tablet
+    @media screen and (min-width: 768px) {
+      font-size: 12px;
+    }
+    // desktop
+    @media screen and (min-width: 992px) {
+      font-size: 15px;
+    }
+    // wide
+    @media screen and (min-width: 1440px) {
+      font-size: 15px;
+    }
+
+}
+
+.RFID-box {
+  width: 98%;
+  height: 26px;
+  line-height: 26px;
+  // font-size: 16px;
+  margin: auto;
+  margin-top: 7px;
+  padding: 1px;
+  border: 1px solid #484848;
+  border-radius: 3px;
+  text-align: center;
+  // phone
+  @media screen and (min-width: 320px) {
+    font-size: 12px;
+  }
+  // tablet
+  @media screen and (min-width: 768px) {
+    font-size: 12px;
+  }
+  // desktop
+  @media screen and (min-width: 992px) {
+    font-size: 15px;
+  }
+  // wide
+  @media screen and (min-width: 1440px) {
+    font-size: 15px;
+  }
+}
