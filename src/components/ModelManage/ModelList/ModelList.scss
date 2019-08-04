@@ -1,0 +1,42 @@
+.model-list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  // phone
+  @media screen and (min-width: 320px) {
+    padding: 10px;
+  }
+  // tablet
+  @media screen and (min-width: 768px) {
+    padding: 50px;
+  }
+  // desktop
+  @media screen and (min-width: 1024px) {
+    padding: 50px;
+  }
+  // wide
+  @media screen and (min-width: 1440px) {
+    padding: 50px;
+  }
+}
+
+.model-list-add-button {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: inherit; 
+  text-align: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  background-color: #fa6e57;
+  color: white;
+  bottom: 30px;
+  right: 30px;
+  cursor: pointer;
+  &:hover {
+    background-color: #e24b34;
+  }
+}

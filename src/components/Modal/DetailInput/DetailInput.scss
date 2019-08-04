@@ -1,0 +1,42 @@
+.detail-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.detail-label {
+  position: relative;
+  margin-top: 10px;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 600;
+  color: #767676;
+}
+
+.detail-input {
+  position: relative;
+  width: calc(100% - 37px);
+  margin-top: 5px;
+  margin-bottom: 0.3rem;
+  margin-right: 2px;
+  padding: 0.5rem;
+  border: 1px solid #c3c3c3;
+  border-radius: 0.2rem;
+  font-size: 18px;
+  outline: none;
+  &::placeholder {
+    color: #cecece;
+  }
+}
+
+.detail-delete-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 25px;
+  width: 35px;
+  color: #fa6e57;
+  &:hover {
+    color: red;
+  }
+  cursor: pointer;
+}
