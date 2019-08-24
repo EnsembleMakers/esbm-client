@@ -1,24 +1,22 @@
 const proxy = require("http-proxy-middleware");
+const backend_host = process.env.REACT_APP_BACKEND_HOST;
 
 module.exports = function(app) {
     app.use(
             proxy("/api", {
-                //target: "http://172.32.2.61:5000/",
-                target: "http://Ensemble-NLB-b125ba92bb371a53.elb.ap-northeast-2.amazonaws.com:5000",
+                target: backend_host,
                 changeOrigin: true
             })
            );
     app.use(
             proxy("/auth", {
-                //target: "http://172.32.2.61:5000/",
-                target: "http://Ensemble-NLB-b125ba92bb371a53.elb.ap-northeast-2.amazonaws.com:5000",
+                target: backend_host,
                 changeOrigin: true
             })
            );
     app.use(
             proxy("/img", {
-                //target: "http://172.32.2.61:5000/",
-                target: "http://Ensemble-NLB-b125ba92bb371a53.elb.ap-northeast-2.amazonaws.com:5000",
+                target: backend_host,
                 changeOrigin: true
             })
            );
