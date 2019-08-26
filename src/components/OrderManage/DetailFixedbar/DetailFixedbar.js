@@ -5,7 +5,7 @@ import { Print } from '../Print';
 import './DetailFixedbar.scss';
 
 import styled from 'styled-components';
-import MdPrint from 'react-ionicons/lib/MdPrint';
+import { FaPrint, FaTrashAlt } from 'react-icons/fa';
 
 const StateButton = styled.div`
   border: 2px solid ${props => 
@@ -42,8 +42,8 @@ const StateButton = styled.div`
 class DetailFixedbar extends Component {
   render() {
     const { imgTextView } = this.props;
-    const { state, orderNumber, name, phone, address, contents, date, detail, images, modelImage } = this.props;
-    const { onOpenEditorModal, onOpenImageModal, onChangeState, onChangeImgText } = this.props;
+    const { state, orderNumber, name, phone, address, date, contents, detail, images, modelImage } = this.props;
+    const { handleOpenEditorModal, handleOpenImageModal, handleChangeState, handleChangeImgText, handleDeleteOrder } = this.props;
     return(
       <div className="detail-fixedbar-wrapper">
         <div className="detail-fixedbar">
@@ -53,7 +53,7 @@ class DetailFixedbar extends Component {
             :<img className="detail-model-image" src={modelImage}/>
             }
           </div>
-          <div className="detail-image-wrapper" onClick={onOpenImageModal} onMouseOver={() => {onChangeImgText(true)}} onMouseOut={() => {onChangeImgText(false)}}>
+          <div className="detail-image-wrapper" onClick={handleOpenImageModal} onMouseOver={() => {handleChangeImgText(true)}} onMouseOut={() => {handleChangeImgText(false)}}>
             {images.length===0?
             <div className="detail-image"/>
             :<img className="detail-image" src={images[0]}/>
@@ -65,11 +65,11 @@ class DetailFixedbar extends Component {
           { // state가 finished일 때, 등록/수정 버튼과 state 변경 버튼 삭제 
             state==="finished" ? null 
               : <div style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between"}}>
-                  <div className="order-manage-post-button" onClick={onOpenEditorModal}>작성 및 수정하기
+                  <div className="order-manage-post-button" onClick={handleOpenEditorModal}>작성 및 수정하기
                   </div>
                   <div className="print-button">
                     <ReactToPrint
-                      trigger={() => <div><MdPrint/>인쇄하기</div>}
+                      trigger={() => <div><FaPrint/> 인쇄하기</div>}
                       content={() => this.componentRef}
                     />
                     <Print 
@@ -88,13 +88,14 @@ class DetailFixedbar extends Component {
            { // state에 따라서 다른 버튼 모양
               state==="ordered" ? <StateButton 
               state={state}
-              onClick={() => onChangeState("processing")}
+              onClick={() => handleChangeState("processing")}
               >제작중으로 변경하기</StateButton>
                 : state==="processing" ? <StateButton 
               state={state} 
-              onClick={() => onChangeState("finished")}
+              onClick={() => handleChangeState("finished")}
               >제작완료로 변경하기</StateButton>
                 : null}
+            <div className="order-delete-button" onClick={handleDeleteOrder}><FaTrashAlt/> 주문서삭제</div>
         </div>
       </div>
     )
