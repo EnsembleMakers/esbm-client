@@ -29,7 +29,7 @@ class Print extends Component {
     return(
       <div>
         <div className="print-page-wrapper">
-          <div className="print-banner-name">온라인 주문서</div>
+          <div className="print-banner-name">주문서</div>
           <div className="print-header-wrapper">
             <table className="print-header-orders">
               <tbody>

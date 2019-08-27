@@ -3,6 +3,8 @@ import './ImageModal.scss';
 import { FaAngleLeft, FaAngleRight, FaTimes, FaPlus } from 'react-icons/fa';
 import MdAdd from 'react-ionicons/lib/MdAdd';
 
+import { confirmBox } from '../../../lib/confirmBox';
+
 class ImageModal extends Component {
 
   // 버튼으로 스크롤 이동
@@ -30,7 +32,7 @@ class ImageModal extends Component {
           return(
           <div key={i} className="image-list-item">
             <img src={image}/>
-            <div className="image-remove-button" onClick={() => {onDeleteImg(i)}}><FaTimes/></div>
+            <div className="image-remove-button" onClick={() => confirmBox("사진을 삭제하시겠습니까?", () => onDeleteImg(i))}><FaTimes/></div>
           </div>
           )
       })

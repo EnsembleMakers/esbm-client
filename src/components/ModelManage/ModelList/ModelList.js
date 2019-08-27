@@ -5,22 +5,25 @@ import './ModelList.scss';
 
 class ModelList extends Component {
   render() {
-    const { userNumber, allModels } = this.props;
+    const { userNumber, allModels, search } = this.props;
     const { onOpenModelModal, handleDelete } = this.props;
   
-    const modelList = allModels.map(
-      (modelListItem, i) =>
-        <ModelListItem 
-          key={i}
-          id={i}
-          modelId={modelListItem._id}
-          userNumber={userNumber}
-          modelName={modelListItem.contents.template[0].value}
-          modelImage={modelListItem.modelImage}
-          onOpenModelModal={onOpenModelModal}
-          handleDelete={handleDelete}
-        />
-    )
+    const modelList = allModels
+      .filter(
+        c => c.contents.template[0].value.indexOf(search) !== -1
+      ).map(
+        (modelListItem, i) =>
+          <ModelListItem 
+            key={i}
+            id={i}
+            modelId={modelListItem._id}
+            userNumber={userNumber}
+            modelName={modelListItem.contents.template[0].value}
+            modelImage={modelListItem.modelImage}
+            onOpenModelModal={onOpenModelModal}
+            handleDelete={handleDelete}
+          />
+      )
     return(
       <div className="model-list-wrapper">
         {modelList}

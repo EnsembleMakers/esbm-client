@@ -6,6 +6,7 @@ import * as ModelAPI from '../../lib/api/model';
 
 const CHANGE_INFO_INPUT = 'model/CHANGE_INFO_INPUT';
 const CHANGE_MODEL_INPUT = 'model/CHANGE_MODEL_INPUT';
+const CHANGE_MODEL_SEARCH_INPUT = 'model/CHANGE_MODEL_SEARCH_INPUT';
 const SET_MODEL_BY_ID = 'model/SET_MODEL_BY_ID';
 const INIT_MODEL_BY_ID = 'model/INIT_MODEL_BY_ID';
 const GET_MODELS_BY_MAKER_ID = 'model/GET_MODELS_BY_MAKER_ID';
@@ -16,8 +17,9 @@ const DELETE_MODEL = 'model/DELETE_MODEL';
 const PATCH_MODEL_IMG = 'model/PATCH_MODEL_IMG';
 const REMOVE_MODEL_IMG = 'model/REMOVE_MODEL_IMG';
 
-export const changeInfoInput = createAction(CHANGE_INFO_INPUT)
-export const changeModelInput = createAction(CHANGE_MODEL_INPUT)
+export const changeInfoInput = createAction(CHANGE_INFO_INPUT);
+export const changeModelInput = createAction(CHANGE_MODEL_INPUT);
+export const changeModelSearchInput = createAction(CHANGE_MODEL_SEARCH_INPUT);
 export const setModelById = createAction(SET_MODEL_BY_ID);
 export const initModelById = createAction(INIT_MODEL_BY_ID);
 export const getModelsByMakerId = createAction(GET_MODELS_BY_MAKER_ID, ModelAPI.getModelsByMakerId);
@@ -31,6 +33,7 @@ export const removeModelImg = createAction(REMOVE_MODEL_IMG, ModelAPI.removeMode
 const initialState = Map({
   allModels: List([]),
   modelById: Map({}),
+  search: '',
   postForm: Map({
     model: Map({}),
     customerInfo: Map({
@@ -49,6 +52,9 @@ export default handleActions({
   [CHANGE_MODEL_INPUT]: (state, action) => {
     const { name, value, id } = action.payload
     return state.setIn(['postForm', 'model', 'contents', 'template', id, 'value'], value)
+  },
+  [CHANGE_MODEL_SEARCH_INPUT]: (state, action) => {
+    return state.set('search', action.payload)
   },
   [SET_MODEL_BY_ID]: (state, action) => {
     return state.set('modelById', Map(action.payload))
