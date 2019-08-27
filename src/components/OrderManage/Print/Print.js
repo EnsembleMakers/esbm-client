@@ -33,7 +33,7 @@ class Print extends Component {
       <div>
         <div className="print-page-wrapper">
           {header}
-          <div className="print-banner-name">온라인 주문서</div>
+          <div className="print-banner-name">주문서</div>
           <div className="print-header-wrapper">
             <table className="print-header-orders">
               <tbody>
