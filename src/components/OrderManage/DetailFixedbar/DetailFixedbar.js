@@ -7,6 +7,8 @@ import './DetailFixedbar.scss';
 import styled from 'styled-components';
 import { FaPrint, FaTrashAlt } from 'react-icons/fa';
 
+import { confirmBox } from '../../../lib/confirmBox';
+
 const StateButton = styled.div`
   border: 2px solid ${props => 
     props.state=="ordered" ? "#fa6e57"
@@ -88,14 +90,14 @@ class DetailFixedbar extends Component {
            { // state에 따라서 다른 버튼 모양
               state==="ordered" ? <StateButton 
               state={state}
-              onClick={() => handleChangeState("processing")}
+              onClick={() => confirmBox("제작중으로 변경하시겠습니까?", () => handleChangeState("processing"))}
               >제작중으로 변경하기</StateButton>
                 : state==="processing" ? <StateButton 
               state={state} 
-              onClick={() => handleChangeState("finished")}
+              onClick={() => confirmBox("제작완료로 변경하시겠습니까?", () => handleChangeState("finished"))}
               >제작완료로 변경하기</StateButton>
                 : null}
-            <div className="order-delete-button" onClick={handleDeleteOrder}><FaTrashAlt/> 주문서삭제</div>
+            <div className="order-delete-button" onClick={() => confirmBox("주문서를 삭제하시겠습니까?", () => handleDeleteOrder())}><FaTrashAlt/>주문서삭제</div>
         </div>
       </div>
     )

@@ -20,6 +20,11 @@ class ModelManageContainer extends Component {
     }
   }
 
+  handleChangeModelSearchInput = (e) => {
+    const { ModelActions } = this.props;
+    ModelActions.changeModelSearchInput(e.target.value)
+  }
+
   handleOpenModelModal = {
     create: async () => {
       const { loggedInfo } = this.props;
@@ -68,16 +73,19 @@ class ModelManageContainer extends Component {
 
   render() {
     const userNumber = this.props.loggedInfo.get('userNumber')
-    const { allModels } = this.props;
-    const { handleOpenModelModal, handleDelete } = this;
+    const { allModels, search } = this.props;
+    const { handleOpenModelModal, handleDelete, handleChangeModelSearchInput } = this;
     return(
         <ModelManageWrapper>
           <ModelManageBanner>
-            <SearchBar/>
+            <SearchBar
+              handleChangeModelSearchInput={handleChangeModelSearchInput}
+            />
           </ModelManageBanner>
           <ModelList 
             userNumber={userNumber}
             allModels={allModels}
+            search={search}
             onOpenModelModal={handleOpenModelModal}
             handleDelete={handleDelete}
           />
@@ -89,7 +97,8 @@ class ModelManageContainer extends Component {
 export default connect(
   (state) => ({
     loggedInfo: state.user.get('loggedInfo'),
-    allModels: state.model.get('allModels')
+    allModels: state.model.get('allModels'),
+    search: state.model.get('search')
   }),
   (dispatch) => ({
     ModelActions: bindActionCreators(modelActions, dispatch),

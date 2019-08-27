@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './ModelListItem.scss';
 
+import { confirmBox } from '../../../lib/confirmBox';
+
 class ModelListItem extends Component {
   render() {
     const { userNumber, modelId, modelName, modelImage, id } = this.props;
@@ -20,7 +22,7 @@ class ModelListItem extends Component {
           <div className="model-list-item-model-name">{modelName}</div>
           <div className="model-list-item-model-content">
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
-              <div className="model-list-item-modify-button" onClick={() => onOpenModelModal['modify'](id)}>수정</div><div className="model-list-item-delete-button" onClick={() => handleDelete(modelId, reModelImage, id)}>삭제</div>
+              <div className="model-list-item-modify-button" onClick={() => onOpenModelModal['modify'](id)}>수정</div><div className="model-list-item-delete-button" onClick={() => confirmBox("모델을 삭제하시겠습니까?", () => handleDelete(modelId, reModelImage, id))}>삭제</div>
             </div>
             <a className="model-list-item-post-button" href={'/model/'+userNumber+'/'+modelName}>주문하기</a>
           </div>
