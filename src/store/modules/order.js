@@ -4,6 +4,7 @@ import { Map, List } from 'immutable';
 import * as OrderAPI from '../../lib/api/order';
 
 const CHANGE_INPUT = 'order/CHANGE_INPUT';
+const CHANGE_ORDER_SEARCH_INPUT = 'order/CHANGE_ORDER_SEARCH_INPUT';
 const CHANGE_VIEW = 'order/CHANGE_VIEW';
 const CHANGE_DETAIL_VIEW = 'order/CHANGE_DETAIL_VIEW'
 const CHANGE_IMG_TEXT_VIEW = 'order/CHANGE_IMG_TEXT_VIEW';
@@ -25,6 +26,7 @@ const CHANGE_STATE = 'order/CHANGE_STATE';
 const CHANGE_PROCESSING_STATE = 'order/CHANGE_PROCESSING_STATE';
 
 export const changeInput = createAction(CHANGE_INPUT);
+export const changeOrderSearchInput = createAction(CHANGE_ORDER_SEARCH_INPUT);
 export const changeView = createAction(CHANGE_VIEW);
 export const changeDetailView = createAction(CHANGE_DETAIL_VIEW);
 export const changeImgTextView = createAction(CHANGE_IMG_TEXT_VIEW);
@@ -47,6 +49,7 @@ export const changeProcessingState = createAction(CHANGE_PROCESSING_STATE, Order
 
 const initialState = Map({
   view: "ordered",
+  search: '',
   detailView: false,
   imgTextView: false,
   allOrders: List([]),
@@ -64,6 +67,9 @@ export default handleActions({
   [CHANGE_INPUT]: (state, action) => {
     const { name, value } = action.payload;
     return state.setIn(['postForm', 'customerInfo', name], value)
+  },
+  [CHANGE_ORDER_SEARCH_INPUT]: (state, action) => {
+    return state.set('search', action.payload)
   },
   [CHANGE_VIEW]: (state, action) => {
     return state.set('view', action.payload)

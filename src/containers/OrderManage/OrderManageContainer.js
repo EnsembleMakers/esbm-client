@@ -20,6 +20,11 @@ class OrderManageContainer extends Component {
     }
   }
 
+  handleChangeOrderSearchInput = (e) => {
+    const { OrderActions } = this.props;
+    OrderActions.changeOrderSearchInput(e.target.value)
+  }
+
   handleChangeView = (view) => {
     const { OrderActions } = this.props;
     OrderActions.changeView(view);
@@ -128,8 +133,8 @@ class OrderManageContainer extends Component {
   }
 
   render() {
-    const { view, detailView, imgTextView, allOrders, orderById, review } = this.props;
-    const { handleChangeView, handleChangeImgTextView, handleGetById, handlePostOrder, handleChangeState, handleOpenEditorModal, handleOpenImageModal, handlePatchProcessingNext, handlePatchProcessingPre, handleDeleteOrder } = this;
+    const { view, search, detailView, imgTextView, allOrders, orderById, review } = this.props;
+    const { handleChangeOrderSearchInput, handleChangeView, handleChangeImgTextView, handleGetById, handlePostOrder, handleChangeState, handleOpenEditorModal, handleOpenImageModal, handlePatchProcessingNext, handlePatchProcessingPre, handleDeleteOrder } = this;
     
     return(
       <OrderManageWrapper>
@@ -141,7 +146,9 @@ class OrderManageContainer extends Component {
           allOrders={allOrders}
           selectedId={orderById.get('_id')}
           view={view}
+          search={search}
           handleGetById={handleGetById}
+          handleChangeOrderSearchInput={handleChangeOrderSearchInput}
         />
         <OrderManageDetail
           id={orderById.get('_id')}
@@ -180,6 +187,7 @@ export default connect(
   (state) => ({
     loggedInfo: state.user.get('loggedInfo'),
     view: state.order.get('view'),
+    search: state.order.get('search'),
     detailView: state.order.get('detailView'),
     imgTextView: state.order.get('imgTextView'),
     allOrders: state.order.get('allOrders'),

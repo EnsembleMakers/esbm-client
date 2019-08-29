@@ -13,3 +13,57 @@
   // 글자드래그 방지
   -ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;
 }
+
+.order-manage-search-bar {
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: #4695D6;
+  color: white;
+  font-size: 14px;
+  transition: all .5s;
+
+  .search-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  /* input */
+  .actions {
+    position: absolute;
+    margin-top: 5px;
+    right: 0;
+    bottom: -3rem;
+    padding: 3px;
+    width: 100%;
+    border: 1px solid #d8d8d8;
+    border-radius: 5px;
+    font-size: 14px;
+    opacity: 0; /* 기본적으론 투명함 */
+    outline: none;
+
+    /* input 값 작성 중일 때 */
+    &:focus{
+      position: relative;
+      opacity: 1;
+      bottom: 0;
+      height: 30px;
+      border: 1px solid #154d77;
+    }
+
+  }
+
+  /* 커서가 위에 있을 때 */
+  &:hover {
+    .actions {
+      opacity: 1;
+      position: relative;
+      bottom: 0;
+      height: 30px;
+      transition: all .5s;
+    }
+  }
+}

@@ -97,7 +97,9 @@ class DetailFixedbar extends Component {
               onClick={() => confirmBox("제작완료로 변경하시겠습니까?", () => handleChangeState("finished"))}
               >제작완료로 변경하기</StateButton>
                 : null}
-            <div className="order-delete-button" onClick={() => confirmBox("주문서를 삭제하시겠습니까?", () => handleDeleteOrder())}><FaTrashAlt/>주문서삭제</div>
+            <div style={{textAlign: 'right', marginTop: '14px'}}>
+              <div className="order-delete-button" onClick={() => confirmBox("주문서를 삭제하시겠습니까?", () => handleDeleteOrder())}><FaTrashAlt/>주문서삭제</div>
+            </div>
         </div>
       </div>
     )
