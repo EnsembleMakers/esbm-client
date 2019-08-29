@@ -3,7 +3,7 @@ import './Print.scss';
 
 class Print extends Component {
   render() {
-    const { name, phone, orderNumber, date, address, contents, detail, images } = this.props;
+    const { name, phone, orderNumber, date, address, contents, detail, modelImage, images } = this.props;
 
     const numContentsList = contents.length;
     const contentsList = contents.template.map(
@@ -18,7 +18,7 @@ class Print extends Component {
     )
 
     let imageDivs = [];
-    for(let i = 1; i < images.length; i++){
+    for(let i = 0; i < images.length; i++){
       imageDivs.push(
         <div className="print-page-wrapper">
           <img className="print-full-image" src={images[i]}/>
@@ -26,17 +26,14 @@ class Print extends Component {
       )
     }
 
-    const header = <div className="print-header-inform">https://esbmakers.com/order/{orderNumber}</div>    
-    const footer = <div className="print-footer-inform"></div>
-
     return(
       <div>
         <div className="print-page-wrapper">
-          {header}
           <div className="print-banner-name">주문서</div>
           <div className="print-header-wrapper">
             <table className="print-header-orders">
               <tbody>
+                <tr className="print-header-element"><td>RFID주소</td><td>https://esbmakers.com/order/{orderNumber}</td></tr>
                 <tr className="print-header-element"><td>주문자</td><td>{name} 고객님</td></tr>
                 <tr className="print-header-element"><td>전화번호</td><td>{phone}</td></tr>
                 <tr className="print-header-element"><td>주문번호</td><td>{orderNumber}</td></tr>
@@ -46,8 +43,7 @@ class Print extends Component {
             </table>
             <div className="print-header-image">
               {images &&
-                // <img className="print-image-wrapper" src={images[0]}/>
-                <img src={images[0]}/>
+                <img src={modelImage}/>
               }
             </div>
           </div>

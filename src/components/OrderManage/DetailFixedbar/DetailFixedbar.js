@@ -73,6 +73,7 @@ class DetailFixedbar extends Component {
                     <ReactToPrint
                       trigger={() => <div><FaPrint/> 인쇄하기</div>}
                       content={() => this.componentRef}
+                      pageStyle={"@page { size: auto;  margin: 10mm; }"}
                     />
                     <Print 
                       ref={e => (this.componentRef = e)} 
@@ -83,6 +84,7 @@ class DetailFixedbar extends Component {
                       date={date}
                       contents={contents}
                       detail={detail}
+                      modelImage={modelImage}
                       images={images}
                     />
                   </div>
