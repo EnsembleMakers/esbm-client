@@ -36,7 +36,7 @@ StateBox.propTypes = {
 class EditorModal extends Component {
 
   render() {
-    const { addMode, addContent, name, state, detail, contents, modelImageURL } = this.props;
+    const { addMode, addContent, name, state, contents, modelImageURL } = this.props;
     const { handleChange, handleChangeModelImg, handleDeleteModelImg, handleChangeAddMode, handleChangeAddInput, handleAddList, handleDeleteList } = this.props;
     const { handlePatch, handleHide } = this.props;
     let stateText;
@@ -44,19 +44,36 @@ class EditorModal extends Component {
     : state=="processing" ? "제작중" 
     : "제작완료";
 
-    const detailInputList = contents.get('template').map(
-      (content, i) => 
-        <DetailInput
+    let buttonOn;
+    const templateInputList = contents.get('template').map(
+      (content, i) => {
+        // 카테고리가 "모델"일 경우 삭제버튼 비활성화
+        i === 0 ? buttonOn = false : buttonOn = true;
+        return <DetailInput
           key={i}
-          id={i}
+          name={i}
+          deleteButton={buttonOn}
           label={content.label}
           placeholder={content.label}
           // only id, name, value, type are valid with input tags.
-          name={i}
           value={content.value || ''}
           onChange={(e, kind) => handleChange(e, 'template')}
           onDeleteList={() => handleDeleteList(i, 'template')}
         />
+      }
+    )
+    const nonTemplateInputList = contents.get('nonTemplate').map(
+      (content, i) => {
+        return <DetailInput
+          key={i}
+          name={i}
+          deleteButton={false}
+          label={content.label}
+          placeholder={content.label}
+          value={content.value}
+          onChange={(e, kind) => handleChange(e, 'nonTemplate')}
+        />
+      }
     )
 
     return(
@@ -90,7 +107,11 @@ class EditorModal extends Component {
           </div>
         </div>
         <div className="editor-modal-line"/>
-        {detailInputList}
+        {/* 템플릿 */}
+        {templateInputList}
+        {/* 특이사항 */}
+        {nonTemplateInputList}
+
         {addMode === false && <div className="editor-modal-open-add-input-button" onClick={() => handleChangeAddMode(true)}> 작성 목록 추가하기 </div>}
         {addMode === true && 
           <div className="editor-modal-add-wrapper">

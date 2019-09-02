@@ -159,7 +159,6 @@ class OrderManageContainer extends Component {
           date={formatDate(orderById.get('createdAt'))}
           state={orderById.get('state')}
           contents={orderById.get('contents')}
-          detail={orderById.toJS().detail}
           images={orderById.toJS().images}
           modelImage={orderById.toJS().modelImage}
           imgTextView={imgTextView}

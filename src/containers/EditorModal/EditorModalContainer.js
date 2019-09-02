@@ -156,7 +156,6 @@ class EditorModalContainer extends Component {
           name={orderContents.getIn(['customerInfo', 'name'])}
           state={orderContents.get('state')}
           contents={modalContents}
-          detail={modalContents.toJS().detail}
           modelImageURL={modelImageURL}
           handleChange={handleChange}
           handleChangeModelImg={handleChangeModelImg}

@@ -36,7 +36,7 @@ class OrderManageDetail extends Component {
   render() {
     const { imgTextView, detailView, review } = this.props;
     const { lastComplete, cutComplete, upperComplete, soleComplete, processingState } = this.props;
-    const { id , orderNumber, name, date, phone, address, state, contents, detail, images, modelImage } = this.props;
+    const { id , orderNumber, name, date, phone, address, state, contents, images, modelImage } = this.props;
     const { handleChangeState, handleChangeImgText, handleOpenEditorModal, handleOpenImageModal, handlePatchProcessingNext, handlePatchProcessingPre, handleDeleteOrder } = this.props;
     let stateText;
     stateText = state=="ordered" ? "주문완료" 
@@ -71,7 +71,6 @@ class OrderManageDetail extends Component {
               <DetailContentsTable
                 address={address}
                 contents={contents}
-                detail={detail}
                 images={images}
                 imgTextView={imgTextView}
               />
@@ -83,7 +82,6 @@ class OrderManageDetail extends Component {
                 address={address}
                 date={date}
                 contents={contents}
-                detail={detail}
                 images={images}
                 modelImage={modelImage}
                 imgTextView={imgTextView}

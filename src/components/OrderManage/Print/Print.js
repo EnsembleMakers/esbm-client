@@ -3,7 +3,7 @@ import './Print.scss';
 
 class Print extends Component {
   render() {
-    const { name, phone, orderNumber, date, address, contents, detail, modelImage, images } = this.props;
+    const { name, phone, orderNumber, date, address, contents, modelImage, images } = this.props;
 
     const numContentsList = contents.length;
     const contentsList = contents.template.map(
@@ -52,8 +52,8 @@ class Print extends Component {
               {contentsList}
             </div>
             <div className="order-table-view">
-              <div className="print-contents-label" style={{width: "100%"}}>특이사항</div>
-              <div className="print-contents-value" style={{width: "100%"}}>{detail}</div>
+              <div className="print-contents-label" style={{width: "100%"}}>{contents.nonTemplate[0].label}</div>
+              <div className="print-contents-value" style={{width: "100%"}}>{contents.nonTemplate[0].value}</div>
             </div>
           </div>
         </div>
