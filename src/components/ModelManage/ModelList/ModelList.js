@@ -15,8 +15,7 @@ class ModelList extends Component {
         (modelListItem, i) =>
           <ModelListItem 
             key={i}
-            id={i}
-            modelId={modelListItem._id}
+            id={modelListItem._id}
             userNumber={userNumber}
             modelName={modelListItem.contents.template[0].value}
             modelImage={modelListItem.modelImage}

@@ -49,25 +49,26 @@ class ModelManageContainer extends Component {
       const { ModalActions, ModelActions } = this.props;
       const { allModels } = this.props;
 
+      const selectedModel = allModels.find(model => model._id === id)
+      
       await ModalActions.show({
         visible: 'model',
         mode: 'modify',
-        modalContents: allModels.toJS()[id].contents,
-        preModalContents: allModels.toJS()[id].contents,
-        modelImage: allModels.toJS()[id].modelImage,
-        preModelImage: allModels.toJS()[id].modelImage
+        modalContents: selectedModel.contents,
+        preModalContents: selectedModel.contents,
+        modelImage: selectedModel.modelImage,
+        preModelImage: selectedModel.modelImage
       })
       
-      await ModelActions.setModelById(allModels.toJS()[id])
+      await ModelActions.setModelById(selectedModel)
     } 
   }
 
-  handleDelete = async(id, modelImage, index) => {
+  handleDelete = async(id, modelImage) => {
     const { ModelActions } = this.props;
     ModelActions.deleteModel({
       id: id,
       modelImage: modelImage,
-      index: index
     })
   }
 

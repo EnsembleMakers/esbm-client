@@ -101,7 +101,8 @@ export default handleActions({
     type: DELETE_MODEL,
     onSuccess: (state, action) => {
       let models = state.get('allModels')
-      const newModels = models.delete(action.payload.data)
+      let deletedIndex = models.findIndex(model => model._id === action.payload.data)
+      let newModels = models.delete(deletedIndex)
       return state.set('allModels', newModels)
     }
   }),

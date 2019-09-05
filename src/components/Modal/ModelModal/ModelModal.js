@@ -13,19 +13,23 @@ class ModelModal extends Component {
     const { onChange, onChangeModelImg, onDeleteModelImg, onChangeAddMode, onChangeAddInput, onAddList, onDeleteList } = this.props;
     const { handlePost, handlePatch, handleHide } = this.props;
 
-    const detailInputList = contents.get('template').map(
-      (content, i) => 
-        <DetailInput
+    let buttonOn;
+    const templateInputList = contents.get('template').map(
+      (content, i) => {
+        // 카테고리가 "모델"일 경우 삭제버튼 비활성화
+        i === 0 ? buttonOn = false : buttonOn = true;
+        return <DetailInput
           key={i}
-          id={i}
+          name={i}
+          deleteButton={buttonOn}
           label={content.label}
           placeholder={content.label}
           // only id, name, value, type are valid with input tags.
-          name={i}
           value={content.value || ''}
           onChange={(e, kind) => onChange(e, 'template')}
           onDeleteList={() => onDeleteList(i, 'template')}
         />
+      }
     )
 
     return(
@@ -35,7 +39,7 @@ class ModelModal extends Component {
           onClick={handleHide}
         ><FaTimes/>
         </div>
-        <div className="model-modal-header">모델 등록하기</div>
+        <div className="model-modal-header">{ mode === 'create' ? "모델 등록하기" : "모델 수정하기"}</div>
         <div className="model-modal-line"/>
         <div style={{marginTop: '10px', textAlign: 'left', fontSize: '18px', color: '#767676', marginBottom: '10px', fontWeight: '600'}}>모델 이미지</div>
         <div className="model-modal-image-wrapper">
@@ -58,7 +62,7 @@ class ModelModal extends Component {
           </div>
         </div>
         <div className="model-modal-line"/>
-        {detailInputList}
+        {templateInputList}
         {addMode === false && <div className="model-modal-open-add-input-button" onClick={() => onChangeAddMode(true)}> 작성 목록 추가하기 </div>}
         {addMode === true && 
           <div className="model-modal-add-wrapper">

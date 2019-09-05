@@ -7,9 +7,11 @@ class ModelPreview extends Component {
     const { postForm } = this.props;
     const { handleChangeModelInput, handleChangeInfoInput, handlePost } = this.props;
 
-    let label;
+    let templateInputList;
+    let nonTemplateInputList;
+    // 랜더링 직후에는 postForm=undefined이기 때문에
     if(postForm.get('model').size !== 0) {
-      label = postForm.get('model').contents.template.map(
+      templateInputList = postForm.get('model').contents.template.map(
         (content, i) => {
           if(content.label === "모델"){
             return(
@@ -37,13 +39,10 @@ class ModelPreview extends Component {
     return(
       <div className="model-preview-wrapper">
         <div className="model-preview-left">
-        {label}
+        {templateInputList}
         </div>
         <div className="model-preview-right">
-          {postForm.get('model').size !== 0?
           <img className="model-preview-img" src={postForm.get('model').modelImage}/>
-          :<div className="model-preview-img" src={postForm.get('model').modelImage}/>
-          }
           <hr className="model-preview-line"/>
           <div style={{fontSize: '20px', fontWeight: 600, color: '#767676'}}>주문하기</div>
           <div className="model-preview-info-input">
