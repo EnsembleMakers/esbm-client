@@ -1,0 +1,35 @@
+.calendar-wrapper {
+  border: 1px solid black;
+}
+
+.calendar-header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  text-align: center;
+}
+
+.calendar-navi {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  text-align: center;
+}
+
+.calendar-table {
+  width: 100%;
+}
+
+.calendar-day {
+
+  border: 1px solid blue;
+
+  &.empty {
+    border: 1px solid pink;
+  }
+  &.today {
+    border: 1px solid red;
+  }
+}
+
