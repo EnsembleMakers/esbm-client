@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './ModelModal.scss';
 import { FaTimes } from 'react-icons/fa';
 import { DetailInput } from '../DetailInput';
+import { ModalError } from '../ModalError';
 
 import styled from 'styled-components';
 import oc from 'open-color';
@@ -9,7 +10,7 @@ import PropTypes from 'prop-types';
 
 class ModelModal extends Component {
   render() {
-    const { mode, addMode, addContent, detail, contents, modelImageURL } = this.props;
+    const { mode, addMode, addContent, detail, contents, modelImageURL, error } = this.props;
     const { onChange, onChangeModelImg, onDeleteModelImg, onChangeAddMode, onChangeAddInput, onAddList, onDeleteList } = this.props;
     const { handlePost, handlePatch, handleHide } = this.props;
 
@@ -31,7 +32,6 @@ class ModelModal extends Component {
         />
       }
     )
-
     return(
       <div className="model-modal-wrapper">
         <div 
@@ -77,6 +77,7 @@ class ModelModal extends Component {
             <div className="model-modal-add-cancel-button" onClick={() => onChangeAddMode(false)}>X</div>
           </div>
         }
+        <ModalError>{error.get('message')}</ModalError>
         {mode === 'create' &&
         <div className="model-modal-post-button" onClick={handlePost}>추가하기</div> ||
         mode === 'modify' &&

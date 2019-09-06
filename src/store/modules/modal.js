@@ -20,6 +20,7 @@ const CHANGE_MODEL_IMG_URL = 'modal/CHANGE_MODEL_IMG_URL';
 const DELETE_MODEL_IMG = 'modal/DELETE_MODEL_IMG';
 const DELETE_MODEL_IMG_URL = 'modal/DELETE_MODEL_IMG_URL';
 const INIT_MODEL_IMG_URL = 'modal/INIT_MODEL_IMG_URL';
+const SET_ERROR = 'modle/SET_ERROR';
 
 export const show = createAction(SHOW);
 export const hide = createAction(HIDE);
@@ -39,6 +40,7 @@ export const changeModelImgURL = createAction(CHANGE_MODEL_IMG_URL);
 export const deleteModelImg = createAction(DELETE_MODEL_IMG);
 export const deleteModelImgURL = createAction(DELETE_MODEL_IMG_URL);
 export const initModelImgURL = createAction(INIT_MODEL_IMG_URL);
+export const setError = createAction(SET_ERROR);
 
 const initialState = Map({
   // visible = image, editor, company, model
@@ -55,6 +57,7 @@ const initialState = Map({
   modelImage: null,
   preModelImage: null,
   modelImageURL: null,
+  error: Map({})
 });
 
 export default handleActions({
@@ -129,5 +132,8 @@ export default handleActions({
   },
   [INIT_MODEL_IMG_URL]: (state, action) => {
     return state.set('modelImageURL', null)
+  },
+  [SET_ERROR]: (state, action) => {
+    return state.set('error', Map(action.payload))
   }
 }, initialState)

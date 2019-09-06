@@ -73,91 +73,103 @@ class ModelModalContainer extends Component {
     // formData에 추가하면 [object Object]로만 들어간다. JSON.stringify와 JSON.parse로 JSON형태로 변형시켜줘야한다.
     formData.append('contents', JSON.stringify(modalContents.toJS()))
     
-    ModelActions.postModel(formData)
-
-    // 현재 수정한 modal의 content list(modalContent)와 이전에 사용하던 content list(orderContent)가 다르면 템플릿 변경
-    let preContents = [];
-    preModalContents.toJS().template.map(
-      (list) => preContents.push(list.label)
-    )
-    let nextContents = [];
-    modalContents.toJS().template.map(
-      (list) => nextContents.push(list.label)
-    )
-    if(JSON.stringify(preContents) !== JSON.stringify(nextContents)) { 
-      OrderTemplateActions.patchOrderTemplate({
-        userId: loggedInfo.get('_id'),
-        template: nextContents
-      })
+    try {
+      await ModelActions.postModel(formData)
+      // 현재 수정한 modal의 content list(modalContent)와 이전에 사용하던 content list(orderContent)가 다르면 템플릿 변경
+      let preContents = [];
+      preModalContents.toJS().template.map(
+        (list) => preContents.push(list.label)
+      )
+      let nextContents = [];
+      modalContents.toJS().template.map(
+        (list) => nextContents.push(list.label)
+      )
+      if(JSON.stringify(preContents) !== JSON.stringify(nextContents)) { 
+        OrderTemplateActions.patchOrderTemplate({
+          userId: loggedInfo.get('_id'),
+          template: nextContents
+        })
+      }
+      this.handleHide();
+    }catch(e) {
+      if(e.response.status === 404) {
+        const { key, message } = e.response.data
+        return this.setError(message)
+      }
     }
-
-    this.handleHide();
   }
 
   handlePatch = async() => {
     const { ModelActions, ModalActions, OrderTemplateActions } = this.props;
     const { loggedInfo, modelById, preModalContents, modalContents, preModelImage, modelImage, modelImageURL } = this.props;
 
-    await ModelActions.patchModel({
-      id: modelById.get('_id'),
-      contents: modalContents
-    })
+    try{
+      await ModelActions.patchModel({
+        id: modelById.get('_id'),
+        contents: modalContents
+      })
 
-    // modelImage 변경
-    if(modelImage !== preModelImage)
-    {
-      // 이미지 교체
-      if(modelImage !== null) {
-        // 이전에 등록해놓은 모델사진이 있을 경우
-        let preImgName;
-        if(preModelImage !== null) {
-          preImgName = preModelImage.split('/')[2];
-        }else {
-          preImgName = null;
+      // modelImage 변경
+      if(modelImage !== preModelImage)
+      {
+        // 이미지 교체
+        if(modelImage !== null) {
+          // 이전에 등록해놓은 모델사진이 있을 경우
+          let preImgName;
+          if(preModelImage !== null) {
+            preImgName = preModelImage.split('/')[2];
+          }else {
+            preImgName = null;
+          }
+          const formData = new FormData();
+          formData.append('modelImage', modelImage)
+          formData.append('preImgName', preImgName)
+          await ModelActions.patchModelImg({
+            id: modelById.get('_id'),
+            formData: formData
+          })
         }
-        const formData = new FormData();
-        formData.append('modelImage', modelImage)
-        formData.append('preImgName', preImgName)
-        await ModelActions.patchModelImg({
-          id: modelById.get('_id'),
-          formData: formData
-        })
+        // 이미지 삭제
+        if(modelImage === null) {
+          // 이전에 등록해놓은 모델사진이 있을 경우
+          const preImgName = preModelImage.split('/')[2];
+          await ModelActions.removeModelImg({
+            id: modelById.get('_id'),
+            preImgName: preImgName
+          })
+        }
       }
-      // 이미지 삭제
-      if(modelImage === null) {
-        // 이전에 등록해놓은 모델사진이 있을 경우
-        const preImgName = preModelImage.split('/')[2];
+
+      // modelImage 삭제시
+      if(modelImage === null && modelImage !== preModelImage)
+      {
+        const imgName = preModelImage.split('/')[2]
         await ModelActions.removeModelImg({
           id: modelById.get('_id'),
-          preImgName: preImgName
+          imgName: imgName
         })
       }
-    }
 
-    // modelImage 삭제시
-    if(modelImage === null && modelImage !== preModelImage)
-    {
-      const imgName = preModelImage.split('/')[2]
-      await ModelActions.removeModelImg({
-        id: modelById.get('_id'),
-        imgName: imgName
-      })
-    }
-
-    // 현재 수정한 modal의 content list(modalContent)와 이전에 사용하던 content list(orderContent)가 다르면 템플릿 변경
-    let preContents = [];
-    preModalContents.toJS().template.map(
-      (list) => preContents.push(list.label)
-    )
-    let nextContents = [];
-    modalContents.toJS().template.map(
-      (list) => nextContents.push(list.label)
-    )
-    if(JSON.stringify(preContents) !== JSON.stringify(nextContents)) { 
-      OrderTemplateActions.patchOrderTemplate({
-        userId: loggedInfo.get('_id'),
-        template: nextContents
-      })
+      // 현재 수정한 modal의 content list(modalContent)와 이전에 사용하던 content list(orderContent)가 다르면 템플릿 변경
+      let preContents = [];
+      preModalContents.toJS().template.map(
+        (list) => preContents.push(list.label)
+      )
+      let nextContents = [];
+      modalContents.toJS().template.map(
+        (list) => nextContents.push(list.label)
+      )
+      if(JSON.stringify(preContents) !== JSON.stringify(nextContents)) { 
+        OrderTemplateActions.patchOrderTemplate({
+          userId: loggedInfo.get('_id'),
+          template: nextContents
+        })
+      }
+    }catch(e) {
+      if(e.response.status === 404) {
+        const { key, message } = e.response.data
+        return this.setError(message)
+      }
     }
 
     this.handleHide();
@@ -168,10 +180,19 @@ class ModelModalContainer extends Component {
     ModalActions.hide();
     ModalActions.initModelImgURL();
     ModelActions.initModelById();
+    ModalActions.setError({})
+  }
+
+  setError = (message) => {
+    const { ModalActions } = this.props;
+    ModalActions.setError({
+      message
+    })
+
   }
 
   render() {
-    const { orderContents, modalContents, visible, mode, addMode, addContent, modelImageURL } = this.props;
+    const { orderContents, modalContents, visible, mode, addMode, addContent, modelImageURL, error } = this.props;
 
     const { handleChange, handleChangeModelImg, handleChangeAddInput, handleDeleteModelImg, handleChangeAddMode, handleAddList, handleDeleteList, handlePost, handlePatch, handleHide } = this;
 
@@ -185,6 +206,7 @@ class ModelModalContainer extends Component {
             addContent={addContent}
             contents={modalContents}
             detail={modalContents.toJS().detail}
+            error={error}
             modelImageURL={modelImageURL}
             onChange={handleChange}
             onChangeModelImg={handleChangeModelImg}
@@ -217,7 +239,8 @@ export default connect(
     addMode: state.modal.get('addMode'),
     modelImage: state.modal.get('modelImage'),
     preModelImage: state.modal.get('preModelImage'),
-    modelImageURL: state.modal.get('modelImageURL')
+    modelImageURL: state.modal.get('modelImageURL'),
+    error: state.modal.get('error')
   }),
   (dispatch) => ({
     ModalActions: bindActionCreators(modalActions, dispatch),
