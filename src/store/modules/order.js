@@ -118,7 +118,8 @@ export default handleActions({
     type: DELETE_ORDER,
     onSuccess: (state, action) => {
       let orders = state.get('allOrders')
-      const newOrders = orders.delete(action.payload.data)
+      let deletedIndex = orders.findIndex(order => order._id === action.payload.data)
+      let newOrders = orders.delete(deletedIndex)
       return state.set('allOrders', newOrders)
     }
   }),
