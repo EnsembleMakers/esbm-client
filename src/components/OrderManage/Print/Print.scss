@@ -79,6 +79,14 @@
   width: 35%;
 }
 
+.print-header-image-cropped {
+  object-fit: none; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  width: 100%;
+  height: 500px;
+}
+
+
 .print-contents-image {
   position: relative;
   border: 1px solid #d8d6d6;
