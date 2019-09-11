@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 import './Calendar.scss';
+import { object } from 'prop-types';
 
 let days = ['일', '월', '화', '수', '목', '금', '토']
 
@@ -11,7 +12,9 @@ class Calendar extends Component {
     this.state = {
       today: moment(),
       selectedDay: '',
-      dateObject: moment()
+      dateObject: moment(),
+      deadline: 5,
+      newDeadline: null,
     }
   }
 
@@ -31,6 +34,11 @@ class Calendar extends Component {
   currentDay = () => {
     return this.state.today.format('YYYY-MM-D')
   }
+  // 데드라인에 포함된 날짜
+  deadline = () => {
+    console.log(this.state.deadline)
+    console.log(this.state.today.add('days', this.state.deadline))
+  }
   // 월 바꾸기
   nextMonth = () => {
     return this.setState({
@@ -42,18 +50,17 @@ class Calendar extends Component {
       dateObject: moment(this.state.dateObject).subtract(1, 'months')
     })
   }
-  // 날짜 선택
-  selectDay = (day) => {
-    return this.setState({
-      // moment(해당날짜, format지정)
-      selectedDay: moment(this.state.dateObject.format('YYYY-MM-')+day, 'YYYY-MM-D')
-    })
-  }
+
+  // 현재 사용 x
+  // // 날짜 선택
+  // selectDay = (day) => {
+  //   return this.setState({
+  //     // moment(해당날짜, format지정)
+  //     selectedDay: moment(this.state.dateObject.format('YYYY-MM-')+day, 'YYYY-MM-D')
+  //   })
+  // }
 
   render() {
-    console.log(this.state.selectedDay)
-    console.log(moment(this.state.selectedDay, 'YYYY-MM-D').diff(this.state.today, 'day')+1)
-
     // 월화수목금토일 표시
     let daysLabel = days.map((day, i) => {
       return <th key={i}>{day}</th>
@@ -65,8 +72,22 @@ class Calendar extends Component {
       blanks.push(<td key={i - this.firstDayOfMonth() + 1} className="calendar-day empty">{""}</td>)
     }
     for(let i = 1; i <= this.daysInMonth(); i++) {
-      let currentDay = this.state.dateObject.format('YYYY-MM-')+i == this.currentDay() ? "today" : "";
-      daysInMonth.push(<td key={i} className={`calendar-day ${currentDay}`} onClick={() => this.selectDay(i)}>{i}</td>)
+      // today 블럭표시
+      let dateObject = this.state.dateObject.format('YYYY-MM-')+i ;
+
+      // 데드라인 블럭표시
+      let objectToToday = moment(dateObject, 'YYYY-MM-D').diff(this.state.today.format('YYYY-MM-D'), 'days')
+
+      let currentDay;
+      if(dateObject == this.currentDay()){
+        currentDay = "today"
+      } else if(objectToToday <= 5 && objectToToday > 0) {
+        currentDay = "deadline";
+      } else {
+        currentDay = "";
+      }
+      
+      daysInMonth.push(<td key={i} className={`calendar-day ${currentDay}`}>{i}</td>)
     }
 
     // 일주일(7개) 단위로 자르기
@@ -86,27 +107,37 @@ class Calendar extends Component {
         rows.push(cells)
       }
     })
-
     let splitDays = rows.map((d, i) => {
       return <tr key={i}>{d}</tr>
     })
 
+    // select box
+    let selectBox = []
+    for(let i=1; i<31; i++) {
+      selectBox.push(<option key={i} value={i}>{`${i}일 후`}</option>)
+    }
+
     return(
-      <div className="calendar-wrapper">
-        <div className="calendar-header">
-          <div style={{width: "50%"}}>s</div>
-          <div style={{width: "50%"}}>s</div>
+      <div>
+        <select className="calendar-select-box" onChange={(e) => console.log(e.target.value)}>
+          {selectBox}
+        </select>
+        <div className="calendar-wrapper">  
+          <div className="calendar-header">
+            <div style={{width: "50%"}}>s</div>
+            <div style={{width: "50%"}}>s</div>
+          </div>
+          <div className="calendar-navi">
+            <div onClick={this.preMonth}>{`<`}</div>
+            <div onClick={this.nextMonth}>{`>`}</div>
+          </div>
+          <table className="calendar-table">
+            <thead>
+              <tr>{daysLabel}</tr>
+            </thead>
+            <tbody>{splitDays}</tbody>
+          </table>
         </div>
-        <div className="calendar-navi">
-          <div onClick={this.preMonth}>{`<`}</div>
-          <div onClick={this.nextMonth}>{`>`}</div>
-        </div>
-        <table className="calendar-table">
-          <thead>
-            <tr>{daysLabel}</tr>
-          </thead>
-          <tbody>{splitDays}</tbody>
-        </table>
       </div>
     )
   }

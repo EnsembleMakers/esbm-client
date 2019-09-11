@@ -22,14 +22,23 @@
 }
 
 .calendar-day {
-
   border: 1px solid blue;
-
+  text-align: center;
   &.empty {
     border: 1px solid pink;
   }
   &.today {
     border: 1px solid red;
   }
+  &.deadline {
+    border: 1px solid peru;
+  }
+}
+
+.calendar-select-box {
+  width: 100px;
+  height: 30px;
+  margin-top: 5px;
+  margin-bottom: 15px;
 }
 
