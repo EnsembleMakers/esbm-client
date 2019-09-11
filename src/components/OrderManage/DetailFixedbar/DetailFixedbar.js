@@ -11,13 +11,13 @@ import { confirmBox } from '../../../lib/confirmBox';
 
 const StateButton = styled.div`
   border: 2px solid ${props => 
-    props.state=="ordered" ? "#fa6e57"
-    : props.state=="processing" ? "#4695d6"
+    props.state==="ordered" ? "#fa6e57"
+    : props.state==="processing" ? "#4695d6"
     : null};
   border-radius: 5px;
   color: ${props => 
-    props.state=="ordered" ? "#fa6e57"
-    : props.state=="processing" ? "#4695d6"
+    props.state==="ordered" ? "#fa6e57"
+    : props.state==="processing" ? "#4695d6"
     : null};
   width: 100%;
   height: 40px;
@@ -30,8 +30,8 @@ const StateButton = styled.div`
 
   &:hover {
     background-color: ${props => 
-      props.state=="ordered" ? "#fa6e57"
-    : props.state=="processing" ? "#4695d6"
+      props.state==="ordered" ? "#fa6e57"
+    : props.state==="processing" ? "#4695d6"
     : null};
     color: white;
   }
@@ -52,13 +52,13 @@ class DetailFixedbar extends Component {
           <div className="detail-model-image-wrapper">
             {modelImage===null?
             <div className="detail-model-image"/>
-            :<img className="detail-model-image" src={modelImage}/>
+            :<img className="detail-model-image" src={modelImage} alt=""/>
             }
           </div>
           <div className="detail-image-wrapper" onClick={handleOpenImageModal} onMouseOver={() => {handleChangeImgText(true)}} onMouseOut={() => {handleChangeImgText(false)}}>
             {images.length===0?
             <div className="detail-image"/>
-            :<img className="detail-image" src={images[0]}/>
+            :<img className="detail-image" src={images[0]} alt=""/>
             }
             {imgTextView && <div className="detail-image-ref-text">등록된 이미지: <b>{images.length}</b>개 <br/><br/> 이미지를 등록/삭제 하시려면 <b>클릭</b>하세요.</div>}
           </div>

@@ -43,7 +43,7 @@ class Print extends Component {
             </table>
             <div className="print-header-image">
               {images &&
-                <img src={modelImage}/>
+                <img className="print-header-image-cropped" src={modelImage}/>
               }
             </div>
           </div>
