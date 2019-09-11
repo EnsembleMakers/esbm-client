@@ -10,6 +10,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const BorderedButton = styled(Link)`
+    display: inline-block;
     font-weight: 600;
     color: #4695D6;
     padding: 0.5rem;
@@ -28,19 +29,15 @@ const BorderedButton = styled(Link)`
 
     @media ${device.phone} { 
         font-size: 12px;
-        width: 110px;
     }
     @media ${device.tablet} { 
         font-size: 15px;
-        width: 140px;
     }
     @media ${device.desktop} { 
         font-size: 15px;
-        width: 140px;
     }
     @media ${device.wide} { 
         font-size: 18px;
-        width: 170px;
     }
 
 
