@@ -12,14 +12,23 @@ import { stringify } from 'querystring';
 
 class EditorModalContainer extends Component {
 
-  handleChange = (e, kind) => {
+  handleChangeTemplateInput = (e, kind) => {
     const { ModalActions } = this.props;
-    ModalActions.change({
+    ModalActions.changeTemplateInput({
       name: e.target.name,
       value: e.target.value,
       kind: kind
     });
   }
+
+  handleChangeAddInput = (e) => {
+    const { ModalActions } = this.props;
+    ModalActions.changeAddInput({
+      name: e.target.name,
+      value: e.target.value,
+    });
+  }
+  
 
   handleChangeModelImg = async(e) => {
     const { ModalActions } = this.props;
@@ -36,13 +45,6 @@ class EditorModalContainer extends Component {
     const { ModalActions } = this.props;
     ModalActions.deleteModelImg();
     ModalActions.deleteModelImgURL();
-  }
-
-  handleChangeAddInput = (e) => {
-    const { ModalActions } = this.props;
-    ModalActions.changeAddInput({
-      value: e.target.value
-    })
   }
 
   handleChangeAddMode = (mode) => {
@@ -144,7 +146,7 @@ class EditorModalContainer extends Component {
   render() {
     const { orderContents, modalContents, visible, mode, addMode, addContent, modelImageURL } = this.props;
 
-    const { handleChange, handleChangeModelImg, handleChangeAddInput, handleDeleteModelImg, handleChangeAddMode, handleAddList, handleDeleteList, handlePatch, handleHide } = this;
+    const { handleChangeTemplateInput, handleChangeModelImg, handleChangeAddInput, handleDeleteModelImg, handleChangeAddMode, handleAddList, handleDeleteList, handlePatch, handleHide } = this;
 
     return(
       visible==='editor' && mode==='modify' &&
@@ -157,10 +159,10 @@ class EditorModalContainer extends Component {
           state={orderContents.get('state')}
           contents={modalContents}
           modelImageURL={modelImageURL}
-          handleChange={handleChange}
+          handleChangeTemplateInput={handleChangeTemplateInput}
+          handleChangeAddInput={handleChangeAddInput}
           handleChangeModelImg={handleChangeModelImg}
           handleDeleteModelImg={handleDeleteModelImg}
-          handleChangeAddInput={handleChangeAddInput}
           handleChangeAddMode={handleChangeAddMode}
           handleAddList={handleAddList}
           handleDeleteList={handleDeleteList}

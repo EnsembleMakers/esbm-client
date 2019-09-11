@@ -15,17 +15,6 @@ class DetailContentsTable extends Component {
           <div className="detail-contents-cell">{content.value}</div>
         </div>
     )
-    const nonTemplateList = contents.nonTemplate.map(
-      (content, i) => 
-      <div key={i}>
-        <div className="detail-contents-row">
-          <div className="detail-contents-cell-header">{content.label}</div>
-        </div>
-        <div className="detail-contents-row">  
-          <div className="detail-contents-cell">{content.value}</div>
-        </div>
-      </div>
-    )
 
     return(
       <div className="detail-contents-table-wrapper">
@@ -33,7 +22,14 @@ class DetailContentsTable extends Component {
           {templateList}
         </div>
         <div className="detail-contents-table-line"/>
-          {nonTemplateList}
+        <div>
+          <div className="detail-contents-row">
+            <div className="detail-contents-cell-header">특이사항</div>
+          </div>
+          <div className="detail-contents-row">  
+            <div className="detail-contents-cell">{contents.detail}</div>
+          </div>
+        </div>
         <div className="detail-contents-table-line"/>
         <div className="detail-contents-row">
           <div className="detail-contents-cell-header">출고날짜 달력넣기</div>

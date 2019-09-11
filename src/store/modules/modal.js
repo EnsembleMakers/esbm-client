@@ -4,9 +4,9 @@ import { Map, List } from 'immutable';
 
 const SHOW = 'modal/SHOW';
 const HIDE = 'modal/HIDE';
-const CHANGE = 'modal/CHANGE';
-const CHANGE_ADD_MODE = 'modal/CHANGE_ADD_MODE';
+const CHANGE_TEMPLATE_INPUT = 'modal/CHANGE_TEMPLATE_INPUT';
 const CHANGE_ADD_INPUT = 'modal/CHANGE_ADD_INPUT';
+const CHANGE_ADD_MODE = 'modal/CHANGE_ADD_MODE';
 const ADD_LIST = 'modal/ADD_LIST';
 const DELETE_LIST = 'modal/DELETE_LIST'
 const CHANGE_IMAGE = 'modal/CHANGE_IMAGE';
@@ -24,9 +24,9 @@ const SET_ERROR = 'modle/SET_ERROR';
 
 export const show = createAction(SHOW);
 export const hide = createAction(HIDE);
-export const change = createAction(CHANGE);
-export const changeAddMode = createAction(CHANGE_ADD_MODE);
+export const changeTemplateInput = createAction(CHANGE_TEMPLATE_INPUT);
 export const changeAddInput = createAction(CHANGE_ADD_INPUT);
+export const changeAddMode = createAction(CHANGE_ADD_MODE);
 export const addList = createAction(ADD_LIST);
 export const deleteList = createAction(DELETE_LIST);
 export const changeImage = createAction(CHANGE_IMAGE);
@@ -76,15 +76,16 @@ export default handleActions({
                 // 초기화
                 .set('modalContents', Map({}))
   },
-  [CHANGE]: (state, action) => {
+  [CHANGE_TEMPLATE_INPUT]: (state, action) => {
     const { name, value, kind } = action.payload;
     return state.setIn(['modalContents', kind, name, 'value'], value)
   },
+  [CHANGE_ADD_INPUT]: (state, action) => {
+    const { name, value } = action.payload;
+    return state.setIn(['modalContents', name], value)
+  },
   [CHANGE_ADD_MODE]: (state, action) => {
     return state.set('addMode', action.payload)
-  },
-  [CHANGE_ADD_INPUT]: (state, action) => {
-    return state.set('addContent', action.payload.value)
   },
   [ADD_LIST]: (state, action) => {
     let contents = List(state.getIn(['modalContents', 'template']))

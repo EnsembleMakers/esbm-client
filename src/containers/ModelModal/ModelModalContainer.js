@@ -11,9 +11,9 @@ import * as orderTemplateActions from '../../store/modules/orderTemplate';
 
 class ModelModalContainer extends Component {
 
-  handleChange = (e, kind) => {
+  handleChangeTemplateInput = (e, kind) => {
     const { ModalActions } = this.props;
-    ModalActions.change({
+    ModalActions.changeTemplateInput({
       name: e.target.name,
       value: e.target.value,
       kind: kind
@@ -194,7 +194,7 @@ class ModelModalContainer extends Component {
   render() {
     const { orderContents, modalContents, visible, mode, addMode, addContent, modelImageURL, error } = this.props;
 
-    const { handleChange, handleChangeModelImg, handleChangeAddInput, handleDeleteModelImg, handleChangeAddMode, handleAddList, handleDeleteList, handlePost, handlePatch, handleHide } = this;
+    const { handleChangeTemplateInput, handleChangeModelImg, handleChangeAddInput, handleDeleteModelImg, handleChangeAddMode, handleAddList, handleDeleteList, handlePost, handlePatch, handleHide } = this;
 
     return(
       visible==="model" &&
@@ -208,7 +208,7 @@ class ModelModalContainer extends Component {
             detail={modalContents.toJS().detail}
             error={error}
             modelImageURL={modelImageURL}
-            onChange={handleChange}
+            onChangeTemplateInput={handleChangeTemplateInput}
             onChangeModelImg={handleChangeModelImg}
             onDeleteModelImg={handleDeleteModelImg}
             onChangeAddInput={handleChangeAddInput}

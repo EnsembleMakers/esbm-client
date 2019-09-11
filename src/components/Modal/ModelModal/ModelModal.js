@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 class ModelModal extends Component {
   render() {
     const { mode, addMode, addContent, detail, contents, modelImageURL, error } = this.props;
-    const { onChange, onChangeModelImg, onDeleteModelImg, onChangeAddMode, onChangeAddInput, onAddList, onDeleteList } = this.props;
+    const { onChangeTemplateInput, onChangeModelImg, onDeleteModelImg, onChangeAddMode, onChangeAddInput, onAddList, onDeleteList } = this.props;
     const { handlePost, handlePatch, handleHide } = this.props;
 
     let buttonOn;
@@ -27,7 +27,7 @@ class ModelModal extends Component {
           placeholder={content.label}
           // only id, name, value, type are valid with input tags.
           value={content.value || ''}
-          onChange={(e, kind) => onChange(e, 'template')}
+          onChange={(e, kind) => onChangeTemplateInput(e, 'template')}
           onDeleteList={() => onDeleteList(i, 'template')}
         />
       }

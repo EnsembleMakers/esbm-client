@@ -5,7 +5,8 @@ import { Map, List } from 'immutable';
 import * as ModelAPI from '../../lib/api/model';
 
 const CHANGE_INFO_INPUT = 'model/CHANGE_INFO_INPUT';
-const CHANGE_MODEL_INPUT = 'model/CHANGE_MODEL_INPUT';
+const CHANGE_MODEL_ADD_INPUT = 'model/CHANGE_MODEL_ADD_INPUT'; // 특이사항
+const CHANGE_MODEL_TEMPLATE_INPUT = 'model/CHANGE_MODEL_TEMPLATE_INPUT';
 const CHANGE_MODEL_SEARCH_INPUT = 'model/CHANGE_MODEL_SEARCH_INPUT';
 const SET_MODEL_BY_ID = 'model/SET_MODEL_BY_ID';
 const INIT_MODEL_BY_ID = 'model/INIT_MODEL_BY_ID';
@@ -18,7 +19,8 @@ const PATCH_MODEL_IMG = 'model/PATCH_MODEL_IMG';
 const REMOVE_MODEL_IMG = 'model/REMOVE_MODEL_IMG';
 
 export const changeInfoInput = createAction(CHANGE_INFO_INPUT);
-export const changeModelInput = createAction(CHANGE_MODEL_INPUT);
+export const changeModelAddInput = createAction(CHANGE_MODEL_ADD_INPUT);
+export const changeModelTemplateInput = createAction(CHANGE_MODEL_TEMPLATE_INPUT);
 export const changeModelSearchInput = createAction(CHANGE_MODEL_SEARCH_INPUT);
 export const setModelById = createAction(SET_MODEL_BY_ID);
 export const initModelById = createAction(INIT_MODEL_BY_ID);
@@ -40,6 +42,9 @@ const initialState = Map({
       name: '',
       phone: '',
       address: ''
+    }),
+    addContents: Map({
+      detail: ''
     })
   })
 });
@@ -49,7 +54,11 @@ export default handleActions({
     const { name, value } = action.payload
     return state.setIn(['postForm', 'customerInfo', name], value)
   },
-  [CHANGE_MODEL_INPUT]: (state, action) => {
+  [CHANGE_MODEL_ADD_INPUT]: (state, action) => {
+    const { name, value } = action.payload
+    return state.setIn(['postForm', 'addContents', name], value)
+  },
+  [CHANGE_MODEL_TEMPLATE_INPUT]: (state, action) => {
     const { name, value, id } = action.payload
     return state.setIn(['postForm', 'model', 'contents', 'template', id, 'value'], value)
   },

@@ -18,10 +18,21 @@ class ModelContainer extends Component {
     UserActions.getUserByNum(userNumber);
   }
 
-  handleChangeModelInput = (e) => {
+  // 일반 input change (detail..)
+  handleChangeModelAddInput = (e) => {
+    const { ModelActions } = this.props;
+    const { name, value } = e.target;
+    ModelActions.changeModelAddInput({
+      name,
+      value,
+    });
+  }
+
+  // template input change (last, sole, size...)
+  handleChangeModelTemplateInput = (e) => {
     const { ModelActions } = this.props;
     const { name, value, id } = e.target;
-    ModelActions.changeModelInput({
+    ModelActions.changeModelTemplateInput({
       name,
       value,
       id,
@@ -43,14 +54,19 @@ class ModelContainer extends Component {
     const { postForm, history } = this.props;
     const { name, phone, address } = postForm.toJS().customerInfo;
     const makerId = this.props.loadedUserInfo.get('_id');
-    const contents = this.props.postForm.toJS().model.contents;
+    let contents = this.props.postForm.toJS().model.contents;
     const modelImage = this.props.postForm.toJS().model.modelImage;
 
     try {
+      // concat addContents + model.contents.template
+      contents = Object.assign(contents, postForm.toJS().addContents)
+
+      // customerInfo
       let customerInfo = {}
       customerInfo['name'] = name;
       customerInfo['phone'] = phone;
       customerInfo['address'] = address;
+      
       await OrderActions.postOrder({customerInfo, makerId, contents, modelImage});
       window.location = await '/customerInfoSuccess/';
     } catch(e) {
@@ -60,13 +76,14 @@ class ModelContainer extends Component {
 
   render() {
     const { postForm } = this.props;
-    const { handleChangeModelInput, handleChangeInfoInput, handlePost } = this;
+    const { handleChangeModelAddInput, handleChangeModelTemplateInput, handleChangeInfoInput, handlePost } = this;
     return(
       <ModelWrapper>
         <ModelBanner/>
         <ModelPreview 
           postForm={postForm}
-          handleChangeModelInput={handleChangeModelInput}
+          handleChangeModelAddInput={handleChangeModelAddInput}
+          handleChangeModelTemplateInput={handleChangeModelTemplateInput}
           handleChangeInfoInput={handleChangeInfoInput}
           handlePost={handlePost}
         />

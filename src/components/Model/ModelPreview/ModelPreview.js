@@ -5,10 +5,9 @@ class ModelPreview extends Component {
 
   render() {
     const { postForm } = this.props;
-    const { handleChangeModelInput, handleChangeInfoInput, handlePost } = this.props;
+    const { handleChangeModelAddInput, handleChangeModelTemplateInput, handleChangeInfoInput, handlePost } = this.props;
 
     let templateInputList;
-    let nonTemplateInputList;
     // 랜더링 직후에는 postForm=undefined이기 때문에
     if(postForm.get('model').size !== 0) {
       templateInputList = postForm.get('model').contents.template.map(
@@ -28,7 +27,7 @@ class ModelPreview extends Component {
                   name={content.label}
                   id={i}
                   value={content.value}
-                  onChange={handleChangeModelInput}
+                  onChange={handleChangeModelTemplateInput}
                 />
               </div>
             )
@@ -36,10 +35,19 @@ class ModelPreview extends Component {
         }
       )
     }
+
     return(
       <div className="model-preview-wrapper">
         <div className="model-preview-left">
         {templateInputList}
+        <div>
+          <div className="model-preview-label">특이사항</div>
+          <input className="model-preview-input"
+            name='detail'
+            value={postForm.getIn(['addContents', 'detail'])}
+            onChange={handleChangeModelAddInput}
+          />
+        </div>
         </div>
         <div className="model-preview-right">
           <img className="model-preview-img" src={postForm.get('model').modelImage}/>

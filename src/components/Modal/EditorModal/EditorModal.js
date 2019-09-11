@@ -37,7 +37,7 @@ class EditorModal extends Component {
 
   render() {
     const { addMode, addContent, name, state, contents, modelImageURL } = this.props;
-    const { handleChange, handleChangeModelImg, handleDeleteModelImg, handleChangeAddMode, handleChangeAddInput, handleAddList, handleDeleteList } = this.props;
+    const { handleChangeTemplateInput, handleChangeModelImg, handleDeleteModelImg, handleChangeAddMode, handleChangeAddInput, handleAddList, handleDeleteList } = this.props;
     const { handlePatch, handleHide } = this.props;
     let stateText;
     stateText = state=="ordered" ? "주문완료" 
@@ -57,21 +57,8 @@ class EditorModal extends Component {
           placeholder={content.label}
           // only id, name, value, type are valid with input tags.
           value={content.value || ''}
-          onChange={(e, kind) => handleChange(e, 'template')}
+          onChange={(e, kind) => handleChangeTemplateInput(e, 'template')}
           onDeleteList={() => handleDeleteList(i, 'template')}
-        />
-      }
-    )
-    const nonTemplateInputList = contents.get('nonTemplate').map(
-      (content, i) => {
-        return <DetailInput
-          key={i}
-          name={i}
-          deleteButton={false}
-          label={content.label}
-          placeholder={content.label}
-          value={content.value}
-          onChange={(e, kind) => handleChange(e, 'nonTemplate')}
         />
       }
     )
@@ -110,7 +97,15 @@ class EditorModal extends Component {
         {/* 템플릿 */}
         {templateInputList}
         {/* 특이사항 */}
-        {nonTemplateInputList}
+        <DetailInput
+          deleteButton={false}
+          label={'특이사항'}
+          name={'detail'}
+          placeholder={'특이사항'}
+          // only id, name, value, type are valid with input tags.
+          value={contents.get('detail')}
+          onChange={handleChangeAddInput}
+        />
 
         {addMode === false && <div className="editor-modal-open-add-input-button" onClick={() => handleChangeAddMode(true)}> 작성 목록 추가하기 </div>}
         {addMode === true && 
