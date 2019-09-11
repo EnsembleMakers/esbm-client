@@ -52,7 +52,7 @@ class Print extends Component {
               {contentsList}
             </div>
             <div className="order-table-view">
-              <div className="print-contents-label" style={{width: "100%"}}>{contents.detail}</div>
+              <div className="print-contents-label" style={{width: "100%"}}>특이사항</div>
               <div className="print-contents-value" style={{width: "100%"}}>{contents.detail}</div>
             </div>
           </div>
