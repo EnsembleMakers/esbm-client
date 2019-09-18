@@ -15,6 +15,7 @@ const GET_ORDER_BY_NUM = 'order/GET_ORDER_BY_NUM';
 const GET_ORDERS_BY_MAKER_ID = 'order/GET_ORDERS_BY_MAKER_ID';
 const POST_ORDER = 'order/POST_ORDER';
 const PATCH_ORDER = 'order/PATCH_ORDER';
+const PATCH_ORDER_DEADLINE = 'order/PATCH_ORDER_DEADLINE';
 const DELETE_ORDER = 'order/DELETE_ORDER';
 const PATCH_IMG = 'order/PATCH_IMG';
 const REMOVE_IMG = 'order/REMOVE_IMG';
@@ -37,6 +38,7 @@ export const getOrderByNum = createAction(GET_ORDER_BY_NUM, OrderAPI.getOrderByN
 export const getOrdersByMakerId = createAction(GET_ORDERS_BY_MAKER_ID, OrderAPI.getOrdersByMakerId)
 export const postOrder = createAction(POST_ORDER, OrderAPI.postOrder);
 export const patchOrder = createAction(PATCH_ORDER, OrderAPI.patchOrder);
+export const patchOrderDeadline = createAction(PATCH_ORDER_DEADLINE, OrderAPI.patchOrderDeadline);
 export const deleteOrder = createAction(DELETE_ORDER, OrderAPI.deleteOrder);
 export const patchImg = createAction(PATCH_IMG, OrderAPI.patchImg);
 export const removeImg = createAction(REMOVE_IMG, OrderAPI.removeImg);
@@ -113,6 +115,12 @@ export default handleActions({
   ...pender({
     type: PATCH_ORDER,
     onSuccess: (state, action) => state.setIn(['orderById', 'contents'], action.payload.data)
+  }),
+  ...pender({
+    type: PATCH_ORDER_DEADLINE,
+    onSuccess: (state, action) => {
+      return state.setIn(['orderById', 'deadline'], action.payload.data.deadline)
+    }
   }),
   ...pender({
     type: DELETE_ORDER,

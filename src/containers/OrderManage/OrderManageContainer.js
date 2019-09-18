@@ -8,6 +8,7 @@ import { OrderManageDetail } from '../../components/OrderManage/OrderManageDetai
 import * as orderActions from '../../store/modules/order';
 import * as modalActions from '../../store/modules/modal';
 import * as reviewActions from '../../store/modules/review';
+import * as calendarActions from '../../store/modules/calendar';
 import { formatDate } from '../../lib/dateFunction';
 
 class OrderManageContainer extends Component {
@@ -36,14 +37,16 @@ class OrderManageContainer extends Component {
   }
 
   handleGetById = async(id) => {
-    const { OrderActions, ReviewActions } = this.props;
+    const { CalendarActions, OrderActions, ReviewActions } = this.props;
 
     try {
+      // calendar 초기화
+      await CalendarActions.initDate();
+      // Order 및 Review 가져오기
       await OrderActions.getOrderById(id);
       await ReviewActions.getReviewById(id);
       // // order detail 창 보이기
       await OrderActions.changeDetailView(true)
-
     }catch(e) {
       console.log(e);
     }
@@ -85,26 +88,13 @@ class OrderManageContainer extends Component {
     })
   }
 
-  handlePatchProcessingNext = async(id, processing) => {
-    const { OrderActions } = this.props;
-    OrderActions.patchProcessing({
-      id: id, 
-      processing: processing});
-    OrderActions.changeProcessingState({
+  handlePatchOrderDeadline = async(id, deadline) => {
+    const { OrderActions, CalendarActions } = this.props;
+    await OrderActions.patchOrderDeadline({
       id: id,
-      processingState: 'next'
-    });
-  }
-
-  handlePatchProcessingPre = async(id, processing) => {
-    const { OrderActions } = this.props;
-    OrderActions.deleteProcessing({
-      id: id, 
-      processing: processing});
-    OrderActions.changeProcessingState({
-      id: id,
-      processingState: 'pre'
-    });
+      deadline: deadline
+    })
+    await CalendarActions.initDate()
   }
 
   handleDeleteOrder = async(id) => {
@@ -134,8 +124,8 @@ class OrderManageContainer extends Component {
 
   render() {
     const { view, search, detailView, imgTextView, allOrders, orderById, review } = this.props;
-    const { handleChangeOrderSearchInput, handleChangeView, handleChangeImgTextView, handleGetById, handlePostOrder, handleChangeState, handleOpenEditorModal, handleOpenImageModal, handlePatchProcessingNext, handlePatchProcessingPre, handleDeleteOrder } = this;
-    
+    const { handleChangeOrderSearchInput, handleChangeView, handleChangeImgTextView, handleGetById, handlePostOrder, handleChangeState, handleOpenEditorModal, handleOpenImageModal, handlePatchOrderDeadline, handleDeleteOrder } = this;
+   
     return(
       <OrderManageWrapper>
         <OrderManageState
@@ -168,13 +158,14 @@ class OrderManageContainer extends Component {
           upperComplete={orderById.toJS().upperComplete && formatDate(orderById.toJS().upperComplete)}
           soleComplete={orderById.toJS().soleComplete && formatDate(orderById.toJS().soleComplete)}
           processingState={orderById.toJS().processingState}
+          deadline={orderById.get('deadline')}
+          orderDay={orderById.get('createdAt')}
           review={review.toJS()}
           handleChangeState={handleChangeState}
           handleChangeImgText={handleChangeImgTextView}
           handleOpenEditorModal={handleOpenEditorModal}
           handleOpenImageModal={handleOpenImageModal}
-          handlePatchProcessingNext={handlePatchProcessingNext}
-          handlePatchProcessingPre={handlePatchProcessingPre}
+          handlePatchOrderDeadline={handlePatchOrderDeadline}
           handleDeleteOrder={handleDeleteOrder}
         />
       </OrderManageWrapper>
@@ -197,5 +188,6 @@ export default connect(
     OrderActions: bindActionCreators(orderActions, dispatch),
     ModalActions: bindActionCreators(modalActions, dispatch),
     ReviewActions: bindActionCreators(reviewActions, dispatch),
+    CalendarActions: bindActionCreators(calendarActions, dispatch)
   })
 )(OrderManageContainer);

@@ -36,8 +36,8 @@ class OrderManageDetail extends Component {
   render() {
     const { imgTextView, detailView, review } = this.props;
     const { lastComplete, cutComplete, upperComplete, soleComplete, processingState } = this.props;
-    const { id , orderNumber, name, date, phone, address, state, contents, images, modelImage } = this.props;
-    const { handleChangeState, handleChangeImgText, handleOpenEditorModal, handleOpenImageModal, handlePatchProcessingNext, handlePatchProcessingPre, handleDeleteOrder } = this.props;
+    const { id , orderNumber, name, date, phone, address, state, contents, images, modelImage, deadline, orderDay, dateObject } = this.props;
+    const { handleChangeState, handleChangeImgText, handleOpenEditorModal, handleOpenImageModal, handlePatchOrderDeadline, handleDeleteOrder } = this.props;
     let stateText;
     stateText = state=="ordered" ? "주문완료" 
     : state=="processing" ? "제작중" 
@@ -54,14 +54,12 @@ class OrderManageDetail extends Component {
             <div className="header-date">주문날짜 {date}</div>
             <hr className="order-manage-detail-line"/>
             {state == "processing" && <ProcessingTable
-              id={id}
               lastComplete={lastComplete}
               cutComplete={cutComplete}
               upperComplete={upperComplete}
               soleComplete={soleComplete}
               processingState={processingState}
-              handlePatchProcessingNext={handlePatchProcessingNext}
-              handlePatchProcessingPre={handlePatchProcessingPre}/>}
+              />}
             {state == "finished" && <FinishedTable
               lastComplete={lastComplete}
               cutComplete={cutComplete}
@@ -69,10 +67,13 @@ class OrderManageDetail extends Component {
               soleComplete={soleComplete}/>}
             <div className="detail-contents-wrapper">
               <DetailContentsTable
+                id={id}
                 address={address}
                 contents={contents}
-                images={images}
                 imgTextView={imgTextView}
+                deadline={deadline}
+                orderDay={orderDay}
+                handlePatchOrderDeadline={handlePatchOrderDeadline}
               />
               <DetailFixedbar
                 state={state}

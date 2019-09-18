@@ -26,7 +26,6 @@ const ProcessingValue = styled.td`
 
 class ProcessingTable extends Component {
   render() {
-    const { id } = this.props;
     const { lastComplete, cutComplete, upperComplete, soleComplete, processingState } = this.props;
 
     return(

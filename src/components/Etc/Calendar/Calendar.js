@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
 import './Calendar.scss';
 import { object } from 'prop-types';
@@ -7,20 +8,10 @@ import { object } from 'prop-types';
 let days = ['일', '월', '화', '수', '목', '금', '토']
 
 class Calendar extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      today: moment(),
-      selectedDay: '',
-      dateObject: moment(),
-      deadline: 5,
-      newDeadline: null,
-    }
-  }
 
   // 해당 월에 시작되는 날의 위치
   firstDayOfMonth = () => {
-    let dateObject = this.state.dateObject;
+    let dateObject = this.props.dateObject;
     let firstDay = moment(dateObject)
                 .startOf("month")
                 .format("d");
@@ -28,39 +19,17 @@ class Calendar extends Component {
   }
   // 해당 월이 가지고 있는 날의 개수
   daysInMonth = () => {
-    return this.state.dateObject.daysInMonth();
+    return this.props.dateObject.daysInMonth();
   }
   // 오늘
   currentDay = () => {
-    return this.state.today.format('YYYY-MM-D')
+    return this.props.today.format('YYYY-MM-D')
   }
-  // 데드라인에 포함된 날짜
-  deadline = () => {
-    console.log(this.state.deadline)
-    console.log(this.state.today.add('days', this.state.deadline))
-  }
-  // 월 바꾸기
-  nextMonth = () => {
-    return this.setState({
-      dateObject: moment(this.state.dateObject).add(1, 'months')
-    })
-  }
-  preMonth = () => {
-    return this.setState({
-      dateObject: moment(this.state.dateObject).subtract(1, 'months')
-    })
-  }
-
-  // 현재 사용 x
-  // // 날짜 선택
-  // selectDay = (day) => {
-  //   return this.setState({
-  //     // moment(해당날짜, format지정)
-  //     selectedDay: moment(this.state.dateObject.format('YYYY-MM-')+day, 'YYYY-MM-D')
-  //   })
-  // }
 
   render() {
+    const { id, orderDay, deadline, today, newDeadline } = this.props;
+    const { handleChangeNextMonth, handleChangePreMonth, handleChangeNewDeadline, handlePatchOrderDeadline, handleInitDate } = this.props;
+
     // 월화수목금토일 표시
     let daysLabel = days.map((day, i) => {
       return <th key={i}>{day}</th>
@@ -68,21 +37,24 @@ class Calendar extends Component {
     // 월 단위 날짜 셀
     let blanks = [];
     let daysInMonth = [];
+
     for(let i = 0; i < this.firstDayOfMonth(); i++) {
       blanks.push(<td key={i - this.firstDayOfMonth() + 1} className="calendar-day empty">{""}</td>)
     }
+
     for(let i = 1; i <= this.daysInMonth(); i++) {
       // today 블럭표시
-      let dateObject = this.state.dateObject.format('YYYY-MM-')+i ;
-
+      let dateObject = this.props.dateObject.format('YYYY-MM-')+i ;
       // 데드라인 블럭표시
-      let objectToToday = moment(dateObject, 'YYYY-MM-D').diff(this.state.today.format('YYYY-MM-D'), 'days')
+      let objectToOrderDay = moment(dateObject, 'YYYY-MM-D').diff(moment(orderDay).format('YYYY-MM-D'), 'days')
 
       let currentDay;
       if(dateObject == this.currentDay()){
         currentDay = "today"
-      } else if(objectToToday <= 5 && objectToToday > 0) {
+      } else if(objectToOrderDay <= deadline && objectToOrderDay >= 0 && newDeadline == null) {
         currentDay = "deadline";
+      } else if(objectToOrderDay <= newDeadline && objectToOrderDay >= 0){
+        currentDay = "new-deadline";
       } else {
         currentDay = "";
       }
@@ -113,23 +85,36 @@ class Calendar extends Component {
 
     // select box
     let selectBox = []
+    selectBox.push(<option key={0} value={0} disabled hidden>기간선택</option>)
     for(let i=1; i<31; i++) {
-      selectBox.push(<option key={i} value={i}>{`${i}일 후`}</option>)
+      selectBox.push(<option key={i} value={i}>{`${i}일`}</option>)
     }
-
+    
     return(
       <div>
-        <select className="calendar-select-box" onChange={(e) => console.log(e.target.value)}>
+        <div className="calendar-controll-wrapper">
+        <select className="calendar-controll-wrapper select-box" value={newDeadline||deadline} onChange={(e) => handleChangeNewDeadline(e.target.value)}>
           {selectBox}
         </select>
+        { newDeadline &&
+        <div className="calendar-controll-wrapper button">
+          <div className="calendar-save-button" onClick={() => handlePatchOrderDeadline(id, newDeadline)}>저장
+          </div>
+          <div className="calendar-cancel-button" onClick={handleInitDate}>취소
+          </div>
+        </div>
+        }
+        </div>
         <div className="calendar-wrapper">  
           <div className="calendar-header">
-            <div style={{width: "50%"}}>s</div>
-            <div style={{width: "50%"}}>s</div>
+            <div style={{width: "50%"}}>{moment(orderDay).format('YYYY-MM-DD')}</div>
+            <div>~</div>
+            <div style={{width: "50%"}}>{moment(orderDay).add(newDeadline||deadline, 'days').format('YYYY-MM-DD')}</div>
           </div>
           <div className="calendar-navi">
-            <div onClick={this.preMonth}>{`<`}</div>
-            <div onClick={this.nextMonth}>{`>`}</div>
+            <div className="calendar-arrow-button" onClick={handleChangePreMonth}><FaArrowLeft/></div>
+            <div style={{fontWeight: 'bold'}}>{this.props.dateObject.format('M')}월</div>
+            <div className="calendar-arrow-button" onClick={handleChangeNextMonth}><FaArrowRight/></div>
           </div>
           <table className="calendar-table">
             <thead>

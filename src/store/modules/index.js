@@ -9,6 +9,7 @@ import model from './model';
 import modal from './modal';
 import review from './review';
 import search from './search';
+import calendar from './calendar';
 import { penderReducer } from 'redux-pender';
 import { sessionReducer } from 'redux-react-session';
 
@@ -23,6 +24,7 @@ export default combineReducers({
     modal,
     review,
     search,
+    calendar,
     pender: penderReducer,
     session: sessionReducer
 });

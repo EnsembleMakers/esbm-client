@@ -46,7 +46,7 @@ const initialState = Map({
     addContents: Map({
       detail: ''
     })
-  })
+  }),
 });
 
 export default handleActions({
