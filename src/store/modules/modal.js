@@ -49,7 +49,7 @@ const initialState = Map({
   mode: '',
   // add list
   addMode: false,
-  addContent: null,
+  addContent: '',
   modalContents: Map({}),
   preModalContents: Map({}),
   images: List([]),
@@ -81,8 +81,7 @@ export default handleActions({
     return state.setIn(['modalContents', kind, name, 'value'], value)
   },
   [CHANGE_ADD_INPUT]: (state, action) => {
-    const { name, value } = action.payload;
-    return state.setIn(['modalContents', name], value)
+    return state.set('addContent', action.payload.value)
   },
   [CHANGE_ADD_MODE]: (state, action) => {
     return state.set('addMode', action.payload)

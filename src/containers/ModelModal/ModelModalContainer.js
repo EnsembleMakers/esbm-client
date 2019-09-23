@@ -177,10 +177,11 @@ class ModelModalContainer extends Component {
 
   handleHide = () => {
     const { ModalActions, ModelActions } = this.props;
-    ModalActions.hide();
+    ModalActions.changeAddMode(false)
     ModalActions.initModelImgURL();
     ModelActions.initModelById();
     ModalActions.setError({})
+    ModalActions.hide();
   }
 
   setError = (message) => {
@@ -188,7 +189,6 @@ class ModelModalContainer extends Component {
     ModalActions.setError({
       message
     })
-
   }
 
   render() {
