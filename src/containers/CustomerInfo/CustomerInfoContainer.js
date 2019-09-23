@@ -107,6 +107,7 @@ class CustomerInfoContainer extends Component {
           inputView={true}
           buttonView={false}
           value={customerInfo.name}
+          times={1}
           onChange={handleChangeCustomerInfoInput}
         />
         <CustomerInfoInput 
@@ -115,6 +116,7 @@ class CustomerInfoContainer extends Component {
           inputView={true}
           buttonView={false}
           value={customerInfo.phone}
+          times={1}
           onChange={handleChangeCustomerInfoInput}
         />
         <CustomerInfoInput 
@@ -125,6 +127,7 @@ class CustomerInfoContainer extends Component {
           onText={"택배로 받기"}
           offText={"방문해서 받기"}
           value={customerInfo.address}
+          times={1}
           onChange={handleChangeCustomerInfoInput}
           handleChangeInputView={handleChangeInputView}
         />

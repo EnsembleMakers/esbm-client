@@ -3,6 +3,7 @@ import './ModelPreview.scss';
 
 import { CustomerInfoInput } from '../../CustomerInfo/CustomerInfoInput';
 import { CustomerInfoError } from '../../CustomerInfo/CustomerInfoError';
+import { CustomerInfoPostButton } from '../../CustomerInfo/CustomerInfoPostButton';
 
 class ModelPreview extends Component {
 
@@ -61,6 +62,7 @@ class ModelPreview extends Component {
             name="name"
             inputView={true}
             buttonView={false}
+            times={0.8}
             value={postForm.getIn(['customerInfo', 'name'])}
             onChange={handleChangeCustomerInfoInput}
           />
@@ -69,6 +71,7 @@ class ModelPreview extends Component {
             name="phone"
             inputView={true}
             buttonView={false}
+            times={0.8}
             value={postForm.getIn(['customerInfo', 'phone'])}
             onChange={handleChangeCustomerInfoInput}
           />
@@ -80,6 +83,7 @@ class ModelPreview extends Component {
             onText={"택배로 받기"}
             offText={"방문해서 받기"}
             value={postForm.getIn(['customerInfo', 'address'])}
+            times={0.8}
             onChange={handleChangeCustomerInfoInput}
             handleChangeInputView={handleChangeInputView}
           />
@@ -87,7 +91,7 @@ class ModelPreview extends Component {
             <CustomerInfoError>{error}
             </CustomerInfoError>
           }
-          <div className="model-preview-post-button" onClick={handlePost}>주문하기</div>
+          <CustomerInfoPostButton onClick={handlePost}/>
         </div>
       </div>
     )
