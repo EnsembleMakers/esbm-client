@@ -1,14 +1,41 @@
+.customer-info-input-wrapper {
+  width: 100%;
+}
+
 .customer-info-label {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 8px;
+  padding-bottom: 8px;
   font-size: 20px;
+  font-weight: 500;
+  color: #484848;
 }
 
 .customer-info-input {
-  padding: 0.5rem;
+  margin-bottom: 20px;
+  padding: 8px;
   width: 100%;
   border: 1px solid #c3c3c3;
-  border-radius: 0.5rem;
+  border-radius: 5px;
   font-size: 25px;
+  color: #484848;
+  
   outline: none;
+}
+
+.customer-info-select-button-wrapper {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+}
+
+.customer-info-select-button {
+  
+  
+  &.on {
+    border: 1px solid red;
+  }
+
+  &.off {
+    border: 1px solid blue;
+  }
 }

@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { CustomerInfoWrapper } from '../../components/CustomerInfo/CustomerInfoWrapper';
 import { CustomerInfoInput } from '../../components/CustomerInfo/CustomerInfoInput';
 import { CustomerInfoPostButton } from '../../components/CustomerInfo/CustomerInfoPostButton';
+import { CustomerInfoError } from '../../components/CustomerInfo/CustomerInfoError';
 import * as orderActions from '../../store/modules/order';
 import * as orderTemplateActions from '../../store/modules/orderTemplate';
 import * as userActions from '../../store/modules/user';
@@ -19,19 +20,24 @@ class CustomerInfoContainer extends Component {
     OrderTemplateActions.getOrderTemplateByNum(userNumber)
   }
 
-  handleChange = (e) => {
+  handleChangeCustomerInfoInput = (e) => {
     const { OrderActions } = this.props;
     const { name, value } = e.target;
 
-    OrderActions.changeInput({
+    OrderActions.changeCustomerInfoInput({
       name,
       value,
     });
   }
 
+  handleChangeInputView = (button) => {
+    const { OrderActions } = this.props;
+    OrderActions.changeInputView(button)
+  }
+
   handlePost = async(e) => {
     const { OrderActions } = this.props;
-    const { postForm, history } = this.props;
+    const { postForm, inputView } = this.props;
     const { name, phone, address } = postForm.toJS().customerInfo;
     const makerId = this.props.loadedUserInfo.get('_id');
     const orderTemplate = this.props.orderTemplate;
@@ -43,6 +49,12 @@ class CustomerInfoContainer extends Component {
     )
 
     try {
+      if(!this.validate['name'](name)
+        ||!this.validate['phone'](phone)
+        ||inputView && !this.validate['address'](address)) {
+          return
+        } 
+
     let customerInfo = {}
     customerInfo['name'] = name;
     customerInfo['phone'] = phone;
@@ -50,36 +62,76 @@ class CustomerInfoContainer extends Component {
     await OrderActions.postOrder({customerInfo, makerId, contents});
     window.location = await '/customerInfoSuccess/';
     } catch(e) {
-      console.log(e);
+      OrderActions.setError({ message: "알 수 없는 에러가 발생했습니다."})
+    }
+  }
+
+  validate = {
+    name: (name) => {
+      if(!name) {
+        const { OrderActions } = this.props;
+        OrderActions.setError({ message: "이름을 입력하세요."})
+        return false;
+      }
+      return true;
+    },
+    phone: (phone) => {
+      if(!phone) {
+        const { OrderActions } = this.props;
+        OrderActions.setError({ message: "전화번호을 입력하세요."})
+        return false;
+      }
+      return true;
+    },
+    address: (address) => {
+      if(!address) {
+        const { OrderActions } = this.props;
+        OrderActions.setError({ message: "주소 입력하세요."})
+        return false;
+      }
+      return true;
     }
   }
 
   render() {
     const customerInfo = this.props.postForm.get('customerInfo')
-    const { loadedUserInfo } = this.props;
-    const { handleChange, handlePost } = this;
+    const { loadedUserInfo, inputView, error } = this.props;
+    const { handleChangeCustomerInfoInput, handleChangeInputView, handlePost } = this;
 
     return(
-      <CustomerInfoWrapper>
-        <div className="customer-info-header"><b>{loadedUserInfo.getIn(['company', 'companyName'])}</b></div>
+      <CustomerInfoWrapper
+        companyName={loadedUserInfo.getIn(['company', 'companyName'])}>
         <CustomerInfoInput 
           label="이름"
           name="name"
+          inputView={true}
+          buttonView={false}
           value={customerInfo.name}
-          onChange={handleChange}
+          onChange={handleChangeCustomerInfoInput}
         />
         <CustomerInfoInput 
           label="연락처"
           name="phone"
+          inputView={true}
+          buttonView={false}
           value={customerInfo.phone}
-          onChange={handleChange}
+          onChange={handleChangeCustomerInfoInput}
         />
         <CustomerInfoInput 
           label="주소"
           name="address"
+          inputView={inputView}
+          buttonView={true}
+          onText={"택배로 받기"}
+          offText={"방문해서 받기"}
           value={customerInfo.address}
-          onChange={handleChange}
+          onChange={handleChangeCustomerInfoInput}
+          handleChangeInputView={handleChangeInputView}
         />
+        { error &&
+          <CustomerInfoError>{error}
+          </CustomerInfoError>
+        }
         <CustomerInfoPostButton
           onClick={handlePost}
         />
@@ -91,6 +143,8 @@ class CustomerInfoContainer extends Component {
 export default connect(
   (state) => ({
     postForm: state.order.get('postForm'),
+    inputView: state.order.get('inputView'),
+    error: state.order.get('error'),
     loadedUserInfo: state.user.get('loadedUserInfo'),
     orderTemplate: state.orderTemplate
   }),

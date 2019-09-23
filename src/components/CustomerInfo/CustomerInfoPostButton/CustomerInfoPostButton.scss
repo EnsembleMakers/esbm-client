@@ -1,15 +1,11 @@
 .customer-info-post-button-wrapper {
-  padding-top: 1rem;
+  margin-top: 20px;
 }
 
 .customer-info-post-button {
-  position: relative;
-
-  left: 50%;
-  transform: translate(-50%, 0%);
-  margin-top: 1.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin: 0 auto;
   border: 2px solid #1d79c4;
   color: #1d79c4;
 
