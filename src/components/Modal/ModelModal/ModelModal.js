@@ -11,24 +11,22 @@ import PropTypes from 'prop-types';
 class ModelModal extends Component {
   render() {
     const { mode, addMode, addContent, detail, contents, modelImageURL, error } = this.props;
-    const { onChangeTemplateInput, onChangeModelImg, onDeleteModelImg, onChangeAddMode, onChangeAddInput, onAddList, onDeleteList } = this.props;
+    const { handleChangeTemplateInput, handleChangeMainInput, handleChangeModelImg, handleDeleteModelImg, handleChangeAddMode, handleChangeAddInput, handleAddList, handleDeleteList } = this.props;
     const { handlePost, handlePatch, handleHide } = this.props;
 
     let buttonOn;
     const templateInputList = contents.get('template').map(
       (content, i) => {
-        // 카테고리가 "모델"일 경우 삭제버튼 비활성화
-        i === 0 ? buttonOn = false : buttonOn = true;
         return <DetailInput
           key={i}
           name={i}
-          deleteButton={buttonOn}
+          deleteButton={true}
           label={content.label}
           placeholder={content.label}
           // only id, name, value, type are valid with input tags.
           value={content.value || ''}
-          onChange={(e, kind) => onChangeTemplateInput(e, 'template')}
-          onDeleteList={() => onDeleteList(i, 'template')}
+          onChange={(e, kind) => handleChangeTemplateInput(e)}
+          handleDeleteList={() => handleDeleteList(i, 'template')}
         />
       }
     )
@@ -53,28 +51,38 @@ class ModelModal extends Component {
             <div style={{display: 'flex', flexDirection: 'row'}}>
               <div className="model-modal-image-button-box">
                 <label htmlFor="ex_file">사진선택</label>
-                <input type="file" id="ex_file" onChange={onChangeModelImg}/>
+                <input type="file" id="ex_file" onChange={handleChangeModelImg}/>
               </div>
               <div className="model-modal-image-delete-button-box">
-                <label onClick={onDeleteModelImg}>사진삭제</label>
+                <label onClick={handleDeleteModelImg}>사진삭제</label>
               </div>
             </div>
           </div>
         </div>
         <div className="model-modal-line"/>
+        {/* 모델명 */}
+        <DetailInput
+          deleteButton={false}
+          label={'모델명'}
+          name={'model'}
+          placeholder={'모델명'}
+          value={contents.get('model')||''}
+          onChange={handleChangeMainInput}
+        />
+        {/* 템플릿 */}
         {templateInputList}
-        {addMode === false && <div className="model-modal-open-add-input-button" onClick={() => onChangeAddMode(true)}> 작성 목록 추가하기 </div>}
+        {addMode === false && <div className="model-modal-open-add-input-button" onClick={() => handleChangeAddMode(true)}> 작성 목록 추가하기 </div>}
         {addMode === true && 
           <div className="model-modal-add-wrapper">
             <input 
               className="model-modal-add-input"
               placeholder="추가할 목록을 작성하세요"
               value={addContent || ''}
-              onChange={onChangeAddInput}
+              onChange={handleChangeAddInput}
             />
-            <div className="model-modal-add-button" onClick={() => onAddList(addContent)}>추가하기</div>
+            <div className="model-modal-add-button" onClick={() => handleAddList(addContent)}>추가하기</div>
             
-            <div className="model-modal-add-cancel-button" onClick={() => onChangeAddMode(false)}>X</div>
+            <div className="model-modal-add-cancel-button" onClick={() => handleChangeAddMode(false)}>X</div>
           </div>
         }
         <ModalError>{error.get('message')}</ModalError>

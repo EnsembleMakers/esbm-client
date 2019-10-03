@@ -6,7 +6,7 @@ import * as ModelAPI from '../../lib/api/model';
 
 const CHANGE_CUSTOMER_INFO_INPUT = 'order/CHANGE_INPUT';
 const CHANGE_MODEL_TEMPLATE_INPUT = 'order/CHANGE_MODEL_TEMPLATE_INPUT';
-const CHANGE_MODEL_ADD_INPUT = 'order/CHANGE_MODEL_ADD_INPUT'; // 특이사항
+const CHANGE_MODEL_MAIN_INPUT = 'order/CHANGE_MODEL_MAIN_INPUT'; // 모델명, 특이사항
 const CHANGE_ORDER_SEARCH_INPUT = 'order/CHANGE_ORDER_SEARCH_INPUT';
 const CHANGE_VIEW = 'order/CHANGE_VIEW';
 const CHANGE_DETAIL_VIEW = 'order/CHANGE_DETAIL_VIEW'
@@ -34,7 +34,7 @@ const CHANGE_PROCESSING_STATE = 'order/CHANGE_PROCESSING_STATE';
 
 export const changeCustomerInfoInput = createAction(CHANGE_CUSTOMER_INFO_INPUT);
 export const changeModelTemplateInput = createAction(CHANGE_MODEL_TEMPLATE_INPUT);
-export const changeModelAddInput = createAction(CHANGE_MODEL_ADD_INPUT);
+export const changeModelMainInput = createAction(CHANGE_MODEL_MAIN_INPUT);
 export const changeOrderSearchInput = createAction(CHANGE_ORDER_SEARCH_INPUT);
 export const changeView = createAction(CHANGE_VIEW);
 export const changeDetailView = createAction(CHANGE_DETAIL_VIEW);
@@ -88,7 +88,7 @@ export default handleActions({
     const { name, value, id } = action.payload
     return state.setIn(['postForm', 'model', 'contents', 'template', id, 'value'], value)
   },
-  [CHANGE_MODEL_ADD_INPUT]: (state, action) => {
+  [CHANGE_MODEL_MAIN_INPUT]: (state, action) => {
     const { name, value } = action.payload
     return state.setIn(['postForm', 'model', 'contents', name], value)
   },

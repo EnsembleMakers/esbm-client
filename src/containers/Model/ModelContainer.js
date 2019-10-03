@@ -19,10 +19,10 @@ class ModelContainer extends Component {
   }
 
   // 일반 input change (detail..)
-  handleChangeModelAddInput = (e) => {
+  handleChangeModelMainInput = (e) => {
     const { OrderActions } = this.props;
     const { name, value } = e.target;
-    OrderActions.changeModelAddInput({
+    OrderActions.changeModelMainInput({
       name,
       value,
     });
@@ -111,7 +111,7 @@ class ModelContainer extends Component {
 
   render() {
     const { postForm, inputView, error } = this.props;
-    const { handleChangeModelAddInput, handleChangeModelTemplateInput, handleChangeCustomerInfoInput, handleChangeInputView, handlePost } = this;
+    const { handleChangeModelMainInput, handleChangeModelTemplateInput, handleChangeCustomerInfoInput, handleChangeInputView, handlePost } = this;
 
     return(
       <ModelWrapper>
@@ -120,7 +120,7 @@ class ModelContainer extends Component {
           postForm={postForm}
           inputView={inputView}
           error={error}
-          handleChangeModelAddInput={handleChangeModelAddInput}
+          handleChangeModelMainInput={handleChangeModelMainInput}
           handleChangeModelTemplateInput={handleChangeModelTemplateInput}
           handleChangeCustomerInfoInput={handleChangeCustomerInfoInput}
           handleChangeInputView={handleChangeInputView}

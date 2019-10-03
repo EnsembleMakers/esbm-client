@@ -5,6 +5,7 @@ import { Map, List } from 'immutable';
 const SHOW = 'modal/SHOW';
 const HIDE = 'modal/HIDE';
 const CHANGE_TEMPLATE_INPUT = 'modal/CHANGE_TEMPLATE_INPUT';
+const CHANGE_MAIN_INPUT = 'order/CHANGE_MAIN_INPUT'; // 모델명, 특이사항
 const CHANGE_ADD_INPUT = 'modal/CHANGE_ADD_INPUT';
 const CHANGE_ADD_MODE = 'modal/CHANGE_ADD_MODE';
 const ADD_LIST = 'modal/ADD_LIST';
@@ -25,6 +26,7 @@ const SET_ERROR = 'modle/SET_ERROR';
 export const show = createAction(SHOW);
 export const hide = createAction(HIDE);
 export const changeTemplateInput = createAction(CHANGE_TEMPLATE_INPUT);
+export const changeMainInput = createAction(CHANGE_MAIN_INPUT);
 export const changeAddInput = createAction(CHANGE_ADD_INPUT);
 export const changeAddMode = createAction(CHANGE_ADD_MODE);
 export const addList = createAction(ADD_LIST);
@@ -77,8 +79,12 @@ export default handleActions({
                 .set('modalContents', Map({}))
   },
   [CHANGE_TEMPLATE_INPUT]: (state, action) => {
-    const { name, value, kind } = action.payload;
-    return state.setIn(['modalContents', kind, name, 'value'], value)
+    const { name, value } = action.payload;
+    return state.setIn(['modalContents', 'template', name, 'value'], value)
+  },
+  [CHANGE_MAIN_INPUT]: (state, action) => {
+    const { name, value } = action.payload
+    return state.setIn(['modalContents', name], value)
   },
   [CHANGE_ADD_INPUT]: (state, action) => {
     return state.set('addContent', action.payload.value)

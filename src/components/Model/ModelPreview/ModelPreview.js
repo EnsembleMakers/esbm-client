@@ -9,21 +9,14 @@ class ModelPreview extends Component {
 
   render() {
     const { postForm, inputView, error } = this.props;
-    const { handleChangeModelAddInput, handleChangeModelTemplateInput, handleChangeCustomerInfoInput, handleChangeInputView, handlePost } = this.props;
+    const { handleChangeModelMainInput, handleChangeModelTemplateInput, handleChangeCustomerInfoInput, handleChangeInputView, handlePost } = this.props;
 
     let templateInputList;
+
     // 랜더링 직후에는 postForm=undefined이기 때문에
     if(postForm.get('model').size !== 0) {
       templateInputList = postForm.get('model').contents.template.map(
         (content, i) => {
-          if(content.label === "모델"){
-            return(
-              <div key={i}>
-                <div className="model-preview-label">{content.label}</div>
-                <div className="model-preview-value">{content.value}</div>
-              </div>
-            )
-          }else {
             return(
               <div key={i}>
                 <div className="model-preview-label">{content.label}</div>
@@ -35,7 +28,6 @@ class ModelPreview extends Component {
                 />
               </div>
             )
-          }
         }
       )
     }
@@ -43,13 +35,17 @@ class ModelPreview extends Component {
     return(
       <div className="model-preview-wrapper">
         <div className="model-preview-left">
-        {templateInputList}
+          <div>
+            <div className="model-preview-label">모델명</div>
+            <div className="model-preview-value">{postForm.get('model').size !== 0 && postForm.get('model').contents.model}</div>
+          </div>
+          {templateInputList}
         <div>
           <div className="model-preview-label">특이사항</div>
           <input className="model-preview-input"
             name='detail'
             value={postForm.getIn(['contents', 'detail'])}
-            onChange={handleChangeModelAddInput}
+            onChange={handleChangeModelMainInput}
           />
         </div>
         </div>

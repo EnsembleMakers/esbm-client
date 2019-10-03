@@ -22,6 +22,10 @@ class DetailContentsTable extends Component {
     return(
       <div className="detail-contents-table-wrapper">
         <div className="detail-contents-table">
+          <div className="detail-contents-row">
+            <div className="detail-contents-cell-header">모델명</div>
+            <div className="detail-contents-cell">{contents.model}</div>
+          </div>
           {templateList}
         </div>
         <div className="detail-contents-table-line"/>
