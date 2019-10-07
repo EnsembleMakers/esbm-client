@@ -113,7 +113,8 @@ class ModelModalContainer extends Component {
     try{
       await ModelActions.patchModel({
         id: modelById.get('_id'),
-        contents: modalContents
+        contents: modalContents,
+        makerId: loggedInfo.get('_id'),
       })
 
       // modelImage 변경
