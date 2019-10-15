@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 import base from './base';
 import auth from './auth';
 import user from './user';
-import post from './post';
 import order from './order';
 import orderTemplate from './orderTemplate';
 import model from './model';
@@ -17,7 +16,6 @@ export default combineReducers({
     base,
     auth,
     user,
-    post,
     order,
     orderTemplate,
     model,

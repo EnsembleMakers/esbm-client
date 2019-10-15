@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { Home, Login, Post, Product, CustomerInfo, CustomerInfoSuccess, OrderManage, ModelManage, Order, Model } from './pages';
+import { Home, Login, CustomerInfo, CustomerInfoSuccess, OrderManage, ModelManage, Order, Model, Review } from './pages';
 import { HeaderContainer } from './containers/Base';
 import { UserMenuContainer } from './containers/Base';
 
 import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 import * as userActions from './store/modules/user';
 
 import storage from './lib/storage';
@@ -43,13 +43,12 @@ class App extends Component {
                 <Route exact path="/" component={Home}/>
                 <Route path="/order/:id" component={Order}/>
                 <Route path="/login" component={Login}/>
-                <Route path="/post" component={Post}/>
-                <Route path="/product" component={Product}/>
                 <Route path="/customerInfo/:id" component={CustomerInfo}/>
                 <Route path="/customerInfoSuccess" component={CustomerInfoSuccess}/>
                 <Route path="/orderManage" component={OrderManage}/>
                 <Route path="/modelManage" component={ModelManage}/>
                 <Route path="/model/:number/:name" component={Model}/>
+                <Route path="/review/:id" component={Review}/>
             </div>
         );
     }
