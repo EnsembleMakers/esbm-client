@@ -21,6 +21,7 @@ import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 
 class ReviewEditor extends Component {
   render() {
+    const { socket, roomId } = this.props;
     return (
         <div className="App">
             <h2>Using CKEditor 5 Framework in React</h2>
@@ -34,7 +35,9 @@ class ReviewEditor extends Component {
               //   };
               // }}
               onChange={ ( event, editor ) => { 
-                console.log( editor.getData() ) 
+                console.log( editor.getData() );
+                console.log( roomId );
+                socket.emit('add', editor.getData() );
               }}
               config={ {
                 language: 'ko',
