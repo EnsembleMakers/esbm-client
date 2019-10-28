@@ -8,15 +8,11 @@ import * as reviewActions from '../../store/modules/review';
 
 class ReviewContainer extends Component {
 
-  handlePost = () => {
-    console.log('aa')
-  }
-
-  componentWillReceiveProps(nextProps) {
+  async componentWillReceiveProps(nextProps) {
     if(this.props.loggedInfo !== nextProps.loggedInfo){
-      this.socket = socketIOClient('http://localhost:5000');
       const { ReviewActions } = this.props;
-      console.log( nextProps.loggedInfo.get('_id') );
+
+      this.socket = socketIOClient('http://localhost:5000');
       const data = {
         orderId: '1004',
         userId: nextProps.loggedInfo.get('_id'),
@@ -24,29 +20,20 @@ class ReviewContainer extends Component {
         content: ' ',
         isCommit: false
       };
-      ReviewActions.postReview(data).then( (res) => { 
-        this.setState({
-          roomId: res.data._id
-        });
-        console.log( res.data._id );
-        this.socket.emit('join', this.state.roomId);
-      });
+
+      await ReviewActions.postReview(data)
+      // make new Promise
+      await new Promise(resolve => resolve(ReviewActions.setRoomId(this.props.reviewData._id)));
+      await this.socket.emit('join', this.props.roomId);
     }
   }
 
-  componentWillMount() {
-  }
-
-  componentDidMount() {
-    
+  handlePost = () => {
+    console.log(this.props.reviewData)
   }
 
   render() {
     const { handlePost, socket } = this;
-    const { roomId } = this.state;
-    if ( roomId !== null ) {
-      console.log( roomId );
-    }
     return(
       <div>
         aa<br/>aa<br/>aa<br/>aa<br/>aa<br/>aa<br/>aa<br/>aa<br/>
@@ -59,8 +46,9 @@ class ReviewContainer extends Component {
 
 export default connect(
   (state) => ({
-    review: state.review.get('data'),
-    loggedInfo: state.user.get('loggedInfo')
+    loggedInfo: state.user.get('loggedInfo'),
+    reviewData: state.review.get('data'),
+    roomId: state.review.get('roomId'),
   }),
   (dispatch) => ({
     ReviewActions: bindActionCreators(reviewActions, dispatch),
