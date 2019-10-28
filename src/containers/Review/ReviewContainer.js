@@ -22,9 +22,8 @@ class ReviewContainer extends Component {
       };
 
       await ReviewActions.postReview(data)
-      // make new Promise
-      await new Promise(resolve => resolve(ReviewActions.setRoomId(this.props.reviewData._id)));
-      await this.socket.emit('join', this.props.roomId);
+      ReviewActions.setRoomId(this.props.reviewData._id)
+      this.socket.emit('join', this.props.roomId);
     }
   }
 
