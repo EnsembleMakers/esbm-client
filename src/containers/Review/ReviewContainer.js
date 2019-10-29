@@ -28,15 +28,16 @@ class ReviewContainer extends Component {
   }
 
   handlePost = () => {
-    console.log(this.props.reviewData)
+    console.log(this.props.reviewData) 
   }
 
   render() {
     const { handlePost, socket } = this;
+    const { roomId, reviewData } = this.props;
     return(
       <div>
         aa<br/>aa<br/>aa<br/>aa<br/>aa<br/>aa<br/>aa<br/>aa<br/>
-        <ReviewEditor socket={socket} />
+        <ReviewEditor socket={socket} roomId={roomId} reviewData={reviewData}/>
         <div onClick={handlePost}>버튼</div>
       </div>
     )

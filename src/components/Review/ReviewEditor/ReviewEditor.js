@@ -18,12 +18,18 @@ import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
 import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
 import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
+import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
+import { get } from 'http';
 
 class ReviewEditor extends Component {
+
   render() {
-    const { socket, roomId } = this.props;
+    const { socket, roomId, reviewData } = this.props;
+    const test = 1231111;
     return (
         <div className="App">
+            <div> {roomId} </div>
+            <div> {reviewData._id} </div>
             <h2>Using CKEditor 5 Framework in React</h2>
             <CKEditor
               editor={ ClassicEditor }
@@ -42,7 +48,7 @@ class ReviewEditor extends Component {
               config={ {
                 language: 'ko',
                 plugins: [ Essentials, Paragraph, Bold, Italic, Heading, Alignment, UploadAdapter, Autoformat,
-                  EasyImage, Image, ImageCaption, ImageStyle, ImageToolbar, ImageUpload, ImageResize ],
+                  EasyImage, Image, ImageCaption, ImageStyle, ImageToolbar, ImageUpload, ImageResize, SimpleUploadAdapter ],
                 toolbar: [ 'heading', '|', 'bold', 'italic', '|', 'undo', 'redo', '|',  'alignment', '|', 'imageUpload'],
                 image: {
                   toolbar: ['imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
@@ -55,13 +61,27 @@ class ReviewEditor extends Component {
                 },
                 ckfinder: {
                   uploadUrl: 'http://localhost:3000/api/reviews/imageUpload',
-                  postId: 'aaabbb',
                   options: {
                     resourceType: 'Images'
                   }
                 },
+                simpleUpload: {
+                  // The URL that the images are uploaded to.
+                  uploadUrl: 'http://localhost:3000/api/reviews/imageUpload',
+      
+                  // Headers sent along with the XMLHttpRequest to the upload server.
+                  headers: {
+                      // 'X-CSRF-TOKEN': 'CSFR-Token',
+                      // Authorization: 'Bearer <JSON Web Token>'
+                      'X-CSRF-TOKEN': 'CSFR-Token',
+                      test: test,
+                      'roomId': roomId,
+                      reviewData: reviewData._id
+                  }
+                }
               }}
               
+              // data="<p>Hello from CKEditor 5!</p>"
               data="<p>Hello from CKEditor 5!</p>"
             />
         </div>
