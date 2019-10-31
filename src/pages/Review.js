@@ -5,8 +5,9 @@ import { ReviewContainer } from '../containers/Review';
 
 class Review extends Component {
   render() {
+    const { id } = this.props.match.params;
     return(
-      <ReviewContainer/>
+      <ReviewContainer orderNumber={id}/>
     )
   }
 }

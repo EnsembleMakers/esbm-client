@@ -23,13 +23,34 @@ import { get } from 'http';
 
 class ReviewEditor extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      socket: null,
+      roomId: 0,
+      reviewData: null
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.reviewData !== nextProps.reviewData) {
+      return { reviewData: nextProps.reviewData };
+    }
+    return null;
+  };
+  componentDidUpdate() {
+    // console.log('update!!!')
+  }
+
   render() {
-    const { socket, roomId, reviewData } = this.props;
+    const { socket, roomId } = this.props;
+    const { reviewData } = this.state;
+    // console.log( reviewData );
     const test = 1231111;
     return (
         <div className="App">
-            <div> {roomId} </div>
-            <div> {reviewData._id} </div>
+            {/* <div> {roomId} </div> */}
             <h2>Using CKEditor 5 Framework in React</h2>
             <CKEditor
               editor={ ClassicEditor }
@@ -41,9 +62,7 @@ class ReviewEditor extends Component {
               //   };
               // }}
               onChange={ ( event, editor ) => { 
-                console.log( editor.getData() );
-                console.log( roomId );
-                socket.emit('add', editor.getData() );
+                socket.emit('add', { roomId, data: editor.getData() } );
               }}
               config={ {
                 language: 'ko',
@@ -75,14 +94,16 @@ class ReviewEditor extends Component {
                       // Authorization: 'Bearer <JSON Web Token>'
                       'X-CSRF-TOKEN': 'CSFR-Token',
                       test: test,
-                      'roomId': roomId,
-                      reviewData: reviewData._id
+                      'roomId': this.props.roomId,
+                      reviewData: this.state.reviewData._id
                   }
                 }
               }}
               
               // data="<p>Hello from CKEditor 5!</p>"
-              data="<p>Hello from CKEditor 5!</p>"
+              data={ reviewData.get('_id') &&
+                reviewData.get('content')
+              }
             />
         </div>
     );
