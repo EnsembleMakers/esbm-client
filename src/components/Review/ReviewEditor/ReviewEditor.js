@@ -23,31 +23,34 @@ import { get } from 'http';
 
 class ReviewEditor extends Component {
 
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      socket: null,
-      roomId: 0,
-      reviewData: null
-    }
-  }
+  //   this.state = {
+  //     socket: null,
+  //     roomId: 0,
+  //     reviewData: null
+  //   }
+  // }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.reviewData !== nextProps.reviewData) {
-      return { reviewData: nextProps.reviewData };
-    }
-    return null;
-  };
-  componentDidUpdate() {
-    // console.log('update!!!')
-  }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (prevState.reviewData !== nextProps.reviewData) {
+  //     return { reviewData: nextProps.reviewData };
+  //   }
+  //   return null;
+  // };
+  // componentDidUpdate() {
+  //   // console.log('update!!!')
+  // }
 
   render() {
     const { socket, roomId } = this.props;
-    const { reviewData } = this.state;
-    // console.log( reviewData );
+    const { reviewData } = this.props;
     const test = 1231111;
+    let reviewId = !reviewData ? undefined : reviewData.get('_id')
+
+    console.log("reviewId?", reviewId)
+
     return (
         <div className="App">
             {/* <div> {roomId} </div> */}
@@ -95,15 +98,13 @@ class ReviewEditor extends Component {
                       'X-CSRF-TOKEN': 'CSFR-Token',
                       test: test,
                       'roomId': this.props.roomId,
-                      reviewData: this.state.reviewData._id
+                      reviewData: reviewId
                   }
                 }
               }}
               
               // data="<p>Hello from CKEditor 5!</p>"
-              data={ reviewData.get('_id') &&
-                reviewData.get('content')
-              }
+              data={ reviewId }
             />
         </div>
     );

@@ -17,7 +17,7 @@ export const changeInput = createAction(CHANGE_INPUT);
 export const changeRating = createAction(CHANGE_RATING);
 export const setRoomId = createAction(SET_ROOM_ID);
 export const getReviewById = createAction(GET_REVIEW_BY_ID, ReviewAPI.getReviewById);
-export const getReviewSeries = createAction(GET_REIVEW_SERIES);
+export const getReviewSeries = createAction(GET_REIVEW_SERIES, ReviewAPI.getReviewSeries);
 export const postReview = createAction(POST_REVIEW, ReviewAPI.postReview);
 export const patchReview = createAction(PATCH_REVIEW, ReviewAPI.patchReview);
 
@@ -25,7 +25,8 @@ const initialState = Map({
   mode: 'read',
   data: Map({}),
   roomId: '',
-  reviewSeries: List()
+  reviewSeries: List(),
+  lastSeries: false,
 })
 
 export default handleActions({
@@ -45,25 +46,30 @@ export default handleActions({
   ...pender({
     type: GET_REVIEW_BY_ID,
     onSuccess: (state, action) => {
-      return action.payload.data ? state.set('data', Map(action.payload.data)) : state.set('data', Map({rating: -1, content: ''}));
+      return action.payload.data ? state.set('data', Map(action.payload.data)) : state.set('data', undefined);
     }
   }),
   ...pender({
     type: GET_REIVEW_SERIES,
     onSuccess: (state, action) => {
-      return state.set('reviewSeries', List(action.payload.data))
+      if(action.payload.data){
+        const series = List(state.get('reviewSeries'))
+        return state.set('reviewSeries', List(series.concat(action.payload.data)))
+      }else {
+        return state.set('lastSeries', true)
+      }
     }
   }),
   ...pender({
     type: POST_REVIEW,
     onSuccess: (state, action) => {
-      return state.set('data', action.payload.data)
+      return state.set('data', Map(action.payload.data))
     }
   }),
   ...pender({
     type: PATCH_REVIEW,
     onSuccess: (state, action) => {
-      return state.set('data', action.payload.data);
+      return state.set('data', Map(action.payload.data));
     }
   })
 

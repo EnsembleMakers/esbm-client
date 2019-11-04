@@ -18,15 +18,16 @@ class ReviewContainer extends Component {
         orderId: orderNumber, // Order Collection에서 documentId가 아닌 orderNumber참조 
         userId: nextProps.loggedInfo.get('_id'),
         rating: -1,
-        content: ' ',
+        content: '',
         isCommit: false
       };
+      
       await ReviewActions.getReviewById(data.orderId);
-      if ( this.props.reviewData.get('content').length == 0 ) {
+      if ( !this.props.reviewData ) {
         await ReviewActions.postReview(data);
       }
-      ReviewActions.setRoomId(this.props.reviewData.get('_id'));
-      this.socket.emit('join', this.props.roomId);
+      await ReviewActions.setRoomId(this.props.reviewData.get('_id'));
+      await this.socket.emit('join', this.props.roomId);
     }
   }
 
@@ -38,7 +39,6 @@ class ReviewContainer extends Component {
   render() {
     const { handlePost, socket } = this;
     const { roomId, reviewData } = this.props;
-    // console.log( this.props )
     return(
       <div>
         <ReviewEditor socket={socket} roomId={roomId} reviewData={reviewData}/>
