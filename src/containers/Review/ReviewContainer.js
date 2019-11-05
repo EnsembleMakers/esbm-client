@@ -5,25 +5,29 @@ import socketIOClient from "socket.io-client";
 
 import { ReviewEditor } from '../../components/Review/ReviewEditor';
 import * as reviewActions from '../../store/modules/review';
+import * as orderActions from '../../store/modules/order';
 
 class ReviewContainer extends Component {
 
   async componentWillReceiveProps(nextProps) {
     if(this.props.loggedInfo !== nextProps.loggedInfo){
       const { orderNumber } = this.props;
-      const { ReviewActions } = this.props;
+      const { ReviewActions, OrderActions } = this.props;
 
       this.socket = socketIOClient('http://localhost:5000');
-      const data = {
-        orderId: orderNumber, // Order Collection에서 documentId가 아닌 orderNumber참조 
-        userId: nextProps.loggedInfo.get('_id'),
-        rating: -1,
-        content: '',
-        isCommit: false
-      };
-      
-      await ReviewActions.getReviewById(data.orderId);
+      await ReviewActions.getReviewByOrder(orderNumber);
       if ( !this.props.reviewData ) {
+        await OrderActions.getOrderByNum(orderNumber)
+        // 등록된 model이 있을 경우
+        let modelId = this.props.orderById.get('modelId') ? this.props.orderById.get('modelId') : null;
+        let data = {
+          orderNumber: orderNumber, // Order Collection에서 documentId가 아닌 orderNumber참조 
+          userId: nextProps.loggedInfo.get('_id'),
+          modelId: modelId,
+          rating: -1,
+          content: '',
+          isCommit: false
+        };
         await ReviewActions.postReview(data);
       }
       await ReviewActions.setRoomId(this.props.reviewData.get('_id'));
@@ -53,8 +57,10 @@ export default connect(
     loggedInfo: state.user.get('loggedInfo'),
     reviewData: state.review.get('data'),
     roomId: state.review.get('roomId'),
+    orderById: state.order.get('orderById')
   }),
   (dispatch) => ({
     ReviewActions: bindActionCreators(reviewActions, dispatch),
+    OrderActions: bindActionCreators(orderActions, dispatch)
   })
 )(ReviewContainer);

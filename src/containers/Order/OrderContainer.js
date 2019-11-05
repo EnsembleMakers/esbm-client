@@ -17,7 +17,7 @@ class OrderContainer extends Component {
     const orderNumber = this.props.id;
     // getOrderByNum 결과 객체로 저장
     let orderId = await OrderActions.getOrderByNum(orderNumber);
-    await ReviewActions.getReviewById(orderId.data._id);
+    await ReviewActions.getReviewByOrder(orderId.data._id);
   }
 
   handleChangeMode = (mode) => {

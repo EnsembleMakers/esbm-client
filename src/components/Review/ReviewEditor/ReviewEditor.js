@@ -49,8 +49,6 @@ class ReviewEditor extends Component {
     const test = 1231111;
     let reviewId = !reviewData ? undefined : reviewData.get('_id')
 
-    console.log("reviewId?", reviewId)
-
     return (
         <div className="App">
             {/* <div> {roomId} </div> */}

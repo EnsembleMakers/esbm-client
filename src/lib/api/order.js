@@ -4,7 +4,7 @@ export const getAllOrder = () => axios.get('/api/orders');
 export const getOrderById = (id) => axios.get('/api/orders/'+id);
 export const getOrderByNum = (id) => axios.get('/api/orders/byNum/'+id);
 export const getOrdersByMakerId = (id) => axios.get('/api/orders/byMakerId/'+id);
-export const postOrder = ({customerInfo, makerId, contents, modelImage}) => axios.post('/api/orders', {customerInfo, makerId, contents, modelImage});
+export const postOrder = ({customerInfo, makerId, modelId, contents, modelImage}) => axios.post('/api/orders', {customerInfo, makerId, modelId, contents, modelImage});
 export const patchOrder = ({id, contents}) => axios.patch('/api/orders/'+id, contents);
 export const patchOrderDeadline = ({id, deadline}) => axios.patch('/api/orders/deadline/'+id, {deadline})
 export const deleteOrder = ({id, modelImage, index}) => axios.delete('/api/orders/'+id, { data: { modelImage: modelImage}})

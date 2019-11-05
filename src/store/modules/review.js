@@ -7,7 +7,8 @@ const CHANGE_MODE = 'review/CHANGE_MODE';
 const CHANGE_INPUT = 'review/CHANGE_INPUT';
 const CHANGE_RATING = 'review/CHANGE_RATING';
 const SET_ROOM_ID = 'review/SET_ROOM_ID';
-const GET_REVIEW_BY_ID = 'review/GET_REVIEW_BY_ID';
+const GET_REVIEW_BY_ID = 'review/GET_REVIEW_BY_ID'
+const GET_REVIEW_BY_ORDER = 'review/GET_REVIEW_BY_ORDER';
 const GET_REIVEW_SERIES = 'review/GET_REVIEW_SERIES';
 const POST_REVIEW = 'review/POST_REVIEW';
 const PATCH_REVIEW = 'review/PATCH_REVIEW';
@@ -17,6 +18,7 @@ export const changeInput = createAction(CHANGE_INPUT);
 export const changeRating = createAction(CHANGE_RATING);
 export const setRoomId = createAction(SET_ROOM_ID);
 export const getReviewById = createAction(GET_REVIEW_BY_ID, ReviewAPI.getReviewById);
+export const getReviewByOrder = createAction(GET_REVIEW_BY_ORDER, ReviewAPI.getReviewByOrder);
 export const getReviewSeries = createAction(GET_REIVEW_SERIES, ReviewAPI.getReviewSeries);
 export const postReview = createAction(POST_REVIEW, ReviewAPI.postReview);
 export const patchReview = createAction(PATCH_REVIEW, ReviewAPI.patchReview);
@@ -25,6 +27,7 @@ const initialState = Map({
   mode: 'read',
   data: Map({}),
   roomId: '',
+  reviewById: Map(),
   reviewSeries: List(),
   lastSeries: false,
 })
@@ -45,6 +48,12 @@ export default handleActions({
   },
   ...pender({
     type: GET_REVIEW_BY_ID,
+    onSuccess: (state, action) => {
+      return state.set('reviewById', Map(action.payload.data))
+    }
+  }),
+  ...pender({
+    type: GET_REVIEW_BY_ORDER,
     onSuccess: (state, action) => {
       return action.payload.data ? state.set('data', Map(action.payload.data)) : state.set('data', undefined);
     }

@@ -7,6 +7,7 @@ import * as ModelAPI from '../../lib/api/model';
 const CHANGE_MODEL_SEARCH_INPUT = 'model/CHANGE_MODEL_SEARCH_INPUT';
 const SET_MODEL_BY_ID = 'model/SET_MODEL_BY_ID';
 const INIT_MODEL_BY_ID = 'model/INIT_MODEL_BY_ID';
+const GET_MODEL_BY_ID = 'model/GET_MODEL_BY_ID';
 const GET_MODELS_BY_MAKER_ID = 'model/GET_MODELS_BY_MAKER_ID';
 const GET_MODEL_BY_MODEL_NAME = 'model/GET_MODEL_BY_MODEL_NAME';
 const POST_MODEL = 'model/POST_MODEL';
@@ -18,6 +19,7 @@ const REMOVE_MODEL_IMG = 'model/REMOVE_MODEL_IMG';
 export const changeModelSearchInput = createAction(CHANGE_MODEL_SEARCH_INPUT);
 export const setModelById = createAction(SET_MODEL_BY_ID);
 export const initModelById = createAction(INIT_MODEL_BY_ID);
+export const getModelById = createAction(GET_MODEL_BY_ID);
 export const getModelsByMakerId = createAction(GET_MODELS_BY_MAKER_ID, ModelAPI.getModelsByMakerId);
 export const getModelByModelName = createAction(GET_MODEL_BY_MODEL_NAME, ModelAPI.getModelByModelName);
 export const postModel = createAction(POST_MODEL, ModelAPI.postModel);
@@ -42,6 +44,12 @@ export default handleActions({
   [INIT_MODEL_BY_ID]: (state, action) => {
     return state.set('modelById', Map({}))
   },
+  ...pender({
+    type: GET_MODEL_BY_ID,
+    onSuccess: (state, action) => {
+      return state.set('modelById', Map(action.payload.data))
+    }
+  }),
   ...pender({
     type: GET_MODELS_BY_MAKER_ID,
     onSuccess: (state, action) => {

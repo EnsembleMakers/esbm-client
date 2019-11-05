@@ -58,6 +58,7 @@ class ModelContainer extends Component {
     const { postForm, inputView } = this.props;
     const { name, phone, address } = postForm.toJS().customerInfo;
     const makerId = this.props.loadedUserInfo.get('_id');
+    const modelId = this.props.postForm.toJS().model._id;
     let { contents } = this.props.postForm.toJS().model;
     const modelImage = this.props.postForm.toJS().model.modelImage;
 
@@ -74,7 +75,7 @@ class ModelContainer extends Component {
       customerInfo['phone'] = phone;
       customerInfo['address'] = address;
       
-      await OrderActions.postOrder({customerInfo, makerId, contents, modelImage});
+      await OrderActions.postOrder({customerInfo, makerId, modelId, contents, modelImage});
       window.location = await '/customerInfoSuccess/';
     } catch(e) {
       console.log(e);

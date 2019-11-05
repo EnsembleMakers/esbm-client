@@ -44,7 +44,7 @@ class OrderManageContainer extends Component {
       await CalendarActions.initDate();
       // Order 및 Review 가져오기
       await OrderActions.getOrderById(id);
-      await ReviewActions.getReviewById(id);
+      // await ReviewActions.getReviewByOrder(id);
       // // order detail 창 보이기
       await OrderActions.changeDetailView(true)
     }catch(e) {
@@ -160,7 +160,7 @@ class OrderManageContainer extends Component {
           processingState={orderById.toJS().processingState}
           deadline={orderById.get('deadline')}
           orderDay={orderById.get('createdAt')}
-          review={review.toJS()}
+          // review={review.toJS()}
           handleChangeState={handleChangeState}
           handleChangeImgText={handleChangeImgTextView}
           handleOpenEditorModal={handleOpenEditorModal}

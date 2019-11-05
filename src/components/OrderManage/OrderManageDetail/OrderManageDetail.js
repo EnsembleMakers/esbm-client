@@ -93,8 +93,8 @@ class OrderManageDetail extends Component {
                 handleDeleteOrder={handleDeleteOrder}
               />
             </div>
-            { // state가 finished일 때, 리뷰창 보이기
-              state==="finished" ? <Review review={review}/> : null}
+            {/* { // state가 finished일 때, 리뷰창 보이기
+              state==="finished" ? <Review review={review}/> : null} */}
           </div>
           // 이름을 클릭하지 않았을 때 나타나는 내용
           : <div className="detail-default-content">고객 주문서를 확인하려면 왼쪽에 있는 해당 <b>주문상태</b>와 <b>고객이름</b>을 클릭하세요.</div>}
