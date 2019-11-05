@@ -1,0 +1,1 @@
+export { default as ReviewSeriesItem } from './ReveiwSeriesItem';
