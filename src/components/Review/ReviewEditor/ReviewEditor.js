@@ -23,30 +23,9 @@ import { get } from 'http';
 
 class ReviewEditor extends Component {
 
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = {
-  //     socket: null,
-  //     roomId: 0,
-  //     reviewData: null
-  //   }
-  // }
-
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (prevState.reviewData !== nextProps.reviewData) {
-  //     return { reviewData: nextProps.reviewData };
-  //   }
-  //   return null;
-  // };
-  // componentDidUpdate() {
-  //   // console.log('update!!!')
-  // }
-
   render() {
     const { socket, roomId } = this.props;
     const { reviewData } = this.props;
-    const test = 1231111;
     let reviewId = !reviewData ? undefined : reviewData.get('_id')
 
     return (
@@ -94,15 +73,15 @@ class ReviewEditor extends Component {
                       // 'X-CSRF-TOKEN': 'CSFR-Token',
                       // Authorization: 'Bearer <JSON Web Token>'
                       'X-CSRF-TOKEN': 'CSFR-Token',
-                      test: test,
                       'roomId': this.props.roomId,
                       reviewData: reviewId
                   }
                 }
               }}
               
-              // data="<p>Hello from CKEditor 5!</p>"
-              data={ reviewId }
+              data={ reviewId && 
+                reviewData.get('tempContent')
+              }
             />
         </div>
     );
