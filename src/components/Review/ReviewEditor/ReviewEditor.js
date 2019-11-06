@@ -24,16 +24,17 @@ import { get } from 'http';
 class ReviewEditor extends Component {
 
   render() {
-    const { socket, roomId } = this.props;
-    const { reviewData } = this.props;
+    const { socket, roomId, reviewData, reviewMode } = this.props;
+    const { handleChangeMode } = this.props;
     let reviewId = !reviewData ? undefined : reviewData.get('_id')
-
+    // console.log(reviewMode);
     return (
         <div className="App">
             {/* <div> {roomId} </div> */}
             <h2>Using CKEditor 5 Framework in React</h2>
             <CKEditor
               editor={ ClassicEditor }
+              
               // onInit={ editor => {
               //   // Connect the upload adapter using code below 
               //   editor.plugins.get("FileRepository").createUploadAdapter = function(loader) {
@@ -45,6 +46,14 @@ class ReviewEditor extends Component {
                 // console.log( editor.getData() );
                 socket.emit('add', { roomId, data: editor.getData() } );
               }}
+              onBlur={ ( event, editor ) => {
+                // console.log( 'Blur.' );
+                // console.log( 'Blur.', editor.commands._commands.get('undo') );
+                if ( reviewData.get('isCommit') && reviewMode == 'complete' ) {
+                  editor.commands._commands.get('undo').clearStack();
+                  handleChangeMode('edit');
+                }
+              } }
               config={ {
                 language: 'ko',
                 plugins: [ Essentials, Paragraph, Bold, Italic, Heading, Alignment, UploadAdapter, Autoformat,

@@ -31,21 +31,38 @@ class ReviewContainer extends Component {
         await ReviewActions.postReview(data);
       }
       await ReviewActions.setRoomId(this.props.reviewData.get('_id'));
+      await ReviewActions.changeMode('edit');
       await this.socket.emit('join', this.props.roomId);
     }
   }
 
-  handlePost = () => {
-      this.socket.emit('commit', this.props.roomId);
-      // this.socket.emit('leave', this.props.roomId);
+  handlePost = async () => {
+    const { orderNumber } = this.props;
+    const { ReviewActions } = this.props;
+    
+    this.socket.emit('commit', this.props.roomId);
+    await ReviewActions.getReviewByOrder(orderNumber);
+    await ReviewActions.changeMode('complete');
+  }
+
+  handleChangeMode = async (mode) => {
+    const { ReviewActions } = this.props;
+
+    await ReviewActions.changeMode(mode);
   }
 
   render() {
-    const { handlePost, socket } = this;
-    const { roomId, reviewData } = this.props;
+    const { socket, handlePost, handleChangeMode } = this;
+    const { roomId, reviewData, reviewMode } = this.props;
     return(
       <div>
-        <ReviewEditor socket={socket} roomId={roomId} reviewData={reviewData}/>
+        <ReviewEditor 
+          socket={socket}
+          roomId={roomId}
+          reviewData={reviewData}
+          reviewMode={reviewMode}
+          handleChangeMode={handleChangeMode}
+        />
         <div onClick={handlePost}>버튼</div>
       </div>
     )
@@ -55,6 +72,7 @@ class ReviewContainer extends Component {
 export default connect(
   (state) => ({
     loggedInfo: state.user.get('loggedInfo'),
+    reviewMode: state.review.get('mode'),
     reviewData: state.review.get('data'),
     roomId: state.review.get('roomId'),
     orderById: state.order.get('orderById')
