@@ -42,6 +42,7 @@ class ReviewEditor extends Component {
               //   };
               // }}
               onChange={ ( event, editor ) => { 
+                // console.log( editor.getData() );
                 socket.emit('add', { roomId, data: editor.getData() } );
               }}
               config={ {
