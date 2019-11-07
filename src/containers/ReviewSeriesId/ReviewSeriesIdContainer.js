@@ -12,18 +12,31 @@ import * as modelActions from '../../store/modules/model';
 class ReviewSeriesIdContainer extends Component {
 
   async componentDidMount() {
-    const { id } = this.props;
-    const { ReviewActions, OrderActions, ModelActions } = this.props;
-    await ReviewActions.getReviewById(id);
+    const { ReviewActions } = this.props;
+    window.addEventListener('scroll', this.handleScroll);
+
+    const modelId = this.props.model;
+    const reviewId = this.props.review;
+    // reviewId query-string으로 받았을 경우
+    if(reviewId){
+      await ReviewActions.getReviewById(reviewId);
+      // review selected: True
+      await ReviewActions.changeSelected(true)
+    }
     // 같은 모델 리뷰들 불러오기
-    await console.log(this.props.reviewById.get('modelId'))
+    // getReviewById (selected)가 있을 경우 그 리뷰를 가장 위로 올리기 위해 reviewId 전달
+    await ReviewActions.getReviewSeries(`offset=${0}&model=${modelId}&review=${reviewId}`)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 
   render() {
-    const { id } = this.props;
+    const { reviewSeries } = this.props;
     return(
       <ReviewSeriesIdWrapper
-        left={<ReviewSeriesIdList/>}
+        left={<ReviewSeriesIdList reviewSeries={reviewSeries}/>}
         right={<ModelInfoFixedBar/>}
       />
     )
@@ -33,6 +46,7 @@ class ReviewSeriesIdContainer extends Component {
 export default connect(
   (state) => ({
     reviewById: state.review.get('reviewById'),
+    reviewSeries: state.review.get('reviewSeries'),
     orderById: state.order.get('orderById')
   }),
   (dispatch) => ({

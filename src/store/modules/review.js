@@ -6,6 +6,7 @@ import * as ReviewAPI from '../../lib/api/review';
 const CHANGE_MODE = 'review/CHANGE_MODE';
 const CHANGE_INPUT = 'review/CHANGE_INPUT';
 const CHANGE_RATING = 'review/CHANGE_RATING';
+const CHANGE_SELECTED = 'review/CHANGE_SELECTED';
 const SET_ROOM_ID = 'review/SET_ROOM_ID';
 const GET_REVIEW_BY_ID = 'review/GET_REVIEW_BY_ID'
 const GET_REVIEW_BY_ORDER = 'review/GET_REVIEW_BY_ORDER';
@@ -16,6 +17,7 @@ const PATCH_REVIEW = 'review/PATCH_REVIEW';
 export const changeMode = createAction(CHANGE_MODE);
 export const changeInput = createAction(CHANGE_INPUT);
 export const changeRating = createAction(CHANGE_RATING);
+export const changeSelected = createAction(CHANGE_SELECTED);
 export const setRoomId = createAction(SET_ROOM_ID);
 export const getReviewById = createAction(GET_REVIEW_BY_ID, ReviewAPI.getReviewById);
 export const getReviewByOrder = createAction(GET_REVIEW_BY_ORDER, ReviewAPI.getReviewByOrder);
@@ -25,6 +27,7 @@ export const patchReview = createAction(PATCH_REVIEW, ReviewAPI.patchReview);
 
 const initialState = Map({
   mode: 'read',
+  selected: false,
   data: Map({}),
   roomId: '',
   reviewById: Map(),
@@ -42,6 +45,9 @@ export default handleActions({
   },
   [CHANGE_RATING]: (state, action) => {
     return state.setIn(['data', 'rating'], action.payload);
+  },
+  [CHANGE_SELECTED]: (state, action) => {
+    return state.set('selected', action.payload)
   },
   [SET_ROOM_ID]: (state, action) => {
     return state.set('roomId', action.payload)

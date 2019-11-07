@@ -49,7 +49,7 @@ class App extends Component {
                 <Route path="/modelManage" component={ModelManage}/>
                 <Route path="/model/:number/:name" component={Model}/>
                 <Route exact path="/reviewSeries" component={ReviewSeries}/>
-                <Route path="/reviewSeries/:id" component={ReviewSeriesId}/>
+                <Route path="/reviewSeries/:model" component={ReviewSeriesId}/>
                 <Route path="/review/:id" component={Review}/>
             </div>
         );
