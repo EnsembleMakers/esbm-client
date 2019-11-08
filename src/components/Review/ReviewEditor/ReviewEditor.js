@@ -44,7 +44,7 @@ class ReviewEditor extends Component {
               // }}
               onChange={ ( event, editor ) => { 
                 // console.log( editor.getData() );
-                socket.emit('add', { roomId, data: editor.getData() } );
+                socket.emit('add', { roomId, name:'tempContent', data: editor.getData() } );
               }}
               onBlur={ ( event, editor ) => {
                 // console.log( 'Blur.' );
