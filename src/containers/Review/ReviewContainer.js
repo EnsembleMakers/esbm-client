@@ -4,6 +4,9 @@ import { bindActionCreators } from 'redux';
 import socketIOClient from "socket.io-client";
 
 import { ReviewEditor } from '../../components/Review/ReviewEditor';
+import { ReviewWrapper } from '../../components/Review/ReviewWrapper';
+import { ReviewInput } from '../../components/Review/ReviewInput';
+import { ReviewRating } from '../../components/Review/ReviewRating';
 import * as reviewActions from '../../store/modules/review';
 import * as orderActions from '../../store/modules/order';
 
@@ -25,6 +28,7 @@ class ReviewContainer extends Component {
           userId: nextProps.loggedInfo.get('_id'),
           modelId: modelId,
           rating: -1,
+          title: '',
           content: '',
           isCommit: false
         };
@@ -36,7 +40,16 @@ class ReviewContainer extends Component {
     }
   }
 
-  handlePost = async () => {
+  handleChange = async(e) => {
+    const { ReviewActions } = this.props;
+    const { roomId } = this.props;
+    const { name, value } = e.target;
+
+    ReviewActions.changeInput({name, value})
+    this.socket.emit('add', { roomId, name: name, data: value } );
+  }
+
+  handlePost = async() => {
     const { orderNumber } = this.props;
     const { ReviewActions } = this.props;
     
@@ -47,15 +60,23 @@ class ReviewContainer extends Component {
 
   handleChangeMode = async (mode) => {
     const { ReviewActions } = this.props;
-
     await ReviewActions.changeMode(mode);
   }
 
   render() {
-    const { socket, handlePost, handleChangeMode } = this;
+    const { socket, handleChange, handlePost, handleChangeMode } = this;
     const { roomId, reviewData, reviewMode } = this.props;
     return(
-      <div>
+      <ReviewWrapper>
+        <ReviewRating
+          label="제품을 평가해주세요!"
+        />
+        <ReviewInput 
+          label="제품을 소개할 문장을 7글자로 작성하세요!" 
+          name='title'
+          value={reviewData && reviewData.get('title') || ''}
+          handleChange={handleChange}
+        />
         <ReviewEditor 
           socket={socket}
           roomId={roomId}
@@ -64,7 +85,7 @@ class ReviewContainer extends Component {
           handleChangeMode={handleChangeMode}
         />
         <div onClick={handlePost}>버튼</div>
-      </div>
+      </ReviewWrapper>
     )
   }
 }

@@ -1,12 +1,29 @@
 .review-series-item-wrapper {
   position: relatvie;
-  // border: 1px solid black;
 }
 
-.review-series-item-img {
-  display: block;
+.review-series-thumbnail-wrapper {
+  // display: block;
+  // width: 100%;
+  // height: 60%;
+  // border: 1px solid black;
+  // overflow: hidden;
   width: 100%;
-  // border: 1px solid red;
+}
+
+.review-series-thumbnail {
+  position: relative;
+  overflow: hidden;
+  padding-top: 70%;
+
+  img {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .review-series-item-contents {
@@ -16,7 +33,7 @@
   height: 100%;
 }
 
-.review-series-item-model {
+.review-series-item-auth {
   display: inline-block;
   vertical-align: middle;
   padding-top: 8px;
@@ -29,7 +46,7 @@
   display: inline-block;
   vertical-align: middle;
   padding-top: 3px;
-  font-size: 18px;
+  font-size: 21px;
   font-weight: 600;
   color: #484848;
 

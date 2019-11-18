@@ -1,0 +1,42 @@
+.model-info-fixed-bar-wrapper {
+  position: sticky;
+  top: 95px;
+  padding: 15px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px 0px
+}
+
+.model-info-fixed-bar-name {
+  font-size: 22px;
+  text-align: center;
+  font-weight: 600;
+  color: #484848;
+}
+
+.model-info-fixed-bar-img {
+  margin-top: 12px;
+}
+
+.model-info-fixed-bar-label {
+  margin-top: 12px;
+  color: #484848; 
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.model-info-fixed-bar-value {
+  margin-top: 8px;
+  color: #484848; 
+  font-size: 16px; 
+  font-weight: 400;
+}
+
+.model-info-fixed-bar-button {
+  height: 40px;
+  border-radius: 5px;
+  background-color: #549dd9; 
+  color: white; 
+  line-height: 40px; 
+  margin-top: 20px;
+  font-weight: 600;
+  text-align: center;
+}

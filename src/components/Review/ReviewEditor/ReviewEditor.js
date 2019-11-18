@@ -27,28 +27,16 @@ class ReviewEditor extends Component {
     const { socket, roomId, reviewData, reviewMode } = this.props;
     const { handleChangeMode } = this.props;
     let reviewId = !reviewData ? undefined : reviewData.get('_id')
-    // console.log(reviewMode);
     return (
-        <div className="App">
-            {/* <div> {roomId} </div> */}
-            <h2>Using CKEditor 5 Framework in React</h2>
+        <div>
+            <div className="review-input-label">제품 리뷰를 작성하세요!</div>
             <CKEditor
               editor={ ClassicEditor }
-              
-              // onInit={ editor => {
-              //   // Connect the upload adapter using code below 
-              //   editor.plugins.get("FileRepository").createUploadAdapter = function(loader) {
-              //     console.log('uploadAdapter')
-              //     return new UploadAdapter(loader);
-              //   };
-              // }}
               onChange={ ( event, editor ) => { 
                 // console.log( editor.getData() );
                 socket.emit('add', { roomId, name:'tempContent', data: editor.getData() } );
               }}
               onBlur={ ( event, editor ) => {
-                // console.log( 'Blur.' );
-                // console.log( 'Blur.', editor.commands._commands.get('undo') );
                 if ( reviewData.get('isCommit') && reviewMode == 'complete' ) {
                   editor.commands._commands.get('undo').clearStack();
                   handleChangeMode('edit');

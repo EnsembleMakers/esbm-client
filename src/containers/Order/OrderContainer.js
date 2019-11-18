@@ -25,11 +25,6 @@ class OrderContainer extends Component {
     ReviewActions.changeMode(mode);
   }
 
-  handleChangeReviewInput = (value) => {
-    const { ReviewActions } = this.props;
-    ReviewActions.changeInput(value);
-  }
-
   handleChangeReviewRating = (rating) => {
     const { ReviewActions } = this.props;
     ReviewActions.changeRating(rating);
@@ -80,7 +75,7 @@ class OrderContainer extends Component {
     const { orderById, review } = this.props;
     const state = orderById.get('state');
     const mode = review.get('mode');
-    const { handleChangeMode, handleChangeReviewInput, handleChangeReviewRating, handlePostReview, handlePatchReview, handlePatchProcessingNext, handlePatchProcessingPre } = this;
+    const { handleChangeMode, handleChangeReviewRating, handlePostReview, handlePatchReview, handlePatchProcessingNext, handlePatchProcessingPre } = this;
 
     return(
       <OrderWrapper>
@@ -114,7 +109,6 @@ class OrderContainer extends Component {
             mode={mode}
             reviewRating={review.getIn(['data', 'rating'])}
             reviewContent={review.getIn(['data', 'content'])}
-            onChangeReviewInput={handleChangeReviewInput}
             onChangeReviewRating={handleChangeReviewRating}
             onPostReview={handlePostReview}
             onPatchReview={handlePatchReview}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { Home, Login, CustomerInfo, CustomerInfoSuccess, OrderManage, ModelManage, Order, Model, ReviewSeries, ReviewSeriesId, Review } from './pages';
+import { Home, Login, CustomerInfo, CustomerInfoSuccess, OrderManage, ModelManage, Order, Model, ReviewSeries, ReviewSeriesId, ReviewOrder, Review } from './pages';
 import { HeaderContainer } from './containers/Base';
 import { UserMenuContainer } from './containers/Base';
 
@@ -50,6 +50,7 @@ class App extends Component {
                 <Route path="/model/:number/:name" component={Model}/>
                 <Route exact path="/reviewSeries" component={ReviewSeries}/>
                 <Route path="/reviewSeries/:model" component={ReviewSeriesId}/>
+                <Route path="/reviewOrder/:id" component={ReviewOrder}/>
                 <Route path="/review/:id" component={Review}/>
             </div>
         );
