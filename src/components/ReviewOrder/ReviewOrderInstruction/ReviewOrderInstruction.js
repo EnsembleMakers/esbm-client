@@ -6,7 +6,7 @@ class ReviewOrderInstruction extends Component {
     const { title } = this.props;
     return(
       <div className="review-order-instruction-wrapper">
-        <div className="review-order-header">제품 리뷰</div>
+        <div className="review-order-header">제품 스토리</div>
         <div className="review-order-cover-img-wrapper">
           <div className="review-order-cover-img">
             <img src="https://image.musinsa.com/mfile_s01/2018/05/11/61dab6ccd19490c00c92eed21f732a04185756.jpg"/>

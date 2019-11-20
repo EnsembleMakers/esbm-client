@@ -56,7 +56,7 @@ class LoginContainer extends Component {
         try {
             await AuthActions.localLogin({email, password});
             const loggedInfo = this.props.result.toJS();
-            UserActions.setLoggedInfo(loggedInfo);
+            UserActions.setLoggedInfo({ logged: true, loggedInfo: loggedInfo });
             history.push('/');
             await storage.set('loggedInfo', loggedInfo);
 

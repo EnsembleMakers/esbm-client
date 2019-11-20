@@ -85,11 +85,11 @@ class LinkButton extends Component {
     const { logged, userNumber } = this.props;
     return(
       <LinkButtonWrapper>
-        <BorderedButton href={logged?"/customerInfo/"+userNumber:"/login/signin"} color="#f69e53">주문받기
+        <BorderedButton href={"/customerInfo/"+userNumber} color="#f69e53">주문받기
         </BorderedButton>
-        <BorderedButton href={logged?"/modelManage":"/login/signin"} color="#fa6e57">모델관리
+        <BorderedButton href="/modelManage" color="#fa6e57">모델관리
         </BorderedButton>
-        <BorderedButton href={logged?"/orderManage":"/login/signin"} color="#4695D6">주문관리
+        <BorderedButton href="/orderManage" color="#4695D6">주문관리
         </BorderedButton>
       </LinkButtonWrapper>
     )

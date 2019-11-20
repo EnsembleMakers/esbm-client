@@ -139,7 +139,7 @@ class RegisterContainer extends Component {
 
             const loggedInfo = this.props.result.toJS();
             // console.log(loggedInfo);
-            UserActions.setLoggedInfo(loggedInfo);
+            UserActions.setLoggedInfo({ logged: true, loggedInfo: loggedInfo });
             UserActions.setValidated(true);
             // TODO: 로그인 정보 저장 (로컬스토리지/스토어)
             history.push('/'); // 회원가입 성공시 홈페이지로 이동

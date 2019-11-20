@@ -29,7 +29,7 @@ class ReviewEditor extends Component {
     let reviewId = !reviewData ? undefined : reviewData.get('_id')
     return (
         <div>
-            <div className="review-input-label">제품 리뷰를 작성하세요!</div>
+            <div className="review-input-label">제품 스토리를 작성하세요!</div>
             <CKEditor
               editor={ ClassicEditor }
               onChange={ ( event, editor ) => { 

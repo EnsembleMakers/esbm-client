@@ -14,11 +14,16 @@ import { formatDate } from '../../lib/dateFunction';
 class OrderManageContainer extends Component {
 
   // 로그인 정보 받은 후(props를 받은 후) 실행
-  componentWillReceiveProps(nextProps) {
-    if(this.props.loggedInfo !== nextProps.loggedInfo){
-      const { OrderActions } = this.props;
-      OrderActions.getOrdersByMakerId(nextProps.loggedInfo.get('_id'))
-    }
+  // componentWillReceiveProps(nextProps) {
+  //   if(this.props.loggedInfo !== nextProps.loggedInfo){
+  //     const { OrderActions } = this.props;
+  //     OrderActions.getOrdersByMakerId(nextProps.loggedInfo.get('_id'))
+  //   }
+  // }
+
+  componentDidMount() {
+    const { OrderActions } = this.props;
+    OrderActions.getOrdersByMakerId(this.props.loggedInfo.get('_id'))
   }
 
   handleChangeOrderSearchInput = (e) => {
