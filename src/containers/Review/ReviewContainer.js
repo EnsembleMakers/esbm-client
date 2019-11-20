@@ -44,9 +44,16 @@ class ReviewContainer extends Component {
     const { ReviewActions } = this.props;
     const { roomId } = this.props;
     const { name, value } = e.target;
-
+  
     ReviewActions.changeInput({name, value})
     this.socket.emit('add', { roomId, name: name, data: value } );
+  }
+
+  handleChangeReviewRating = (rating) => {
+    const { ReviewActions } = this.props;
+    const { roomId } = this.props;
+    ReviewActions.changeRating(rating);
+    this.socket.emit('add', { roomId, name: 'rating', data: rating } );
   }
 
   handlePost = async() => {
@@ -64,12 +71,14 @@ class ReviewContainer extends Component {
   }
 
   render() {
-    const { socket, handleChange, handlePost, handleChangeMode } = this;
+    const { socket, handleChange, handleChangeReviewRating, handlePost, handleChangeMode } = this;
     const { roomId, reviewData, reviewMode } = this.props;
     return(
       <ReviewWrapper>
         <ReviewRating
           label="제품을 평가해주세요!"
+          rating={reviewData.get('rating')}
+          handleChangeReviewRating={handleChangeReviewRating}
         />
         <ReviewInput 
           label="제품을 소개할 문장을 7글자로 작성하세요!" 

@@ -16,7 +16,9 @@ class ReviewSeriesList extends Component {
 
     return(
       <div className="review-series-list-wrapper">
-        {reviewSeriesList}
+        <div className="review-series-list-header">원하는 제품 찾아보기</div>
+        <div style={{'fontSize': '25px', 'color': '#484848', 'fontWeight': 700, 'paddingBottom': '15px'}}>성수동</div>
+        <div className="review-series-list">{reviewSeriesList}</div>
       </div>
     )
   }

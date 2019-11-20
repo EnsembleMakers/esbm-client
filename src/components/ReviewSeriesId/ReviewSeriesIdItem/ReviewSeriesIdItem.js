@@ -78,7 +78,7 @@ const Stat = styled.div`
 
 const DetailContents = styled.div`
   height: 420px;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #f5f5f5;
   color: #6A6A6A;
   padding: 15px;

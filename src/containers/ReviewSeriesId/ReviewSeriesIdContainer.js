@@ -38,6 +38,8 @@ class ReviewSeriesIdContainer extends Component {
     await ReviewActions.getReviewById(id)
   }
 
+  
+
   render() {
     const { reviewById, reviewSeries } = this.props;
     const { handleGetById } = this;
@@ -48,7 +50,7 @@ class ReviewSeriesIdContainer extends Component {
                 reviewSeries={reviewSeries}
                 handleGetById={handleGetById}
               />}
-        right={<ModelInfoFixedBar/>}
+        right={<ModelInfoFixedBar buttonOn={false}/>}
       />
     )
   }
