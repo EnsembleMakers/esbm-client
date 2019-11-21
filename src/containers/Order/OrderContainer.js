@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { OrderWrapper } from '../../components/Order/OrderWrapper';
 import { ProcessingControll } from '../../components/Order/ProcessingControll';
+import { ModelInfo } from '../../components/Order/ModelInfo';
 import { MakerInfo } from '../../components/Order/MakerInfo';
+import { LinkReviewInfo } from '../../components/Order/LinkReviewInfo';
 import { ReviewPost } from '../../components/Order/ReviewPost';
 import { ReviewRead } from '../../components/Order/ReviewRead';
 import * as orderActions from '../../store/modules/order';
@@ -78,8 +80,11 @@ class OrderContainer extends Component {
     const { handleChangeMode, handleChangeReviewRating, handlePostReview, handlePatchReview, handlePatchProcessingNext, handlePatchProcessingPre } = this;
 
     return(
-      <OrderWrapper>
-        <ProcessingControll
+      <OrderWrapper
+        date={formatDate(orderById.get('createdAt'))}
+      >
+        {/* 임시 보류 */}
+        {/* <ProcessingControll
           id={orderById.get('_id')}
           orderNumber={orderById.get('orderNumber')}
           name={orderById.getIn(['customerInfo', 'name'])}
@@ -114,7 +119,11 @@ class OrderContainer extends Component {
             onPatchReview={handlePatchReview}
             onChangeMode={handleChangeMode}
           />
-        }
+        } */}
+        <ModelInfo/>
+        <LinkReviewInfo/>
+        <div>내 리뷰 (아직작성되지 않았습니다.)</div>
+        <MakerInfo/>
       </OrderWrapper>
     )
   }
