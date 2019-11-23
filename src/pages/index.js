@@ -8,4 +8,5 @@ export { default as Order } from './Order';
 export { default as Model } from './Model';
 export { default as ReviewSeries } from './ReviewSeries';
 export { default as ReviewSeriesId } from './ReviewSeriesId';
+export { default as ReviewOrder } from './ReviewOrder';
 export { default as Review } from './Review';

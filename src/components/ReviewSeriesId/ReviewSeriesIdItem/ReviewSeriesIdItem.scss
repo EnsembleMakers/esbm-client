@@ -1,4 +1,14 @@
-.review-series-id-item-wrapper {
-  border: 1px solid black;
-  margin-top: 10px;
+.image{
+  text-align: center;
+  margin: 1em auto;
+  &.image-style-align-right {
+    float: right;
+    margin-left: var(--ck-image-style-spacing);
+  }
+
+  &.image-style-align-left {
+    float: left;
+    margin-left: var(--ck-image-style-spacing);
+  }
+
 }

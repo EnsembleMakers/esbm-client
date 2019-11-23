@@ -1,0 +1,23 @@
+.review-order-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 60px;
+  margin-right: 40px;
+  margin-left: 40px;
+  padding-bottom: 100px;
+}
+
+.review-order-instruction {
+  width: 100%;
+}
+
+.review-order-contents {
+  width: 70%;
+  padding: 20px;
+}
+
+.review-order-fixed-bar {
+  width: 30%;
+  padding: 20px;
+}

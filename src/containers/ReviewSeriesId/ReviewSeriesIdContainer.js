@@ -17,27 +17,40 @@ class ReviewSeriesIdContainer extends Component {
 
     const modelId = this.props.model;
     const reviewId = this.props.review;
+    
     // reviewId query-string으로 받았을 경우
-    if(reviewId){
-      await ReviewActions.getReviewById(reviewId);
-      // review selected: True
-      await ReviewActions.changeSelected(true)
-    }
     // 같은 모델 리뷰들 불러오기
     // getReviewById (selected)가 있을 경우 그 리뷰를 가장 위로 올리기 위해 reviewId 전달
-    await ReviewActions.getReviewSeries(`offset=${0}&model=${modelId}&review=${reviewId}`)
+    if(modelId && reviewId) {
+      await ReviewActions.getReviewById(reviewId);
+      await ReviewActions.getReviewSeries(`offset=${0}&model=${modelId}&review=${reviewId}`)
+    }else {
+      await ReviewActions.getReviewSeries(`offset=${0}&model=${modelId}`)
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
   }
 
+  handleGetById = async(id) => {
+    const { ReviewActions } = this.props;
+    await ReviewActions.getReviewById(id)
+  }
+
+  
+
   render() {
-    const { reviewSeries } = this.props;
+    const { reviewById, reviewSeries } = this.props;
+    const { handleGetById } = this;
     return(
       <ReviewSeriesIdWrapper
-        left={<ReviewSeriesIdList reviewSeries={reviewSeries}/>}
-        right={<ModelInfoFixedBar/>}
+        left={<ReviewSeriesIdList 
+                reviewById={reviewById}
+                reviewSeries={reviewSeries}
+                handleGetById={handleGetById}
+              />}
+        right={<ModelInfoFixedBar buttonOn={false}/>}
       />
     )
   }

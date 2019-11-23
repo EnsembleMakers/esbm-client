@@ -13,11 +13,16 @@ import * as orderTemplateActions from '../../store/modules/orderTemplate';
 class ModelManageContainer extends Component {
 
   // 로그인 정보 받은 후(props를 받은 후) 실행
-  componentWillReceiveProps(nextProps) {
-    if(this.props.loggedInfo !== nextProps.loggedInfo){
-      const { ModelActions } = this.props;
-      ModelActions.getModelsByMakerId(nextProps.loggedInfo.get('_id'))
-    }
+  // componentWillReceiveProps(nextProps) {
+  //   if(this.props.loggedInfo !== nextProps.loggedInfo){
+  //     const { ModelActions } = this.props;
+  //     ModelActions.getModelsByMakerId(nextProps.loggedInfo.get('_id'))
+  //   }
+  // }
+
+  componentDidMount() {
+    const { ModelActions } = this.props;
+    ModelActions.getModelsByMakerId(this.props.loggedInfo.get('_id'))
   }
 
   handleChangeModelSearchInput = (e) => {
