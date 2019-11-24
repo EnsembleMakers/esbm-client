@@ -7,6 +7,7 @@ import { ReviewEditor } from '../../components/Review/ReviewEditor';
 import { ReviewWrapper } from '../../components/Review/ReviewWrapper';
 import { ReviewInput } from '../../components/Review/ReviewInput';
 import { ReviewRating } from '../../components/Review/ReviewRating';
+
 import * as reviewActions from '../../store/modules/review';
 import * as orderActions from '../../store/modules/order';
 
@@ -75,11 +76,11 @@ class ReviewContainer extends Component {
     const { roomId, reviewData, reviewMode } = this.props;
     return(
       <ReviewWrapper>
-        {/* <ReviewRating
+        <ReviewRating
           label="제품을 평가해주세요!"
           rating={reviewData.get('rating')}
           handleChangeReviewRating={handleChangeReviewRating}
-        /> */}
+        />
         <ReviewInput 
           label="제품을 소개할 문장을 7글자로 작성하세요!" 
           name='title'

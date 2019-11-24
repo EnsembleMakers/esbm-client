@@ -1,0 +1,35 @@
+.coupon-modal-wrapper {
+  overflow: auto;
+  @media screen and (min-width: 320px) {
+    margin: 8px;
+    margin-top: 45px;
+  }
+  // tablet
+  @media screen and (min-width: 768px) {
+    margin: 14px;
+    margin-top: 45px;
+  }
+  // desktop
+  @media screen and (min-width: 2024px) {
+    margin: 40px;
+    margin-top: 50px;
+  }
+  // wide
+  @media screen and (min-width: 2560px) {
+    margin: 80px;
+    margin-top: 60px;
+  }
+}
+
+.modal-cancel-button {
+  position: absolute;
+  margin-top: 0.6rem;
+  right: 1rem;
+  top: 0.2rem;
+  color: black;
+  cursor: pointer;
+  font-size: 1.5rem;
+  &:hover {
+    color: red;
+  }
+}

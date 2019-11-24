@@ -5,7 +5,9 @@ import { ReviewOrderWrapper } from '../../components/ReviewOrder/ReviewOrderWrap
 import { ReviewOrderInstruction } from '../../components/ReviewOrder/ReviewOrderInstruction';
 import { ReviewViewer } from '../../components/ReviewOrder/ReviewViewer';
 import { ModelInfoFixedBar } from '../../components/ReviewSeriesId/ModelInfoFixedBar'
+
 import * as reviewActions from '../../store/modules/review';
+import * as modalActions from '../../store/modules/modal';
 
 class ReviewOrderContainer extends Component {
 
@@ -15,9 +17,18 @@ class ReviewOrderContainer extends Component {
     ReviewActions.getReviewById(id)
   }
 
+  handleOpenCouponModal = () => {
+    const { ModalActions } = this.props;
+    console.log('aaa')
+    ModalActions.show({
+      visible: "coupon"
+    })
+  }
+
   render() {
     const { id } = this.props;
     const { reviewById } = this.props;
+    const { handleOpenCouponModal} = this;
     return(
       <ReviewOrderWrapper
         instruction={<ReviewOrderInstruction 
@@ -28,6 +39,7 @@ class ReviewOrderContainer extends Component {
             />}
         fixedBar={<ModelInfoFixedBar 
             buttonOn={true}
+            handleOpenCouponModal={handleOpenCouponModal}
             />}
       />
     )
@@ -40,5 +52,6 @@ export default connect(
   }),
   (dispatch) => ({
     ReviewActions: bindActionCreators(reviewActions, dispatch),
+    ModalActions: bindActionCreators(modalActions, dispatch)
   })
 )(ReviewOrderContainer)

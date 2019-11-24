@@ -4,6 +4,7 @@ import './ModelInfoFixedBar.scss';
 class ModelInfoFixedBar extends Component {
   render() {
     const { buttonOn } = this.props;
+    const { handleOpenCouponModal } = this.props;
     return(
       <div className="model-info-fixed-bar-wrapper">
         <div className="model-info-fixed-bar-name">Z304 모델</div>
@@ -18,7 +19,7 @@ class ModelInfoFixedBar extends Component {
         <div className="model-info-fixed-bar-value">맞춤</div>
         <div className="model-info-fixed-bar-label">가격</div>
         <div className="model-info-fixed-bar-value"><b>210,000</b> 원</div>
-        {buttonOn && <div className="model-info-fixed-bar-button">구매티켓 받기</div>}
+        {buttonOn && <div className="model-info-fixed-bar-button" onClick={handleOpenCouponModal}>구매티켓 받기</div>}
       </div>
 
     )

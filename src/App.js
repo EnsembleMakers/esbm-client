@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import PrivateRoute from './PrivateRoute'
-import { Home, Login, CustomerInfo, CustomerInfoSuccess, OrderManage, ModelManage, Order, Model, ReviewSeries, ReviewSeriesId, ReviewOrder, Review } from './pages';
+import { Home, Login, User, CustomerInfo, CustomerInfoSuccess, OrderManage, ModelManage, Order, Model, ReviewSeries, ReviewSeriesId, ReviewOrder, Review } from './pages';
 import { HeaderContainer } from './containers/Base';
 import { UserMenuContainer } from './containers/Base';
 import * as userActions from './store/modules/user';
@@ -42,6 +42,7 @@ class App extends Component {
                 <HeaderContainer/>
                 <UserMenuContainer/>
                 <Route exact path="/" component={Home}/>
+                <Route path="/user" component={User}/>
                 <Route path="/order/:id" component={Order}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/customerInfo/:id" component={CustomerInfo}/>
