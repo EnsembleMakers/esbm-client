@@ -13,17 +13,18 @@ import storage from './lib/storage';
 class App extends Component {
 
     // 로그인 세션 종료
-    initializeUserInfo = () => {
+    initializeUserInfo = async() => {
         const loggedInfo = storage.get('loggedInfo');
         const { UserActions } = this.props;
         if(!loggedInfo) {
-            UserActions.setLoggedInfo({ logged: false, loggedInfo: null }); 
+            await UserActions.setLoggedInfo({ logged: false, loggedInfo: null }); 
             return;
         }
-        UserActions.setLoggedInfo({ logged: true, loggedInfo: loggedInfo });
+        await UserActions.setLoggedInfo({ logged: true, loggedInfo: loggedInfo });
         try{
-            UserActions.checkStatus();
+            await UserActions.checkStatus();
         }catch(e) {
+            console.log('aa')
             storage.remove('loggedInfo');
             window.location.href = '/login/signin?expired';
         }
