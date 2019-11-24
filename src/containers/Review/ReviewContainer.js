@@ -19,11 +19,11 @@ class ReviewContainer extends Component {
 
       this.socket = socketIOClient('http://localhost:5000');
       await ReviewActions.getReviewByOrder(orderNumber);
-      if ( !this.props.reviewData ) {
+      if(!this.props.reviewData) {
         await OrderActions.getOrderByNum(orderNumber)
         // 등록된 model이 있을 경우
-        let modelId = this.props.orderById.get('modelId') ? this.props.orderById.get('modelId') : null;
-        let data = {
+        let modelId = await this.props.orderById.get('modelId') ? this.props.orderById.get('modelId') : null;
+        let data = await {
           orderNumber: orderNumber, // Order Collection에서 documentId가 아닌 orderNumber참조 
           userId: nextProps.loggedInfo.get('_id'),
           modelId: modelId,
@@ -34,9 +34,9 @@ class ReviewContainer extends Component {
         };
         await ReviewActions.postReview(data);
       }
-      await ReviewActions.setRoomId(this.props.reviewData.get('_id'));
-      await ReviewActions.changeMode('edit');
-      await this.socket.emit('join', this.props.roomId);
+      await ReviewActions.setRoomId(this.props.reviewData._id);
+      ReviewActions.changeMode('edit');
+      this.socket.emit('join', this.props.roomId);
     }
   }
 
@@ -75,11 +75,11 @@ class ReviewContainer extends Component {
     const { roomId, reviewData, reviewMode } = this.props;
     return(
       <ReviewWrapper>
-        <ReviewRating
+        {/* <ReviewRating
           label="제품을 평가해주세요!"
           rating={reviewData.get('rating')}
           handleChangeReviewRating={handleChangeReviewRating}
-        />
+        /> */}
         <ReviewInput 
           label="제품을 소개할 문장을 7글자로 작성하세요!" 
           name='title'
