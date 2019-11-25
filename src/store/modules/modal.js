@@ -5,6 +5,8 @@ import { Map, List } from 'immutable';
 const SHOW = 'modal/SHOW';
 const HIDE = 'modal/HIDE';
 const CHANGE_TEMPLATE_INPUT = 'modal/CHANGE_TEMPLATE_INPUT';
+const CHANGE_SPEC_INPUT = 'modal/CHANGE_SPEC_INPUT';
+const CHANGE_SPEC_BUTTON = 'modal/CHANGE_SPEC_BUTTON';
 const CHANGE_MAIN_INPUT = 'order/CHANGE_MAIN_INPUT'; // 모델명, 특이사항
 const CHANGE_ADD_INPUT = 'modal/CHANGE_ADD_INPUT';
 const CHANGE_ADD_MODE = 'modal/CHANGE_ADD_MODE';
@@ -26,6 +28,8 @@ const SET_ERROR = 'modle/SET_ERROR';
 export const show = createAction(SHOW);
 export const hide = createAction(HIDE);
 export const changeTemplateInput = createAction(CHANGE_TEMPLATE_INPUT);
+export const changeSpecInput = createAction(CHANGE_SPEC_INPUT);
+export const changeSpecButton = createAction(CHANGE_SPEC_BUTTON);
 export const changeMainInput = createAction(CHANGE_MAIN_INPUT);
 export const changeAddInput = createAction(CHANGE_ADD_INPUT);
 export const changeAddMode = createAction(CHANGE_ADD_MODE);
@@ -81,6 +85,14 @@ export default handleActions({
   [CHANGE_TEMPLATE_INPUT]: (state, action) => {
     const { name, value } = action.payload;
     return state.setIn(['modalContents', 'template', name, 'value'], value)
+  },
+  [CHANGE_SPEC_INPUT]: (state, action) => {
+    const { name, value } = action.payload;
+    return state.setIn(['modalContents', 'spec', name], value)
+  },
+  [CHANGE_SPEC_BUTTON]: (state, action) => {
+    const { name, value } = action.payload;
+    return state.setIn(['modalContents', 'spec', name], value)
   },
   [CHANGE_MAIN_INPUT]: (state, action) => {
     const { name, value } = action.payload

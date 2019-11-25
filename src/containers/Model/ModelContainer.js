@@ -60,6 +60,8 @@ class ModelContainer extends Component {
     const makerId = this.props.loadedUserInfo.get('_id');
     const modelId = this.props.postForm.toJS().model._id;
     let { contents } = this.props.postForm.toJS().model;
+    // spec은 삭제하고 order post
+    delete contents.spec;
     const modelImage = this.props.postForm.toJS().model.modelImage;
 
     try {

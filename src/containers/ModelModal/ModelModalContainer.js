@@ -19,6 +19,22 @@ class ModelModalContainer extends Component {
     });
   }
 
+  handleChangeSpecInput = (e) => {
+    const { ModalActions } = this.props;
+    ModalActions.changeSpecInput({
+      name: e.target.name,
+      value: e.target.value,
+    });
+  }
+
+  handleChangeSpecButton = (name, value) => {
+    const { ModalActions } = this.props;
+    ModalActions.changeSpecButton({
+      name: name,
+      value: value
+    })
+  }
+
   handleChangeMainInput = (e) => {
     const { ModalActions } = this.props;
     ModalActions.changeMainInput({
@@ -73,6 +89,8 @@ class ModelModalContainer extends Component {
   handlePost = async() => {
     const { loggedInfo, preModalContents, modalContents, modelImage } = this.props;
     const { ModalActions, ModelActions, OrderTemplateActions } = this.props;
+
+    const spec = [{"label": "테스트입니다", "value": "테스트"}]
 
     const formData = new FormData();
     formData.append('modelImage', modelImage)
@@ -202,7 +220,7 @@ class ModelModalContainer extends Component {
   render() {
     const { orderContents, modalContents, visible, mode, addMode, addContent, modelImageURL, error } = this.props;
 
-    const { handleChangeTemplateInput, handleChangeMainInput, handleChangeModelImg, handleChangeAddInput, handleDeleteModelImg, handleChangeAddMode, handleAddList, handleDeleteList, handlePost, handlePatch, handleHide } = this;
+    const { handleChangeTemplateInput, handleChangeSpecInput, handleChangeSpecButton, handleChangeMainInput, handleChangeModelImg, handleChangeAddInput, handleDeleteModelImg, handleChangeAddMode, handleAddList, handleDeleteList, handlePost, handlePatch, handleHide } = this;
 
     return(
       visible==="model" &&
@@ -217,6 +235,8 @@ class ModelModalContainer extends Component {
             error={error}
             modelImageURL={modelImageURL}
             handleChangeTemplateInput={handleChangeTemplateInput}
+            handleChangeSpecInput={handleChangeSpecInput}
+            handleChangeSpecButton={handleChangeSpecButton}
             handleChangeMainInput={handleChangeMainInput}
             handleChangeModelImg={handleChangeModelImg}
             handleDeleteModelImg={handleDeleteModelImg}
