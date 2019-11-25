@@ -74,17 +74,21 @@ class ReviewContainer extends Component {
   render() {
     const { socket, handleChange, handleChangeReviewRating, handlePost, handleChangeMode } = this;
     const { roomId, reviewData, reviewMode } = this.props;
+
+    let ratingData = !reviewData ? '' : reviewData.get('rating');
+    let titleData = !reviewData ? '' : reviewData.get('title');
+
     return(
       <ReviewWrapper>
         <ReviewRating
           label="제품을 평가해주세요!"
-          rating={reviewData.get('rating')}
+          rating={ratingData || ''}
           handleChangeReviewRating={handleChangeReviewRating}
         />
         <ReviewInput 
           label="제품을 소개할 문장을 7글자로 작성하세요!" 
           name='title'
-          value={reviewData && reviewData.get('title') || ''}
+          value={titleData || ''}
           handleChange={handleChange}
         />
         <ReviewEditor 

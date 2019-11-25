@@ -12,7 +12,7 @@ import * as modelActions from '../../store/modules/model';
 class ReviewSeriesIdContainer extends Component {
 
   async componentDidMount() {
-    const { ReviewActions } = this.props;
+    const { ReviewActions, ModelActions } = this.props;
     window.addEventListener('scroll', this.handleScroll);
 
     const modelId = this.props.model;
@@ -24,6 +24,7 @@ class ReviewSeriesIdContainer extends Component {
     if(modelId && reviewId) {
       await ReviewActions.getReviewById(reviewId);
       await ReviewActions.getReviewSeries(`offset=${0}&model=${modelId}&review=${reviewId}`)
+      await ModelActions.getModelById(modelId)
     }else {
       await ReviewActions.getReviewSeries(`offset=${0}&model=${modelId}`)
     }
@@ -38,10 +39,8 @@ class ReviewSeriesIdContainer extends Component {
     await ReviewActions.getReviewById(id)
   }
 
-  
-
   render() {
-    const { reviewById, reviewSeries } = this.props;
+    const { reviewById, modelById, reviewSeries } = this.props;
     const { handleGetById } = this;
     return(
       <ReviewSeriesIdWrapper
@@ -50,7 +49,10 @@ class ReviewSeriesIdContainer extends Component {
                 reviewSeries={reviewSeries}
                 handleGetById={handleGetById}
               />}
-        right={<ModelInfoFixedBar buttonOn={false}/>}
+        right={<ModelInfoFixedBar 
+                buttonOn={false}
+                modelById={modelById}
+              />}
       />
     )
   }
@@ -60,7 +62,8 @@ export default connect(
   (state) => ({
     reviewById: state.review.get('reviewById'),
     reviewSeries: state.review.get('reviewSeries'),
-    orderById: state.order.get('orderById')
+    orderById: state.order.get('orderById'),
+    modelById: state.model.get('modelById')
   }),
   (dispatch) => ({
     ReviewActions: bindActionCreators(reviewActions, dispatch),

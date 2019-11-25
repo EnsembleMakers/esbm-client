@@ -11,7 +11,7 @@ class ReviewSeriesIdList extends Component {
       (review, i) => 
         <ReviewSeriesIdItem 
           key={i}
-          review={review}
+          reviewData={review}
           reviewById={reviewById}
           handleGetById={handleGetById}
         />
