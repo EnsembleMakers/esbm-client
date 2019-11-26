@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import PrivateRoute from './PrivateRoute'
-import { Home, Login, CustomerInfo, CustomerInfoSuccess, OrderManage, ModelManage, Order, Model, ReviewSeries, ReviewSeriesId, ReviewOrder, Review } from './pages';
+import { 
+    Home, Login, CustomerInfo, CustomerInfoSuccess,
+    OrderManage, ModelManage, Order, Model,
+    ReviewSeries, ReviewSeriesId, ReviewOrder, Review,
+    CouponList
+} from './pages';
 import { HeaderContainer } from './containers/Base';
 import { UserMenuContainer } from './containers/Base';
 import * as userActions from './store/modules/user';
@@ -39,7 +44,6 @@ class App extends Component {
         return (
             <div>
                 <HeaderContainer/>
-                <UserMenuContainer/>
                 <Route exact path="/" component={Home}/>
                 <Route path="/order/:id" component={Order}/>
                 <Route path="/login" component={Login}/>
@@ -52,6 +56,7 @@ class App extends Component {
                 <Route path="/reviewSeries/:model" component={ReviewSeriesId}/>
                 <Route path="/reviewOrder/:id" component={ReviewOrder}/>
                 <Route path="/review/:id" component={Review}/>
+                <Route path="/couponList" component={CouponList}/>
             </div>
         );
     }
