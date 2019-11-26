@@ -73,6 +73,7 @@ export default handleActions({
                 .set('modalContents', Map(action.payload.modalContents))
                 .set('preModalContents', Map(action.payload.preModalContents))
                 .set('modelImage', action.payload.modelImage)
+                // modelImage가 등록되어 있으면 modelImageURL에 넣어줌
                 .set('preModelImage', action.payload.modelImage)
                 .set('modelImageURL', action.payload.modelImage)
   },

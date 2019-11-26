@@ -43,7 +43,7 @@ class ModelModalContainer extends Component {
     })
   }
 
-  handleChangeModelImg = async(e) => {
+  handleChangeModelImg = (e) => {
     const { ModalActions } = this.props;
     ModalActions.changeModelImg(e.target.files[0])
     // images URL를 만들기 위한 action

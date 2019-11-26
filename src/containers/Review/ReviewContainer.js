@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import socketIOClient from "socket.io-client";
 
-import { ReviewEditor } from '../../components/Review/ReviewEditor';
 import { ReviewWrapper } from '../../components/Review/ReviewWrapper';
+import { ReviewCoverImg } from '../../components/Review/ReviewCoverImg';
 import { ReviewInput } from '../../components/Review/ReviewInput';
 import { ReviewRating } from '../../components/Review/ReviewRating';
+import { ReviewEditor } from '../../components/Review/ReviewEditor';
 
 import * as reviewActions from '../../store/modules/review';
 import * as orderActions from '../../store/modules/order';
+import { read } from 'fs';
 
 class ReviewContainer extends Component {
 
@@ -57,6 +59,18 @@ class ReviewContainer extends Component {
     this.socket.emit('add', { roomId, name: 'rating', data: rating } );
   }
 
+  handleChangeCoverImg = (e) => {
+    const { ReviewActions } = this.props;
+    const { roomId } = this.props;
+    ReviewActions.changeCoverImg(e.target.files[0])
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0])
+    reader.onload = () => {
+      ReviewActions.changeCoverImgURL(reader.result);
+    }
+    this.socket.emit('add', { roomId, name: 'coverImg', data: e.target.files[0]})
+  }
+
   handlePost = async() => {
     const { orderNumber } = this.props;
     const { ReviewActions } = this.props;
@@ -72,7 +86,7 @@ class ReviewContainer extends Component {
   }
 
   render() {
-    const { socket, handleChange, handleChangeReviewRating, handlePost, handleChangeMode } = this;
+    const { socket, handleChange, handleChangeCoverImg, handleChangeReviewRating, handlePost, handleChangeMode } = this;
     const { roomId, reviewData, reviewMode } = this.props;
 
     let ratingData = !reviewData ? '' : reviewData.get('rating');
@@ -90,6 +104,10 @@ class ReviewContainer extends Component {
           name='title'
           value={titleData || ''}
           handleChange={handleChange}
+        />
+        <ReviewCoverImg 
+          coverImgURL={reviewData.get('coverImgURL')}
+          handleChangeCoverImg={handleChangeCoverImg}
         />
         <ReviewEditor 
           socket={socket}
