@@ -10,12 +10,13 @@ const CheckBoxButton = styled.div`
   height: 35px;
   display: flex;
   align-items: center;
-  font-size: 18px;
+  font-size: 14px;
   cursor: pointer;
 `
 
 class ModelInfoFixedBar extends Component {
   render() {
+    console.log(this.props.modelById)
     const { buttonOn, modelById } = this.props;
     const { handleOpenCouponModal } = this.props;
     return(
