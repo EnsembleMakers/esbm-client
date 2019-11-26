@@ -6,6 +6,7 @@ import * as ReviewAPI from '../../lib/api/review';
 const CHANGE_MODE = 'review/CHANGE_MODE';
 const CHANGE_INPUT = 'review/CHANGE_INPUT';
 const CHANGE_COVER_IMG = 'review/CHANGE_COVER_IMG';
+const CHANGE_COVER_IMG_TYPE = 'review/CHANGE_COVER_IMG_TYPE';
 const CHANGE_COVER_IMG_URL = 'review/CHANGE_COVER_IMG_URL';
 const CHANGE_RATING = 'review/CHANGE_RATING';
 const SET_ROOM_ID = 'review/SET_ROOM_ID';
@@ -18,6 +19,7 @@ const PATCH_REVIEW = 'review/PATCH_REVIEW';
 export const changeMode = createAction(CHANGE_MODE);
 export const changeInput = createAction(CHANGE_INPUT);
 export const changeCoverImg = createAction(CHANGE_COVER_IMG);
+export const changeCoverImgType = createAction(CHANGE_COVER_IMG_TYPE);
 export const changeCoverImgURL = createAction(CHANGE_COVER_IMG_URL);
 export const changeRating = createAction(CHANGE_RATING);
 export const setRoomId = createAction(SET_ROOM_ID);
@@ -46,6 +48,9 @@ export default handleActions({
   },
   [CHANGE_COVER_IMG]: (state, action) => {
     return state.setIn(['data', 'coverImg'], action.payload)
+  },
+  [CHANGE_COVER_IMG_TYPE]: (state, action) => {
+    return state.setIn(['data', 'coverImgType'], action.payload)
   },
   [CHANGE_COVER_IMG_URL]: (state, action) => {
     return state.setIn(['data', 'coverImgURL'], action.payload)

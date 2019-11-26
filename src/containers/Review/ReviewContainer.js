@@ -39,6 +39,37 @@ class ReviewContainer extends Component {
       }
       await ReviewActions.setRoomId(this.props.reviewData.get('_id'));
       ReviewActions.changeMode('edit');
+      if (!this.props.reviewIsCommit) {
+        // console.log( 'isCommited false' );
+        try {
+          let coverImgData = this.props.reviewData.get('tempCoverImg');
+          let coverImgType = this.props.reviewData.get('coverImgType');
+          if (coverImgData) {
+            let binaryArray = new Uint8Array(coverImgData.data);
+            let binary = '';
+            var len = binaryArray.byteLength;
+            for (var i = 0; i < len; i++) {
+              binary += String.fromCharCode( binaryArray[ i ] );
+            }
+            // console.log( window.btoa( binary ) );
+            coverImgData = window.btoa( binary );
+            coverImgData = `data:${coverImgType};base64,${coverImgData}`;  
+            ReviewActions.changeCoverImgURL(coverImgData);
+          }
+        } catch {
+          
+        }
+      } else {
+        console.log( 'isCommited' );
+        try {
+          let coverImgData = this.props.reviewData.get('coverImg');
+          if (coverImgData) {
+            ReviewActions.changeCoverImgURL(coverImgData);
+          }
+        } catch {
+          
+        }
+      }
       this.socket.emit('join', this.props.roomId);
     }
   }
@@ -62,13 +93,15 @@ class ReviewContainer extends Component {
   handleChangeCoverImg = (e) => {
     const { ReviewActions } = this.props;
     const { roomId } = this.props;
-    ReviewActions.changeCoverImg(e.target.files[0])
+    ReviewActions.changeCoverImg(e.target.files[0]);
+    ReviewActions.changeCoverImgType(e.target.files[0].type);
     let reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0])
+    reader.readAsDataURL(e.target.files[0]);
     reader.onload = () => {
       ReviewActions.changeCoverImgURL(reader.result);
     }
-    this.socket.emit('add', { roomId, name: 'coverImg', data: e.target.files[0]})
+
+    this.socket.emit('add', { roomId, name: 'tempCoverImg', data: {type: e.target.files[0].type, base64: e.target.files[0]}})
   }
 
   handlePost = async() => {
@@ -127,6 +160,7 @@ export default connect(
     loggedInfo: state.user.get('loggedInfo'),
     reviewMode: state.review.get('mode'),
     reviewData: state.review.get('data'),
+    reviewIsCommit: state.review.get('data').get('isCommit'),
     roomId: state.review.get('roomId'),
     orderById: state.order.get('orderById')
   }),
