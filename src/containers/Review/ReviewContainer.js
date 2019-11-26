@@ -35,7 +35,7 @@ class ReviewContainer extends Component {
         };
         await ReviewActions.postReview(data);
       }
-      await ReviewActions.setRoomId(this.props.reviewData._id);
+      await ReviewActions.setRoomId(this.props.reviewData.get('_id'));
       ReviewActions.changeMode('edit');
       this.socket.emit('join', this.props.roomId);
     }
