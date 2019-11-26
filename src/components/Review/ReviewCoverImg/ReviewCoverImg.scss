@@ -1,0 +1,139 @@
+.review-cover-img-wrapper {
+  display: flex;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  @media screen and (min-width: 320px) {
+    flex-direction: column;
+    justify-content: center;
+    height: 250px;
+  }
+  // tablet
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    justify-content: left;
+    height: 100px;
+  }
+  // desktop
+  @media screen and (min-width: 1024px) {
+    flex-direction: row;
+    justify-content: left;
+    height: 100px;
+  }
+  // wide
+  @media screen and (min-width: 2560px) {
+    flex-direction: row;
+    justify-content: left;
+    height: 140px;
+  }
+}
+
+.review-cover-img {
+  border: 1px solid #ebebeb;
+  
+  // phone
+  @media screen and (min-width: 320px) {
+    width: 93.33px;
+    height: 80px;
+  }
+  // tablet
+  @media screen and (min-width: 768px) {
+    width: 133.33px;
+    height: 100px;
+    margin-right: 20px;
+  }
+  // desktop
+  @media screen and (min-width: 1024px) {
+    width: 133.33px;
+    height: 100px;
+    margin-right: 20px;
+  }
+  // wide
+  @media screen and (min-width: 2560px) {
+    width: 186.66px;
+    height: 140px;
+    margin-right: 20px;
+  }
+  cursor: pointer;
+}
+
+.review-cover-img-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  // phone
+  @media screen and (min-width: 320px) {
+    height: 120px;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+  // tablet
+  @media screen and (min-width: 768px) {
+    height: 100px;
+    width: 320px;
+    text-align: left;
+    align-items: start;
+  }
+  // desktop
+  @media screen and (min-width: 1024px) {
+    height: 100px;
+    width: 320px;
+    text-align: left;
+    align-items: start;
+  }
+  // wide
+  @media screen and (min-width: 2560px) {
+    height: 140px;
+    width: 500px;
+    text-align: left;
+    align-items: start;
+  }
+}
+
+.review-cover-img-button-box {
+  font-size: 20px;
+  label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: inherit;
+    width: 100px;
+    height: 35px;
+    border-radius: .25em;
+    border: 1px solid #ebebeb; 
+    background-color: #fdfdfd; 
+    color: #999; 
+    cursor: pointer;
+  }
+  input[type="file"] {
+    position: absolute; 
+    width: 1px; 
+    height: 1px; 
+    padding: 0; 
+    margin: -1px; 
+    overflow: hidden; 
+    clip:rect(0,0,0,0); 
+    border: 0;
+  }
+}
+
+.review-cover-img-delete-button-box {
+  font-size: 20px;
+  margin-left: 10px;
+  label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: inherit;
+    width: 100px;
+    height: 35px;
+    border-radius: .25em;
+    border: 1px solid #ebebeb; 
+    background-color: #fdfdfd; 
+    color: #999; 
+    cursor: pointer;
+  }
+}

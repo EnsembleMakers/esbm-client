@@ -5,6 +5,8 @@ import * as ReviewAPI from '../../lib/api/review';
 
 const CHANGE_MODE = 'review/CHANGE_MODE';
 const CHANGE_INPUT = 'review/CHANGE_INPUT';
+const CHANGE_COVER_IMG = 'review/CHANGE_COVER_IMG';
+const CHANGE_COVER_IMG_URL = 'review/CHANGE_COVER_IMG_URL';
 const CHANGE_RATING = 'review/CHANGE_RATING';
 const SET_ROOM_ID = 'review/SET_ROOM_ID';
 const GET_REVIEW_BY_ID = 'review/GET_REVIEW_BY_ID'
@@ -15,6 +17,8 @@ const PATCH_REVIEW = 'review/PATCH_REVIEW';
 
 export const changeMode = createAction(CHANGE_MODE);
 export const changeInput = createAction(CHANGE_INPUT);
+export const changeCoverImg = createAction(CHANGE_COVER_IMG);
+export const changeCoverImgURL = createAction(CHANGE_COVER_IMG_URL);
 export const changeRating = createAction(CHANGE_RATING);
 export const setRoomId = createAction(SET_ROOM_ID);
 export const getReviewById = createAction(GET_REVIEW_BY_ID, ReviewAPI.getReviewById);
@@ -27,7 +31,7 @@ const initialState = Map({
   mode: 'read',
   data: Map({}),
   roomId: '',
-  reviewById: Map(),
+  reviewById: Map({}),
   reviewSeries: List(),
   lastSeries: false,
 })
@@ -39,6 +43,12 @@ export default handleActions({
   [CHANGE_INPUT]: (state, action) => {
     const { name, value } = action.payload;
     return state.setIn(['data', name], value);
+  },
+  [CHANGE_COVER_IMG]: (state, action) => {
+    return state.setIn(['data', 'coverImg'], action.payload)
+  },
+  [CHANGE_COVER_IMG_URL]: (state, action) => {
+    return state.setIn(['data', 'coverImgURL'], action.payload)
   },
   [CHANGE_RATING]: (state, action) => {
     return state.setIn(['data', 'rating'], action.payload);

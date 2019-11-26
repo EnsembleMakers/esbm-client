@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import socketIOClient from "socket.io-client";
 
-import { ReviewEditor } from '../../components/Review/ReviewEditor';
 import { ReviewWrapper } from '../../components/Review/ReviewWrapper';
+import { ReviewCoverImg } from '../../components/Review/ReviewCoverImg';
 import { ReviewInput } from '../../components/Review/ReviewInput';
 import { ReviewRating } from '../../components/Review/ReviewRating';
+import { ReviewEditor } from '../../components/Review/ReviewEditor';
+
 import * as reviewActions from '../../store/modules/review';
 import * as orderActions from '../../store/modules/order';
+import { read } from 'fs';
 
 class ReviewContainer extends Component {
 
@@ -19,11 +22,11 @@ class ReviewContainer extends Component {
 
       this.socket = socketIOClient('http://localhost:5000');
       await ReviewActions.getReviewByOrder(orderNumber);
-      if ( !this.props.reviewData ) {
+      if(!this.props.reviewData) {
         await OrderActions.getOrderByNum(orderNumber)
         // 등록된 model이 있을 경우
-        let modelId = this.props.orderById.get('modelId') ? this.props.orderById.get('modelId') : null;
-        let data = {
+        let modelId = await this.props.orderById.get('modelId') ? this.props.orderById.get('modelId') : null;
+        let data = await {
           orderNumber: orderNumber, // Order Collection에서 documentId가 아닌 orderNumber참조 
           userId: nextProps.loggedInfo.get('_id'),
           modelId: modelId,
@@ -35,8 +38,8 @@ class ReviewContainer extends Component {
         await ReviewActions.postReview(data);
       }
       await ReviewActions.setRoomId(this.props.reviewData.get('_id'));
-      await ReviewActions.changeMode('edit');
-      await this.socket.emit('join', this.props.roomId);
+      ReviewActions.changeMode('edit');
+      this.socket.emit('join', this.props.roomId);
     }
   }
 
@@ -56,6 +59,18 @@ class ReviewContainer extends Component {
     this.socket.emit('add', { roomId, name: 'rating', data: rating } );
   }
 
+  handleChangeCoverImg = (e) => {
+    const { ReviewActions } = this.props;
+    const { roomId } = this.props;
+    ReviewActions.changeCoverImg(e.target.files[0])
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0])
+    reader.onload = () => {
+      ReviewActions.changeCoverImgURL(reader.result);
+    }
+    this.socket.emit('add', { roomId, name: 'coverImg', data: e.target.files[0]})
+  }
+
   handlePost = async() => {
     const { orderNumber } = this.props;
     const { ReviewActions } = this.props;
@@ -71,20 +86,28 @@ class ReviewContainer extends Component {
   }
 
   render() {
-    const { socket, handleChange, handleChangeReviewRating, handlePost, handleChangeMode } = this;
+    const { socket, handleChange, handleChangeCoverImg, handleChangeReviewRating, handlePost, handleChangeMode } = this;
     const { roomId, reviewData, reviewMode } = this.props;
+
+    let ratingData = !reviewData ? '' : reviewData.get('rating');
+    let titleData = !reviewData ? '' : reviewData.get('title');
+
     return(
       <ReviewWrapper>
         <ReviewRating
           label="제품을 평가해주세요!"
-          rating={reviewData.get('rating')}
+          rating={ratingData || ''}
           handleChangeReviewRating={handleChangeReviewRating}
         />
         <ReviewInput 
           label="제품을 소개할 문장을 7글자로 작성하세요!" 
           name='title'
-          value={reviewData && reviewData.get('title') || ''}
+          value={titleData || ''}
           handleChange={handleChange}
+        />
+        <ReviewCoverImg 
+          coverImgURL={reviewData.get('coverImgURL')}
+          handleChangeCoverImg={handleChangeCoverImg}
         />
         <ReviewEditor 
           socket={socket}

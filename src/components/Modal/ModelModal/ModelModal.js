@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './ModelModal.scss';
 import { FaTimes } from 'react-icons/fa';
 import { DetailInput } from '../DetailInput';
+import { CheckBox } from '../CheckBox';
 import { ModalError } from '../ModalError';
 
 import styled from 'styled-components';
@@ -11,7 +12,7 @@ import PropTypes from 'prop-types';
 class ModelModal extends Component {
   render() {
     const { mode, addMode, addContent, detail, contents, modelImageURL, error } = this.props;
-    const { handleChangeTemplateInput, handleChangeMainInput, handleChangeModelImg, handleDeleteModelImg, handleChangeAddMode, handleChangeAddInput, handleAddList, handleDeleteList } = this.props;
+    const { handleChangeTemplateInput, handleChangeSpecInput, handleChangeSpecButton, handleChangeMainInput, handleChangeModelImg, handleDeleteModelImg, handleChangeAddMode, handleChangeAddInput, handleAddList, handleDeleteList } = this.props;
     const { handlePost, handlePatch, handleHide } = this.props;
 
     let buttonOn;
@@ -25,7 +26,7 @@ class ModelModal extends Component {
           placeholder={content.label}
           // only id, name, value, type are valid with input tags.
           value={content.value || ''}
-          onChange={(e, kind) => handleChangeTemplateInput(e)}
+          onChange={handleChangeTemplateInput}
           handleDeleteList={() => handleDeleteList(i, 'template')}
         />
       }
@@ -59,6 +60,55 @@ class ModelModal extends Component {
             </div>
           </div>
         </div>
+        <div className="model-modal-line"/>
+        <DetailInput
+          deleteButton={false}
+          label={'제품이름'}
+          name={'name'}
+          placeholder={'제품이름'}
+          value={contents.getIn(['spec', 'name'])||''}
+          onChange={handleChangeSpecInput}
+        />
+        <DetailInput
+          deleteButton={false}
+          label={'가죽소재'}
+          name={'leather'}
+          placeholder={'가죽소재'}
+          value={contents.getIn(['spec', 'leather'])||''}
+          onChange={handleChangeSpecInput}
+        />
+        <CheckBox
+          label={'굽조절'}
+          name={'heelCustom'}
+          list_1={'가능'}
+          list_2={'불가능'}
+          value={contents.getIn(['spec', 'heelCustom']) || 0}
+          handleChangeSpecButton={handleChangeSpecButton}
+        />
+        <DetailInput
+          deleteButton={false}
+          label={'밑창소재'}
+          name={'soleMaterial'}
+          placeholder={'밑창소재'}
+          value={contents.getIn(['spec', 'soleMaterial'])||''}
+          onChange={handleChangeSpecInput}
+        />
+        <CheckBox
+          label={'사이즈 측정'}
+          name={'sizeCustom'}
+          list_1={'직접측정'}
+          list_2={'측정안함'}
+          value={contents.getIn(['spec', 'sizeCustom']) || 0}
+          handleChangeSpecButton={handleChangeSpecButton}
+        />
+        <DetailInput
+          deleteButton={false}
+          label={'가격'}
+          name={'price'}
+          placeholder={'가격'}
+          value={contents.getIn(['spec', 'price'])||''}
+          onChange={handleChangeSpecInput}
+        />
         <div className="model-modal-line"/>
         {/* 모델명 */}
         <DetailInput

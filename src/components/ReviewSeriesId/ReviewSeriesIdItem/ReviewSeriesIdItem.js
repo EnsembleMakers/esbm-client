@@ -88,24 +88,24 @@ const DetailContents = styled.div`
 
 class ReviewSeriesIdItem extends Component {
   render() {
-    const { review, reviewById } = this.props;
+    const { reviewData, reviewById } = this.props;
 
     const { handleGetById } = this.props;
-    let selected = reviewById.get('_id')==review._id 
+    let selected = reviewById.get('_id')==reviewData._id 
 
     return(
       <Wrapper
         selected={selected}
-        onClick={()=>{!selected && handleGetById(review._id)}}
+        onClick={()=>{!selected && handleGetById(reviewData._id)}}
       >
       <Header selected={selected}>
-        <Title selected={selected}>{review.title}</Title>
-        <Auth selected={selected}>작성자</Auth>
+        <Title selected={selected}>{reviewData.title}</Title>
+        <Auth selected={selected}>{reviewData.userId.username}</Auth>
         <Stat selected={selected}>신뢰도 <img style={{width: '45px'}} src='/img/gauge11.png'/></Stat>
       </Header>
-      {!selected && <Rating><div>평점: 5</div><img src='/img/star22.png'/></Rating>}
-      {!selected && <ImageRail images={review.images}></ImageRail>}
-      {selected && <div><DetailContents dangerouslySetInnerHTML={ {__html: review.content} }/><a href={`/reviewOrder/${review._id}`}>자세히보기</a></div>}
+      {!selected && <Rating><div>평점 {reviewData.rating + 1}</div><img src='/img/star22.png'/></Rating>}
+      {!selected && <ImageRail images={reviewData.images}></ImageRail>}
+      {selected && <div><DetailContents dangerouslySetInnerHTML={ {__html: reviewData.content} }/><a href={`/reviewOrder/${reviewData._id}`}>자세히보기</a></div>}
       </Wrapper>
     )
   }
