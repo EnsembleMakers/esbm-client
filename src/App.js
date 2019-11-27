@@ -5,10 +5,10 @@ import { bindActionCreators } from 'redux';
 
 import PrivateRoute from './PrivateRoute'
 import { 
-    Home, Login, CustomerInfo, CustomerInfoSuccess,
+    Home, Login, User, CustomerInfo, CustomerInfoSuccess,
     OrderManage, ModelManage, Order, Model,
     ReviewSeries, ReviewSeriesId, ReviewOrder, Review,
-    CouponList
+    // CouponList
 } from './pages';
 import { HeaderContainer } from './containers/Base';
 import { UserMenuContainer } from './containers/Base';
@@ -29,7 +29,6 @@ class App extends Component {
         try{
             await UserActions.checkStatus();
         }catch(e) {
-            console.log('aa')
             storage.remove('loggedInfo');
             window.location.href = '/login/signin?expired';
         }
@@ -58,7 +57,7 @@ class App extends Component {
                 <Route path="/reviewSeries/:model" component={ReviewSeriesId}/>
                 <Route path="/reviewOrder/:id" component={ReviewOrder}/>
                 <Route path="/review/:id" component={Review}/>
-                <Route path="/couponList" component={CouponList}/>
+                {/* <Route path="/couponList" component={CouponList}/> */}
             </div>
         );
     }

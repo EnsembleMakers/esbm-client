@@ -19,10 +19,11 @@ class ReviewContainer extends Component {
     if(this.props.loggedInfo !== nextProps.loggedInfo){
       const { orderNumber } = this.props;
       const { ReviewActions, OrderActions } = this.props;
-
       this.socket = socketIOClient('http://localhost:5000');
+      
       await ReviewActions.getReviewByOrder(orderNumber);
-      if(!this.props.reviewData) {
+      
+      if(this.props.reviewData.size == 0) {
         await OrderActions.getOrderByNum(orderNumber)
         // 등록된 model이 있을 경우
         let modelId = await this.props.orderById.get('modelId') ? this.props.orderById.get('modelId') : null;
@@ -37,10 +38,13 @@ class ReviewContainer extends Component {
         };
         await ReviewActions.postReview(data);
       }
+
+      
       await ReviewActions.setRoomId(this.props.reviewData.get('_id'));
+      console.log(this.props.reviewData.get('_id'))
       ReviewActions.changeMode('edit');
+
       if (!this.props.reviewIsCommit) {
-        // console.log( 'isCommited false' );
         try {
           let coverImgData = this.props.reviewData.get('tempCoverImg');
           let coverImgType = this.props.reviewData.get('coverImgType');
@@ -93,19 +97,25 @@ class ReviewContainer extends Component {
   handleChangeCoverImg = (e) => {
     const { ReviewActions } = this.props;
     const { roomId } = this.props;
-    ReviewActions.changeCoverImg(e.target.files[0]);
-    ReviewActions.changeCoverImgType(e.target.files[0].type);
-    let reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      ReviewActions.changeCoverImgURL(reader.result);
+    if(e.target.files.length) {
+      ReviewActions.changeCoverImg(e.target.files[0]);
+      ReviewActions.changeCoverImgType(e.target.files[0].type);
+      let reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = () => {
+        ReviewActions.changeCoverImgURL(reader.result);
+      }
+      this.socket.emit('add', { roomId, name: 'tempCoverImg', data: {type: e.target.files[0].type, base64: e.target.files[0]}})
     }
+  }
 
-    this.socket.emit('add', { roomId, name: 'tempCoverImg', data: {type: e.target.files[0].type, base64: e.target.files[0]}})
+  handleDeleteCoverImg = (e) => {
+    const { roomId } = this.props;
+    // Delete Cover Image
   }
 
   handlePost = async() => {
-    const { orderNumber } = this.props;
+    const { orderNumber, reviewData } = this.props;
     const { ReviewActions } = this.props;
     
     this.socket.emit('commit', this.props.roomId);
@@ -119,7 +129,7 @@ class ReviewContainer extends Component {
   }
 
   render() {
-    const { socket, handleChange, handleChangeCoverImg, handleChangeReviewRating, handlePost, handleChangeMode } = this;
+    const { socket, handleChange, handleChangeCoverImg, handleDeleteCoverImg, handleChangeReviewRating, handlePost, handleChangeMode } = this;
     const { roomId, reviewData, reviewMode } = this.props;
 
     let ratingData = !reviewData ? '' : reviewData.get('rating');
@@ -141,6 +151,7 @@ class ReviewContainer extends Component {
         <ReviewCoverImg 
           coverImgURL={reviewData.get('coverImgURL')}
           handleChangeCoverImg={handleChangeCoverImg}
+          handleDeleteCoverImg={handleDeleteCoverImg}
         />
         <ReviewEditor 
           socket={socket}

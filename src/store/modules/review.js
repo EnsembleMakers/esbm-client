@@ -70,7 +70,7 @@ export default handleActions({
   ...pender({
     type: GET_REVIEW_BY_ORDER,
     onSuccess: (state, action) => {
-      return action.payload.data ? state.set('data', Map(action.payload.data)) : state.set('data', undefined);
+      return action.payload.data ? state.set('data', Map(action.payload.data)): state.set('data', Map({}))
     }
   }),
   ...pender({

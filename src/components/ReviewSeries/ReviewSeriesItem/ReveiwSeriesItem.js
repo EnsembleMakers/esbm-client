@@ -6,6 +6,7 @@ class ReviewSeriesItem extends Component {
   render() {
     const { reviewData } = this.props;
     return(
+      // reviewSeriesId 아직 사용 안함
       // <a className="review-series-item-wrapper" href={`/reviewSeries/${reviewData.modelId._id}?review=${reviewData._id}`}>
       <a className="review-series-item-wrapper" href={`/reviewOrder/${reviewData._id}`}>
         <div className="review-series-thumbnail-wrapper">
