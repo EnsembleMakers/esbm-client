@@ -11,7 +11,8 @@ import { ReviewEditor } from '../../components/Review/ReviewEditor';
 
 import * as reviewActions from '../../store/modules/review';
 import * as orderActions from '../../store/modules/order';
-import { read } from 'fs';
+
+import { confirmBox } from '../../lib/confirmBox';
 
 class ReviewContainer extends Component {
 
@@ -121,6 +122,7 @@ class ReviewContainer extends Component {
     this.socket.emit('commit', this.props.roomId);
     await ReviewActions.getReviewByOrder(orderNumber);
     await ReviewActions.changeMode('complete');
+    window.location = await `/order/${reviewData.get('orderNumber')}`;
   }
 
   handleChangeMode = async (mode) => {
@@ -160,7 +162,7 @@ class ReviewContainer extends Component {
           reviewMode={reviewMode}
           handleChangeMode={handleChangeMode}
         />
-        <div onClick={handlePost}>버튼</div>
+        <div style={{'height': '40px', 'width': '30%', 'margin': '0 auto', 'borderRadius': '5px', 'backgroundColor': '#549dd9', 'color': 'white', 'lineHeight': '40px', 'marginTop': '23px','fontWeight': 600, 'textAlign': 'center', 'cursor': 'pointer'}} onClick={() => confirmBox("리뷰를 저장하시겠습니까?", () => handlePost())}>저장하기</div>
       </ReviewWrapper>
     )
   }

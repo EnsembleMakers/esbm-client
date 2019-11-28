@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import CKEditor from '@ckeditor/ckeditor5-react';
+import './ReviewEditor.scss';
 
+import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
@@ -76,12 +77,11 @@ class ReviewEditor extends Component {
                   }
                 }
               }}
-              
               data={ reviewId && 
                 reviewData.get('tempContent')
               }
             />
-        </div>
+          </div>
     );
 }
 }
