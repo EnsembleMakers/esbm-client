@@ -8,7 +8,7 @@ import {
     Home, Login, CustomerInfo, CustomerInfoSuccess,
     OrderManage, ModelManage, Order, Model,
     ReviewSeries, ReviewSeriesId, ReviewOrder, Review,
-    CouponList
+    CouponList, User
 } from './pages';
 import { HeaderContainer } from './containers/Base';
 import { UserMenuContainer } from './containers/Base';
