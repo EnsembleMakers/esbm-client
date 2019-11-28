@@ -3,13 +3,13 @@ import './ReviewOrderInstruction.scss'
 
 class ReviewOrderInstruction extends Component {
   render() {
-    const { title } = this.props;
+    const { title, coverImg } = this.props;
     return(
       <div className="review-order-instruction-wrapper">
         <div className="review-order-header">제품 스토리</div>
         <div className="review-order-cover-img-wrapper">
           <div className="review-order-cover-img">
-            <img src="https://image.musinsa.com/mfile_s01/2018/05/11/61dab6ccd19490c00c92eed21f732a04185756.jpg"/>
+            <img src={coverImg}/>
           </div>
           <div className="review-order-title">{title}</div>
           <div className="review-order-auth">작성자</div>
