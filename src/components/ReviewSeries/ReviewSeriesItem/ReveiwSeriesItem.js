@@ -15,7 +15,7 @@ class ReviewSeriesItem extends Component {
           </div>
         </div>
         <div className="review-series-item-contents">
-          <div className="review-series-item-name">{reviewData.modelId.contents.spec.name}</div>
+          <div className="review-series-item-name">{reviewData.modelId.contents.model}</div>
           <div className="review-series-item-title">{reviewData.title}</div>
           <div className="review-series-item-auth">{reviewData.userId.username}</div>
           <div className="review-series-item-rating"><FaStar style={{color:'#fa6e57'}}/> {reviewData.rating + 1}</div>

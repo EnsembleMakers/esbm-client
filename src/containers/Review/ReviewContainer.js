@@ -20,14 +20,15 @@ class ReviewContainer extends Component {
     if(this.props.loggedInfo !== nextProps.loggedInfo){
       const { orderNumber } = this.props;
       const { ReviewActions, OrderActions } = this.props;
-      this.socket = socketIOClient('http://localhost:5000');
+      this.socket = socketIOClient('https://api.esbmakers.com', {secure:true});
       
       await ReviewActions.getReviewByOrder(orderNumber);
       
       if(this.props.reviewData.size == 0) {
         await OrderActions.getOrderByNum(orderNumber)
+     
         // 등록된 model이 있을 경우
-        let modelId = await this.props.orderById.get('modelId') ? this.props.orderById.get('modelId') : null;
+        let modelId = await this.props.orderById.get('_id') ? this.props.orderById.get('_id') : null;
         let data = await {
           orderNumber: orderNumber, // Order Collection에서 documentId가 아닌 orderNumber참조 
           userId: nextProps.loggedInfo.get('_id'),
@@ -40,9 +41,7 @@ class ReviewContainer extends Component {
         await ReviewActions.postReview(data);
       }
 
-      
       await ReviewActions.setRoomId(this.props.reviewData.get('_id'));
-      console.log(this.props.reviewData.get('_id'))
       ReviewActions.changeMode('edit');
 
       if (!this.props.reviewIsCommit) {
