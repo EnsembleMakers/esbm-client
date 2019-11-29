@@ -23,6 +23,12 @@ class LoginContainer extends Component {
         }
     }
 
+    handleKeyDown = async (e) => {
+        if (e.key === 'Enter') {
+           await this.handleLocalLogin(e);
+        }
+    }
+
     handleChange = (e) => {
         const { AuthActions } = this.props;
         const { name, value } = e.target;
@@ -79,6 +85,7 @@ class LoginContainer extends Component {
                     placeholder="이메일" 
                     value={email} 
                     onChange={handleChange}
+                    onKeyDown={this.handleKeyDown} 
                 />
                 <InputWithLabel 
                     label="비밀번호" 
@@ -87,6 +94,7 @@ class LoginContainer extends Component {
                     type="password" 
                     value={password} 
                     onChange={handleChange}
+                    onKeyDown={this.handleKeyDown} 
                 />
                 {
                     error && <AuthError>{error}</AuthError>
