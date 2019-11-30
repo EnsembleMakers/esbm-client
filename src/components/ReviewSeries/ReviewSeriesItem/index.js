@@ -1,1 +1,1 @@
-export { default as ReviewSeriesItem } from './ReveiwSeriesItem';
+export { default as ReviewSeriesItem } from './ReviewSeriesItem';

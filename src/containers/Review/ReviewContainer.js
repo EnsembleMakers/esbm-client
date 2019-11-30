@@ -23,12 +23,12 @@ class ReviewContainer extends Component {
       this.socket = socketIOClient('https://api.esbmakers.com', {secure:true});
       
       await ReviewActions.getReviewByOrder(orderNumber);
-      
+
       if(this.props.reviewData.size == 0) {
         await OrderActions.getOrderByNum(orderNumber)
-     
+
         // 등록된 model이 있을 경우
-        let modelId = await this.props.orderById.get('_id') ? this.props.orderById.get('_id') : null;
+        let modelId = await this.props.orderById.get('modelId') ? this.props.orderById.get('modelId') : null;
         let data = await {
           orderNumber: orderNumber, // Order Collection에서 documentId가 아닌 orderNumber참조 
           userId: nextProps.loggedInfo.get('_id'),
