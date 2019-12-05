@@ -58,14 +58,14 @@ class ReviewEditor extends Component {
                   resizeUnit: '%'
                 },
                 ckfinder: {
-                  uploadUrl: 'http://localhost:3000/api/reviews/imageUpload',
+                  uploadUrl: `${process.env.PUBLIC_URL}/api/reviews/imageUpload`,
                   options: {
                     resourceType: 'Images'
                   }
                 },
                 simpleUpload: {
                   // The URL that the images are uploaded to.
-                  uploadUrl: 'http://localhost:3000/api/reviews/imageUpload',
+                  uploadUrl: `${process.env.PUBLIC_URL}/api/reviews/imageUpload`,
       
                   // Headers sent along with the XMLHttpRequest to the upload server.
                   headers: {
