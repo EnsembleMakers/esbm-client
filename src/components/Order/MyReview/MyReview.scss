@@ -1,4 +1,4 @@
-.model-info-wrapper {
+.my-review-wrapper {
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
@@ -6,7 +6,7 @@
   border-bottom: 1px solid #d8d6d6;
 }
 
-.model-info-title {
+.my-review-title {
   width: 100%;
   margin-bottom: 10px;
   font-size: 23px;
@@ -14,13 +14,12 @@
   font-weight: 700;
 }
 
-.model-info-img-wrapper {
-  width: 30%;
+.my-review-img-wrapper {
+  width: 15%;
   border: 1px solid blue;
-  padding: 10px;
 }
 
-.model-info-img {
+.my-review-img {
   position: relative;
   overflow: hidden;
   padding-top: 70%;
@@ -35,14 +34,9 @@
   }
 }
 
-.model-info-content-wrapper {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  width: 70%;
+.my-review-content-wrapper {
+  display: flex;
+  align-items: center;
+  width: 85%;
   border: 1px solid pink;
-}
-
-.model-info-content-item {
-  border: 1px solid red;
-  padding: 10px;
 }

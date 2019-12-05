@@ -6,6 +6,7 @@ import { ProcessingControll } from '../../components/Order/ProcessingControll';
 import { ModelInfo } from '../../components/Order/ModelInfo';
 import { MakerInfo } from '../../components/Order/MakerInfo';
 import { LinkReviewInfo } from '../../components/Order/LinkReviewInfo';
+import { MyReview } from '../../components/Order/MyReview';
 import { ReviewPost } from '../../components/Order/ReviewPost';
 import { ReviewRead } from '../../components/Order/ReviewRead';
 import * as orderActions from '../../store/modules/order';
@@ -122,7 +123,7 @@ class OrderContainer extends Component {
         } */}
         <ModelInfo/>
         <LinkReviewInfo/>
-        <div>내 리뷰 (아직작성되지 않았습니다.)</div>
+        <MyReview/>
         <MakerInfo/>
       </OrderWrapper>
     )
