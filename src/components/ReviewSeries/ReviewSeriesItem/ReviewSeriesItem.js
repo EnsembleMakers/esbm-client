@@ -15,7 +15,7 @@ class ReviewSeriesItem extends Component {
           </div>
         </div>
         <div className="review-series-item-contents">
-          <div className="review-series-item-name">{reviewData.modelId ? reviewData.modelId.contents.model : '미등록 모델'}</div>
+          <div className="review-series-item-name">{reviewData.spec ? reviewData.modelId.spec.name : '미등록 모델'}</div>
           <div className="review-series-item-title">{reviewData.title}</div>
           <div className="review-series-item-auth">{reviewData.userId.username}</div>
           <div className="review-series-item-rating"><FaStar style={{color:'#fa6e57'}}/> {reviewData.rating + 1}</div>
