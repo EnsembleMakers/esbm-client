@@ -15,7 +15,6 @@ class ModelModal extends Component {
     const { handleChangeTemplateInput, handleChangeSpecInput, handleChangeSpecButton, handleChangeMainInput, handleChangeModelImg, handleDeleteModelImg, handleChangeAddMode, handleChangeAddInput, handleAddList, handleDeleteList } = this.props;
     const { handlePost, handlePatch, handleHide } = this.props;
 
-    let buttonOn;
     const templateInputList = contents.get('template').map(
       (content, i) => {
         return <DetailInput
@@ -83,6 +82,7 @@ class ModelModal extends Component {
           list_1={'가능'}
           list_2={'불가능'}
           value={contents.getIn(['spec', 'heelCustom']) || 0}
+          clickable={true}
           handleChangeSpecButton={handleChangeSpecButton}
         />
         <DetailInput
@@ -99,6 +99,7 @@ class ModelModal extends Component {
           list_1={'직접측정'}
           list_2={'측정안함'}
           value={contents.getIn(['spec', 'sizeCustom']) || 0}
+          clickable={true}
           handleChangeSpecButton={handleChangeSpecButton}
         />
         <DetailInput
