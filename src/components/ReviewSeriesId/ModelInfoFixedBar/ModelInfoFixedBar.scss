@@ -8,26 +8,31 @@
 .model-info-fixed-bar-name {
   font-size: 20px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 800;
   color: #484848;
+  margin-bottom: 15px;
 }
 
 .model-info-fixed-bar-img {
-  margin-top: 12px;
+  margin-bottom: 20px;
 }
 
 .model-info-fixed-bar-label {
-  margin-top: 12px;
-  color: #484848; 
-  font-size: 16px;
+  position: relative;
+  font-size: 15px;
+  margin-bottom: 5px;
+  text-align: left;
   font-weight: 600;
+  color: #767676;
 }
 
 .model-info-fixed-bar-value {
-  margin-top: 8px;
-  color: #484848; 
-  font-size: 16px; 
-  font-weight: 400;
+  display: flex;
+  flex-direction: row;
+  font-size: 17px;
+  margin-bottom: 20px;
+  font-weight: 800;
+  color: #484848;
 }
 
 .model-info-fixed-bar-button {

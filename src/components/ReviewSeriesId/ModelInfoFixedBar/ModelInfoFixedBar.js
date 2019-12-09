@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { CheckBox } from '../../Modal/CheckBox';
+
 import styled from 'styled-components';
 import { FaCheckCircle } from 'react-icons/fa';
 import './ModelInfoFixedBar.scss';
@@ -25,24 +27,22 @@ class ModelInfoFixedBar extends Component {
         <img className="model-info-fixed-bar-img" src={modelById.get('modelImage')}/>
         <div className="model-info-fixed-bar-label">가죽소재</div>
         <div className="model-info-fixed-bar-value">{modelById.getIn(['contents', 'spec', 'leather'])}</div>
-        <div className="model-info-fixed-bar-label">굽조절</div>
-        <div className="model-info-fixed-bar-value" style={{display: 'flex',
-  flexDirection: 'row', marginTop: '5px'}}><CheckBoxButton
-            selected={modelById.getIn(['contents', 'spec', 'heelCustom'])==1}
-          ><FaCheckCircle style={{marginRight: '10px'}}/>가능</CheckBoxButton>
-          <CheckBoxButton
-            selected={modelById.getIn(['contents', 'spec', 'heelCustom'])==2}
-          ><FaCheckCircle style={{marginRight: '10px'}}/>불가능</CheckBoxButton></div>
+        <CheckBox
+          label={'굽조절'}
+          list_1={'가능'}
+          list_2={'불가능'}
+          value={modelById.getIn(['contents', 'spec', 'heelCustom'])}
+          clickable={false}
+        />
         <div className="model-info-fixed-bar-label">밑창소재</div>
         <div className="model-info-fixed-bar-value">{modelById.getIn(['contents', 'spec', 'soleMaterial'])}</div>
-        <div className="model-info-fixed-bar-label">사전치수측정</div>
-        <div className="model-info-fixed-bar-value" style={{display: 'flex',
-  flexDirection: 'row', marginTop: '5px'}}><CheckBoxButton
-            selected={modelById.getIn(['contents', 'spec', 'sizeCustom'])==1}
-          ><FaCheckCircle style={{marginRight: '10px'}}/>직접측정</CheckBoxButton>
-          <CheckBoxButton
-            selected={modelById.getIn(['contents', 'spec', 'sizeCustom'])==2}
-          ><FaCheckCircle style={{marginRight: '10px'}}/>측정안함</CheckBoxButton></div>
+        <CheckBox
+          label={'사전치수측정'}
+          list_1={'직접측정'}
+          list_2={'측정안함'}
+          value={modelById.getIn(['contents', 'spec', 'sizeCustom'])}
+          clickable={false}
+        />
         <div className="model-info-fixed-bar-label">가격</div>
         <div className="model-info-fixed-bar-value"><b>{modelById.getIn(['contents', 'spec', 'price'])}</b> 원</div>
         {buttonOn && <div className="model-info-fixed-bar-button" onClick={handleOpenCouponModal}>구매티켓 받기</div>}
