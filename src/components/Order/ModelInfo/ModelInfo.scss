@@ -1,19 +1,21 @@
 .model-info-wrapper {
   margin-top: 20px;
-  border: 1px solid black;
   display: flex;
   flex-wrap: wrap;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #d8d6d6;
 }
 
 .model-info-title {
-  width: 20%;
-  border: 1px solid red;
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 23px;
+  color: #484848;
+  font-weight: 700;
 }
 
 .model-info-img-wrapper {
   width: 30%;
-  border: 1px solid blue;
-  padding: 10px;
 }
 
 .model-info-img {
@@ -31,7 +33,28 @@
   }
 }
 
-.model-info-content {
+.model-info-content-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 70%;
+  padding-left: 30px;
+}
+
+.model-info-content-item {
   width: 50%;
-  border: 1px solid pink;
+  margin-bottom: 5px;
+  .label {
+    position: relative;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #767676;
+  }
+  .value {
+    display: flex;
+    flex-direction: row;
+    font-size: 17px;
+    margin-bottom: 10px;
+  }
 }
