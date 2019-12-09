@@ -3,6 +3,8 @@ import './MyReview.scss';
 
 class MyReview extends Component {
   render() {
+    const { reviewData } = this.props;
+
     return(
       <div className="my-review-wrapper">
         <div className="my-review-title">작성한 리뷰</div>
@@ -12,7 +14,10 @@ class MyReview extends Component {
           </div>
         </div>
         <div className="my-review-content-wrapper">
-          교교
+          <div className="rating">{reviewData.get('rating')}</div>
+          <div className="auth">작성자</div>
+          <div className="date">{reviewData.get('createdAt')}</div>
+          <div className="title">{reviewData.get('title')}</div>
         </div>
       </div>
     )

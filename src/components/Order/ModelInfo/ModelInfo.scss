@@ -16,8 +16,6 @@
 
 .model-info-img-wrapper {
   width: 30%;
-  border: 1px solid blue;
-  padding: 10px;
 }
 
 .model-info-img {
@@ -36,13 +34,27 @@
 }
 
 .model-info-content-wrapper {
-  display: grid;
-  grid-template-columns: 50% 50%;
+  display: flex;
+  flex-wrap: wrap;
   width: 70%;
-  border: 1px solid pink;
+  padding-left: 30px;
 }
 
 .model-info-content-item {
-  border: 1px solid red;
-  padding: 10px;
+  width: 50%;
+  margin-bottom: 5px;
+  .label {
+    position: relative;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #767676;
+  }
+  .value {
+    display: flex;
+    flex-direction: row;
+    font-size: 17px;
+    margin-bottom: 10px;
+  }
 }
