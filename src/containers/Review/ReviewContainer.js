@@ -20,7 +20,16 @@ class ReviewContainer extends Component {
     if(this.props.loggedInfo !== nextProps.loggedInfo){
       const { orderNumber } = this.props;
       const { ReviewActions, OrderActions } = this.props;
-      this.socket = socketIOClient('https://api.esbmakers.com', {secure:true});
+      let backend_host = process.env.REACT_APP_BACKEND_HOST;
+      
+      if (process.env.NODE_ENV === 'production') {
+        let url = new URL(backend_host);
+        url.port = '';
+        backend_host = url.toString();
+      }
+
+      //this.socket = socketIOClient(process.env.REACT_APP_BACKEND_HOST, {secure:true});
+      this.socket = socketIOClient(backend_host, {secure:true});
       
       await ReviewActions.getReviewByOrder(orderNumber);
 
