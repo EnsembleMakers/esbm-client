@@ -18,9 +18,8 @@ class OrderContainer extends Component {
   async componentDidMount() {
     const { OrderActions, ReviewActions } = this.props;
     const orderNumber = this.props.id;
-    // getOrderByNum 결과 객체로 저장
-    let orderId = await OrderActions.getOrderByNum(orderNumber);
-    await ReviewActions.getReviewByOrder(orderId.data._id);
+    await OrderActions.getOrderByNum(orderNumber);
+    await ReviewActions.getReviewByOrder(orderNumber)
   }
 
   handleChangeMode = (mode) => {
@@ -75,9 +74,9 @@ class OrderContainer extends Component {
   }
 
   render() {
-    const { orderById, review } = this.props;
-    const state = orderById.get('state');
-    const mode = review.get('mode');
+    const { orderById, reviewData } = this.props;
+    // const state = orderById.get('state');
+    // const mode = review.get('mode');
     const { handleChangeMode, handleChangeReviewRating, handlePostReview, handlePatchReview, handlePatchProcessingNext, handlePatchProcessingPre } = this;
 
     return(
@@ -121,9 +120,13 @@ class OrderContainer extends Component {
             onChangeMode={handleChangeMode}
           />
         } */}
-        <ModelInfo/>
+        <ModelInfo
+          orderById={orderById}
+        />
         <LinkReviewInfo/>
-        <MyReview/>
+        <MyReview
+          reviewData={reviewData}
+        />
         <MakerInfo/>
       </OrderWrapper>
     )
@@ -133,7 +136,7 @@ class OrderContainer extends Component {
 export default connect(
   (state) => ({
     orderById: state.order.get('orderById'),
-    review: state.review,
+    reviewData: state.review.get('data'),
   }),
   (dispatch) => ({
     OrderActions: bindActionCreators(orderActions, dispatch),
