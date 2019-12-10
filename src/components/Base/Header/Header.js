@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import oc from 'open-color';
-import { shadow, media, device } from '../../../lib/styleUtils';
+import { media, device } from '../../../lib/styleUtils';
 
 // 상단 고정, 그림자
 const Positioner = styled.div`
@@ -11,7 +11,7 @@ const Positioner = styled.div`
     position: fixed;
     top: 0px;
     width: 100%;
-    ${shadow(1)}
+    border-bottom: 1px solid #eee;
 `;
 
 // 흰 배경, 내용 중간 정렬
@@ -24,7 +24,7 @@ const WhiteBackground = styled.div`
 
 // 해더의 내용
 const HeaderContents = styled.div`
-    height: 55px;
+    height: 50px;
     display: flex;
     flex-direction: row;
     align-items: center;

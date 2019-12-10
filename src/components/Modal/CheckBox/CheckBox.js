@@ -7,7 +7,6 @@ const CheckBoxButton = styled.div`
   width: 40%
   margin-right: 10px;
   color: ${props => props.selected? '#fa6e57' : '#c3c3c3'}
-  height: 35px;
   display: flex;
   align-items: center;
   ${props => props.clickable && 'cursor: pointer;'}

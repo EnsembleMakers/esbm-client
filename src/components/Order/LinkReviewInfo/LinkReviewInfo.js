@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ReviewRatingPlain } from '../ReviewRatingPlain';
 import './LinkReviewInfo.scss'
 
 class LinkReviewInfo extends Component {
@@ -12,10 +13,10 @@ class LinkReviewInfo extends Component {
           </div>
         </div>
         <div className="link-review-info-content-wrapper">
-          <div className="rating">평점</div>
+          <div className="rating"><ReviewRatingPlain rating={1}/></div>
           <div className="auth">작성자</div>
-          <div className="date">작성일</div>
-          <div className="title">제목</div>
+          <div className="date">aa</div>
+          <div className="title">aa</div>
         </div>
       </div>
     )

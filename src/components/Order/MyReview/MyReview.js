@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ReviewRatingPlain } from '../ReviewRatingPlain';
 import './MyReview.scss';
 
 class MyReview extends Component {
@@ -14,7 +15,7 @@ class MyReview extends Component {
           </div>
         </div>
         <div className="my-review-content-wrapper">
-          <div className="rating">{reviewData.get('rating')}</div>
+          <div className="rating"><ReviewRatingPlain rating={reviewData.get('rating')}/></div>
           <div className="auth">작성자</div>
           <div className="date">{reviewData.get('createdAt')}</div>
           <div className="title">{reviewData.get('title')}</div>
