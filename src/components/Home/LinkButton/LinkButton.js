@@ -91,6 +91,10 @@ class LinkButton extends Component {
         </BorderedButton>
         <BorderedButton href="/orderManage" color="#4695D6">주문관리
         </BorderedButton>
+        {/* below is for test */}
+        <BorderedButton href="/couponList" color="#1295D6">리뷰
+        </BorderedButton>
+        {/* end test */}
       </LinkButtonWrapper>
     )
   }
