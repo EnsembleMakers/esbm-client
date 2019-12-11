@@ -6,6 +6,7 @@ import { ProcessingControll } from '../../components/Order/ProcessingControll';
 import { ModelInfo } from '../../components/Order/ModelInfo';
 import { MakerInfo } from '../../components/Order/MakerInfo';
 import { LinkReviewInfo } from '../../components/Order/LinkReviewInfo';
+import { MyReview } from '../../components/Order/MyReview';
 import { ReviewPost } from '../../components/Order/ReviewPost';
 import { ReviewRead } from '../../components/Order/ReviewRead';
 import * as orderActions from '../../store/modules/order';
@@ -17,9 +18,8 @@ class OrderContainer extends Component {
   async componentDidMount() {
     const { OrderActions, ReviewActions } = this.props;
     const orderNumber = this.props.id;
-    // getOrderByNum 결과 객체로 저장
-    let orderId = await OrderActions.getOrderByNum(orderNumber);
-    await ReviewActions.getReviewByOrder(orderId.data._id);
+    await OrderActions.getOrderByNum(orderNumber);
+    await ReviewActions.getReviewByOrder(orderNumber)
   }
 
   handleChangeMode = (mode) => {
@@ -74,9 +74,9 @@ class OrderContainer extends Component {
   }
 
   render() {
-    const { orderById, review } = this.props;
-    const state = orderById.get('state');
-    const mode = review.get('mode');
+    const { orderById, reviewData } = this.props;
+    // const state = orderById.get('state');
+    // const mode = review.get('mode');
     const { handleChangeMode, handleChangeReviewRating, handlePostReview, handlePatchReview, handlePatchProcessingNext, handlePatchProcessingPre } = this;
 
     return(
@@ -120,9 +120,13 @@ class OrderContainer extends Component {
             onChangeMode={handleChangeMode}
           />
         } */}
-        <ModelInfo/>
+        <ModelInfo
+          orderById={orderById}
+        />
         <LinkReviewInfo/>
-        <div>내 리뷰 (아직작성되지 않았습니다.)</div>
+        <MyReview
+          reviewData={reviewData}
+        />
         <MakerInfo/>
       </OrderWrapper>
     )
@@ -132,7 +136,7 @@ class OrderContainer extends Component {
 export default connect(
   (state) => ({
     orderById: state.order.get('orderById'),
-    review: state.review,
+    reviewData: state.review.get('data'),
   }),
   (dispatch) => ({
     OrderActions: bindActionCreators(orderActions, dispatch),

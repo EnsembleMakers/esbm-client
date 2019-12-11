@@ -20,12 +20,22 @@ class ReviewContainer extends Component {
     if(this.props.loggedInfo !== nextProps.loggedInfo){
       const { orderNumber } = this.props;
       const { ReviewActions, OrderActions } = this.props;
-      this.socket = socketIOClient('http://localhost:5000');
+      let backend_host = process.env.REACT_APP_BACKEND_HOST;
+      
+      if (process.env.NODE_ENV === 'production') {
+        let url = new URL(backend_host);
+        url.port = '';
+        backend_host = url.toString();
+      }
+
+      //this.socket = socketIOClient(process.env.REACT_APP_BACKEND_HOST, {secure:true});
+      this.socket = socketIOClient(backend_host, {secure:true});
       
       await ReviewActions.getReviewByOrder(orderNumber);
-      
+
       if(this.props.reviewData.size == 0) {
         await OrderActions.getOrderByNum(orderNumber)
+
         // 등록된 model이 있을 경우
         let modelId = await this.props.orderById.get('modelId') ? this.props.orderById.get('modelId') : null;
         let data = await {
@@ -40,9 +50,7 @@ class ReviewContainer extends Component {
         await ReviewActions.postReview(data);
       }
 
-      
       await ReviewActions.setRoomId(this.props.reviewData.get('_id'));
-      console.log(this.props.reviewData.get('_id'))
       ReviewActions.changeMode('edit');
 
       if (!this.props.reviewIsCommit) {

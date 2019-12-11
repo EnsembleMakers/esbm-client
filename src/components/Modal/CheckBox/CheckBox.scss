@@ -5,15 +5,16 @@
 
 .check-box-label {
   position: relative;
-  margin-top: 10px;
   text-align: left;
-  font-size: 18px;
+  font-size: 1em;
   font-weight: 600;
   color: #767676;
+  margin-bottom: 0.5em;
 }
 
 .check-box-value {
   display: flex;
   flex-direction: row;
-  margin-top: 5px;
+  font-size: 1.1em;
+  margin-bottom: 1.1em;
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FaStar } from 'react-icons/fa';
 import './ReviewRating.scss'
 
 class ReviewRating extends Component {
@@ -18,7 +19,7 @@ class ReviewRating extends Component {
           key={i}
           className={klass}
           onClick={() => handleChangeReviewRating(i)}
-        >★</label>
+        ><FaStar/></label>
       );
     }
 
