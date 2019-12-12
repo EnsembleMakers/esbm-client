@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import { ReviewSeriesIdWrapper } from '../../components/ReviewSeriesId/ReviewSeriesIdWrapper';
 import { ReviewSeriesIdList } from '../../components/ReviewSeriesId/ReviewSeriesIdList';
-import { ModelInfoFixedBar } from '../../components/ReviewSeriesId/ModelInfoFixedBar';
+import { ModelInfoFixedBar } from '../../components/ReviewOrder/ModelInfoFixedBar';
 import * as reviewActions from '../../store/modules/review';
 import * as orderActions from '../../store/modules/order';
 import * as modelActions from '../../store/modules/model';

@@ -5,7 +5,8 @@ import { Map } from 'immutable';
 import { ReviewOrderWrapper } from '../../components/ReviewOrder/ReviewOrderWrapper';
 import { ReviewOrderInstruction } from '../../components/ReviewOrder/ReviewOrderInstruction';
 import { ReviewViewer } from '../../components/ReviewOrder/ReviewViewer';
-import { ModelInfoFixedBar } from '../../components/ReviewSeriesId/ModelInfoFixedBar'
+import { ModelInfoFixedBar } from '../../components/ReviewOrder/ModelInfoFixedBar';
+import { ModelInfoFixedBottom } from '../../components/ReviewOrder/ModelInfoFixedBottom';
 
 import * as reviewActions from '../../store/modules/review';
 import * as modalActions from '../../store/modules/modal';
@@ -44,6 +45,11 @@ class ReviewOrderContainer extends Component {
             modelById={Map(reviewById.get('modelId'))}
             handleOpenCouponModal={handleOpenCouponModal}
             />}
+        fixedBottom={<ModelInfoFixedBottom
+          buttonOn={true}
+          modelById={Map(reviewById.get('modelId'))}
+          handleOpenCouponModal={handleOpenCouponModal}
+          />}
       />
     )
   }

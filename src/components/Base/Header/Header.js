@@ -32,7 +32,7 @@ const HeaderContents = styled.div`
     @media ${device.phone} { 
         padding-right: 5px;
         padding-left: 5px;
-        width: 98%;
+        width: 94%;
     }
     @media ${device.tablet} { 
         padding-right: 10px;
