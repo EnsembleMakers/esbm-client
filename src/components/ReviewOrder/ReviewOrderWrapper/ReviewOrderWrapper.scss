@@ -13,7 +13,10 @@
 }
 
 .review-order-contents {
-  width: 70%;
+  // desktop
+  @media screen and (min-width: 1024px) {
+    width: 70%;
+  }
   padding: 20px;
 }
 

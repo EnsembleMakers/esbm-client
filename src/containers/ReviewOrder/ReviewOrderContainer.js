@@ -30,7 +30,6 @@ class ReviewOrderContainer extends Component {
     const { id } = this.props;
     const { reviewById } = this.props;
     const { handleOpenCouponModal} = this;
-    console.log(reviewById.get('modelId'))
     return(
       <ReviewOrderWrapper
         instruction={<ReviewOrderInstruction 

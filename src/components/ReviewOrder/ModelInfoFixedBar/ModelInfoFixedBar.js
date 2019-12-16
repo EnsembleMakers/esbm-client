@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { CheckBox } from '../../Modal/CheckBox';
-
 import styled from 'styled-components';
+import { CheckBox } from '../../Modal/CheckBox';
 import { FaCheckCircle } from 'react-icons/fa';
 import './ModelInfoFixedBar.scss';
 
@@ -18,7 +17,6 @@ const CheckBoxButton = styled.div`
 
 class ModelInfoFixedBar extends Component {
   render() {
-    console.log(this.props.modelById)
     const { buttonOn, modelById } = this.props;
     const { handleOpenCouponModal } = this.props;
     return(
