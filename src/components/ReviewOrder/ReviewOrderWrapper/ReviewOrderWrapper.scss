@@ -1,27 +1,42 @@
 .review-order-wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 15px;
   padding-top: 50px;
   padding-bottom: 100px;
-  max-width: 1024px;
+  max-width: 768px;
   margin: 0 auto;
+  transition: all .8s;
 }
 
 .review-order-instruction {
   width: 100%;
+  border-bottom: 1px solid #EBEBEB;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
 }
 
-.review-order-contents {
+.review-order-header {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: #484848;
+  font-size: 40px;
+  font-weight: 800;
+  width: 100%;
+  text-align: center;
+}
+
+.review-order-review-viewer {
   // desktop
   @media screen and (min-width: 1024px) {
-    width: 70%;
+    width: 65%;
   }
-  padding: 20px;
 }
 
 .review-order-fixed-bar {
-  width: 30%;
+  width: 35%;
+  padding-left: 30px;
 }
 
 .review-order-fixed-bottom {

@@ -1,7 +1,6 @@
 .model-info-fixed-bar-wrapper {
   position: sticky;
   top: 50px;
-  padding: 20px;
   background-color: white;
 
   // phone
@@ -16,7 +15,6 @@
   @media screen and (min-width: 1024px) {
     display: block;
   }
-
 }
 
 .model-info-fixed-bar-name {

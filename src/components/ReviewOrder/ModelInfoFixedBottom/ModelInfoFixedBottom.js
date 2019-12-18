@@ -3,14 +3,16 @@ import styled from 'styled-components';
 import { CheckBox } from '../../Modal/CheckBox';
 import { FaSleigh, FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import './ModelInfoFixedBottom.scss';
+import { device } from '../../../lib/styleUtils';
 
 const Inner = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
+  max-width: 768px;
   margin: 0 auto;
-  margin-right: 20px;
-  margin-left: 20px;
+  padding-right: 15px;
+  padding-left: 15px;
   padding-top: 5px;
   padding-bottom: 15px;
 `
@@ -24,6 +26,7 @@ const ExpandButton = styled.div`
   justify-content: center;
   width: 100%;
   margin: 0 auto;
+  margin-top: 5px;
   cursor: pointer;
 `
 

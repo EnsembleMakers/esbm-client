@@ -1,18 +1,16 @@
 .review-order-instruction-wrapper {
-  padding: 10px;
-  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .review-order-cover-img-wrapper {
-  max-width: 425px;
-  margin: 0 auto;
+  width: 65%;
 }
 
 .review-order-cover-img {
   position: relative;
   overflow: hidden;
   padding-top: 70%;
-
   img {
     position: absolute; 
     top: 0; 
@@ -23,38 +21,32 @@
   }
 }
 
-.review-order-header {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  color: #484848;
-  font-size: 40px;
-  font-weight: 800;
-  text-align: center;
-}
-
-.review-order-title {
-  margin-top: 10px;
-  color: #484848;
-  font-size: 28px;
-  font-weight: 800;
-}
-
-.review-order-auth {
-  margin-top: 7px;
-  color: #484848;
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.review-order-rating {
-  margin-top: 7px;
-  color: #484848;
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.review-order-feature {
-  margin-top: 7px;
-  color: #4695D6;
-  font-size: 14px;
+.review-order-instruction-contents {
+  width: 35%;
+  padding-left: 30px;
+  .title {
+    color: #484848;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 7px;
+  }
+  
+  .auth {
+    color: #484848;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 7px;
+  }
+  
+  .rating {
+    color: #484848;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 7px;
+  }
+  
+  .feature {
+    color: #4695D6;
+    font-size: 14px;
+  }
 }
