@@ -64,7 +64,7 @@ class ModelInfoFixedBottom extends Component {
         </ExpandButton>
         <Inner>
           <Contents>
-            <div className="model-info-fixed-bottom-name">라운딩 여성구두 로우블랙</div>
+        <div className="model-info-fixed-bottom-name">{modelById.getIn(['contents', 'spec', 'name'])}</div>
             {bottomExpand &&
               <div>
                 <div className="model-info-fixed-bottom-detail">

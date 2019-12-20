@@ -34,6 +34,7 @@ class ReviewOrderContainer extends Component {
       <ReviewOrderWrapper
         instruction={<ReviewOrderInstruction 
             title={reviewById.get('title')}
+            rating={reviewById.get('rating')}
             coverImg={reviewById.get('coverImg')}
             />}
         contents={<ReviewViewer 
