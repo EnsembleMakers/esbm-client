@@ -7,7 +7,7 @@ import orderTemplate from './orderTemplate';
 import model from './model';
 import modal from './modal';
 import review from './review';
-// import reviewCoupon from './reviewCoupon';
+import reviewCoupon from './reviewCoupon';
 import search from './search';
 import calendar from './calendar';
 import { penderReducer } from 'redux-pender';
@@ -22,7 +22,7 @@ export default combineReducers({
     model,
     modal,
     review,
-    // coupon: reviewCoupon,
+    coupon: reviewCoupon,
     search,
     calendar,
     pender: penderReducer,

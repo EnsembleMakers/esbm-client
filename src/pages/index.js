@@ -12,3 +12,4 @@ export { default as ReviewSeriesId } from './ReviewSeriesId';
 export { default as ReviewOrder } from './ReviewOrder';
 export { default as Review } from './Review';
 export { default as CouponList } from './CouponList';
+export { default as CouponDetail } from './CouponDetail';

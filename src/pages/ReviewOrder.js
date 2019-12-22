@@ -8,7 +8,7 @@ class ReviewOrder extends Component {
     return(
       <div>
         <ReviewOrderContainer id={id}/>
-        <CouponModalContainer/>
+        <CouponModalContainer id={id}/>
       </div>
     )
   }
