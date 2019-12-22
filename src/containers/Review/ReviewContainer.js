@@ -37,7 +37,7 @@ class ReviewContainer extends Component {
         await OrderActions.getOrderByNum(orderNumber)
 
         // 등록된 model이 있을 경우
-        let modelId = await this.props.orderById.get('modelId') ? this.props.orderById.get('modelId') : null;
+        let modelId = await this.props.orderById.getIn(['modelId', '_id']) ? this.props.orderById.getIn(['modelId', '_id']) : null;
         let data = await {
           orderNumber: orderNumber, // Order Collection에서 documentId가 아닌 orderNumber참조 
           userId: nextProps.loggedInfo.get('_id'),
@@ -118,9 +118,15 @@ class ReviewContainer extends Component {
     }
   }
 
-  handleDeleteCoverImg = (e) => {
+  handleDeleteCoverImg = () => {
+    const { ReviewActions } = this.props;
     const { roomId } = this.props;
     // Delete Cover Image
+    ReviewActions.changeCoverImg(null);
+    ReviewActions.changeCoverImgURL(null);
+    ReviewActions.changeCoverImgType(null);
+    this.socket.emit('add', { roomId, name: 'tempCoverImg', data: null })
+
   }
 
   handlePost = async() => {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ReviewRatingPlain } from '../ReviewRatingPlain';
+import { FaAngleRight } from 'react-icons/fa';
 import './LinkReviewInfo.scss'
 
 class LinkReviewInfo extends Component {
@@ -13,10 +14,13 @@ class LinkReviewInfo extends Component {
           </div>
         </div>
         <div className="link-review-info-content-wrapper">
-          <div className="rating"><ReviewRatingPlain rating={1}/></div>
           <div className="auth">작성자</div>
-          <div className="date">aa</div>
           <div className="title">aa</div>
+          <div className="date">aa</div>
+          <div className="rating"><ReviewRatingPlain rating={1}/></div>
+        </div>
+        <div className="link-review-info-angle-button">
+          <FaAngleRight/>
         </div>
       </div>
     )

@@ -11,7 +11,7 @@ const Positioner = styled.div`
     position: fixed;
     top: 0px;
     width: 100%;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #EBEBEB;
 `;
 
 // 흰 배경, 내용 중간 정렬
@@ -32,7 +32,7 @@ const HeaderContents = styled.div`
     @media ${device.phone} { 
         padding-right: 5px;
         padding-left: 5px;
-        width: 98%;
+        width: 94%;
     }
     @media ${device.tablet} { 
         padding-right: 10px;

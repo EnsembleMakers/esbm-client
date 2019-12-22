@@ -1,8 +1,20 @@
 .model-info-fixed-bar-wrapper {
   position: sticky;
-  top: 95px;
-  padding: 15px;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px 0px
+  top: 120px;
+  background-color: white;
+
+  // phone
+  @media screen and (min-width: 320px) {
+    display: none;
+  }
+  // tablet
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+  // desktop
+  @media screen and (min-width: 1024px) {
+    display: block;
+  }
 }
 
 .model-info-fixed-bar-name {
@@ -39,7 +51,7 @@
   height: 40px;
   border-radius: 5px;
   background-color: #549dd9; 
-  color: white; 
+  color: white;
   line-height: 40px; 
   margin-top: 20px;
   font-weight: 600;

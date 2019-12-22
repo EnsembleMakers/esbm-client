@@ -96,5 +96,4 @@ export default handleActions({
       return state.set('data', Map(action.payload.data));
     }
   })
-
 }, initialState);
