@@ -5,8 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import PrivateRoute from './PrivateRoute'
 import { Home, Login, User, CustomerInfo, CustomerInfoSuccess,
-    OrderManage, ModelManage, Order, Model, ReviewSeries, ReviewSeriesId, ReviewOrder, Review,
-    CouponList, CouponDetail } from './pages';
+    OrderManage, ModelManage, Order, Model, ReviewSeries, ReviewSeriesId, ReviewOrder, ReviewOrderForm, Review, CouponList, CouponDetail } from './pages';
 import { HeaderContainer } from './containers/Base';
 import { UserMenuContainer } from './containers/Base';
 import * as userActions from './store/modules/user';
@@ -54,6 +53,7 @@ class App extends Component {
                     <Route path="/reviewSeries/:model" component={ReviewSeriesId}/>
                     <Route path="/reviewOrder/:id" component={ReviewOrder}/>
                     <Route path="/review/:id" component={Review}/>
+                    <Route path="/reviewOrderForm/:modelName" component={ReviewOrderForm}/>
                     <PrivateRoute path="/coupon/:hash" logged={logged} component={CouponDetail}/>
                     <PrivateRoute path="/myPage" logged={logged} component={User}/>
                 </Switch>
