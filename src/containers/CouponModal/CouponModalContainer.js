@@ -65,30 +65,17 @@ class CouponModalContainer extends Component {
     const { ReviewActions, ModelActions, CouponActions } = this.props;
 
     try {
-      // console.log('handleGenerateHash()1');
       const reviewId = reviewById.get('_id');
       const modelId = reviewById.get('modelId')._id;
       const userId = loggedInfo.get('_id');
-      // console.log(`${reviewId}`);
-      // console.log(`${modelId}`);
-      // console.log(`${userId}`);
       const payload = {
         reviewId,
         modelId,
         customerId: userId
       };
       const key = modelById.get('makerId');//makerId
-      // console.log('handleGenerateHash()2');
-      // console.log(payload);
-      // console.log( modelById );
-      // console.log('handleGenerateHash()2');
       const hash = CryptoJS.AES.encrypt(JSON.stringify(payload), key);
-      // console.log(`${hash.toString}`);
-      const bytes = CryptoJS.AES.decrypt(hash.toString(), key);
-      // var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-      // console.log(hash.toString());
-      // console.log( decryptedData );
-      console.log('generate')
+      // const bytes = CryptoJS.AES.decrypt(hash.toString(), key);
       await CouponActions.getCouponByReviewId(reviewId);
       return { hash: btoa(hash.toString()) };
     }

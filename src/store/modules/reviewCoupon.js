@@ -36,7 +36,7 @@ export default handleActions({
   ...pender({
     type: GET_COUPON_BY_HASH,
     onSuccess: (state, action) => {
-      return action.payload.data ? state.set('couponByHash', Map(action.payload.data)): state.set('couponByHash', Map({}))
+      return action.payload.data ? state.set('couponByHash', Map(action.payload.data)): state.set('couponByHash', Map({})).set('error', '쿠폰이 없습니다');
     }
   }),
   ...pender({
@@ -48,7 +48,10 @@ export default handleActions({
   ...pender({
     type: POST_COUPON,
     onSuccess: (state, action) => {
-      return state.set('couponByHash', Map(action.payload.data))
+      return state.set('couponByHash', Map(action.payload.data));
+    },
+    onFailure: (state, action) => {  
+      return state.set('error', '쿠폰 등록 실패');
     }
   }),
   ...pender({

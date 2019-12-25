@@ -17,7 +17,7 @@ const CheckBoxButton = styled.div`
 
 class ModelInfoFixedBar extends Component {
   render() {
-    const { buttonOn, modelById } = this.props;
+    const { buttonOn, reviewId, modelById } = this.props;
     const { handleOpenCouponModal } = this.props;
     return(
       <div className="model-info-fixed-bar-wrapper">
@@ -44,7 +44,7 @@ class ModelInfoFixedBar extends Component {
         <div className="model-info-fixed-bar-label">가격</div>
         <div className="model-info-fixed-bar-value"><b>{modelById.getIn(['contents', 'spec', 'price'])}</b> 원</div>
         {/* {buttonOn && <div className="model-info-fixed-bar-button" onClick={handleOpenCouponModal}>구매티켓 받기</div>} */}
-        {buttonOn && <div className="model-info-fixed-bar-button" onClick={() => window.location.href='/reviewOrderForm/'+ modelById.getIn(['contents', 'model'])}>구매티켓 받기</div>}
+        {buttonOn && <div className="model-info-fixed-bar-button" onClick={() => window.location.href=`/reviewOrderForm/${modelById.getIn(['contents', 'model'])}?rid=${reviewId}`}>구매티켓 받기</div>}
       </div>
 
     )

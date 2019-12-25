@@ -53,7 +53,7 @@ class ModelInfoFixedBottom extends Component {
 
   render() {
     const { bottomExpand } = this.state;
-    const { buttonOn, modelById } = this.props;
+    const { buttonOn, reviewId, modelById } = this.props;
     const { handleOpenCouponModal } = this.props;
     return(
       <div className="model-info-fixed-bottom-wrapper">
@@ -101,7 +101,7 @@ class ModelInfoFixedBottom extends Component {
             </div>
           </Contents>
           {/* {buttonOn && <CouponButton onClick={handleOpenCouponModal}>구매티켓 받기</CouponButton>} */}
-          {buttonOn && <CouponButton onClick={() => window.location.href='/reviewOrderForm/'+ modelById.getIn(['contents', 'model'])}>구매티켓 받기</CouponButton>}
+          {buttonOn && <CouponButton onClick={() => window.location.href=`/reviewOrderForm/${modelById.getIn(['contents', 'model'])}?rid=${reviewId}`}>구매티켓 받기</CouponButton>}
         </Inner>
       </div>
     )

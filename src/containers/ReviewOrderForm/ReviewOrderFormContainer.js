@@ -8,11 +8,53 @@ import { CustomerInfoPostButton } from '../../components/CustomerInfo/CustomerIn
 import { CustomerInfoError } from '../../components/CustomerInfo/CustomerInfoError';
 
 import * as orderActions from '../../store/modules/order';
+import * as reviewActions from '../../store/modules/review';
+import * as couponActions from '../../store/modules/reviewCoupon';
+
+import queryString from 'query-string';
+const CryptoJS = require("crypto-js");
 
 class ReviewOrderFormContainer extends Component {
+
+  static async getDerivedStateFromProps(nextProps, prevState) {
+    console.log(nextProps);
+    
+    if (nextProps.reviewById.size !== 0) {
+      if (nextProps.couponByHash.size !== 0) {
+        window.location = await '/customerInfoSuccess';
+        return null;
+      } else {
+        if (nextProps.couponError) {
+          // console.log(nextProps.couponError);
+          return nextProps.OrderActions.setError({ message: "이미 등록된 주문입니다"});
+        } 
+      }
+    }
+  }
+
   componentDidMount() {
-    const { OrderActions } = this.props;
+    const { OrderActions, ReviewActions } = this.props;
     const { modelName } = this.props;
+    const { location } = this.props;
+
+    if (location.search.length !== 0) {
+      const query = queryString.parse(location.search);
+      if (query.rid === undefined){
+        alert('리뷰를 보고 구매티켓을 받아주세요');
+        // temp
+        window.location = '/reviewSeries';
+        return;
+      } else {
+        // console.log(`rid = ${query.rid}`);
+        ReviewActions.getReviewById(query.rid);
+      }
+    } else {
+      alert('리뷰를 보고 구매티켓을 받아주세요');
+      // temp
+      window.location = '/reviewSeries';
+      return;
+    }
+
     OrderActions.getOrderPostFormByModel(modelName);
   }
 
@@ -29,13 +71,37 @@ class ReviewOrderFormContainer extends Component {
     });
   }
 
+  // temporary function
+  async handleGenerateHash(customerInfo) {
+    const { reviewById, couponByHash } = this.props;
+    const { CouponActions } = this.props;
+
+    try {
+      const reviewId = reviewById.get('_id');
+      const modelId = reviewById.get('modelId')._id;
+      const userId = {...customerInfo};
+      const payload = {
+        reviewId,
+        modelId,
+        customerId: userId
+      };
+      const key = this.props.postForm.toJS().model._id;//makerId
+      const hash = CryptoJS.AES.encrypt(JSON.stringify(payload), key);
+      // const bytes = CryptoJS.AES.decrypt(hash.toString(), key);
+      // await CouponActions.getCouponByReviewId(reviewId);
+      return { hash: btoa(hash.toString()) };
+    }
+    catch (err) {
+      console.error(err);
+    }
+  }
+
   handlePost = async(e) => {
-    const { OrderActions } = this.props;
-    const { postForm  } = this.props;
+    const { OrderActions, CouponActions } = this.props;
+    const { postForm, reviewById, couponByHash, couponError } = this.props;
     const { name, phone } = postForm.toJS().customerInfo;
-    const makerId = null
     const modelId = this.props.postForm.toJS().model._id;
-    let { contents } = this.props.postForm.toJS().model;
+    let { contents, makerId } = this.props.postForm.toJS().model;
     // spec은 삭제하고 order post
     delete contents.spec;
     const modelImage = this.props.postForm.toJS().model.modelImage;
@@ -51,9 +117,14 @@ class ReviewOrderFormContainer extends Component {
       let customerInfo = {}
       customerInfo['name'] = name;
       customerInfo['phone'] = phone;
-      
+
+      // for coupon issue 
+      const reviewId = reviewById.get('_id');
+      const userId = JSON.stringify(customerInfo);
+      const { hash } = await this.handleGenerateHash(customerInfo);
+
       await OrderActions.postOrder({customerInfo, makerId, modelId, contents, modelImage});
-      window.location = await '/customerInfoSuccess/';
+      await CouponActions.postCoupon({reviewId, userId, hash});
     } catch(e) {
       console.log(e);
     }
@@ -76,8 +147,8 @@ class ReviewOrderFormContainer extends Component {
       }
       const phoneRegex = /^\d{3}-\d{3,4}-\d{4}$/
       let error = !phone.match(phoneRegex)
-      console.log(phone)
-      console.log(error)
+      // console.log(phone)
+      // console.log(error)
       if(error) {
         OrderActions.setError({ message: "전화번호를 확인해주세요."})
         return false;
@@ -157,9 +228,14 @@ class ReviewOrderFormContainer extends Component {
 export default connect(
   (state) => ({
     postForm: state.order.get('postForm'),
-    error: state.order.get('error')
+    error: state.order.get('error'),
+    reviewById: state.review.get('reviewById'),
+    couponByHash: state.coupon.get('couponByHash'),
+    couponError: state.coupon.get('error')
   }),
   (dispatch) => ({
-    OrderActions: bindActionCreators(orderActions, dispatch)
+    OrderActions: bindActionCreators(orderActions, dispatch),
+    ReviewActions: bindActionCreators(reviewActions, dispatch),
+    CouponActions: bindActionCreators(couponActions, dispatch)
   })
 )(ReviewOrderFormContainer);

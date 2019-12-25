@@ -4,9 +4,12 @@ import { ReviewOrderFormContainer } from '../containers/ReviewOrderForm';
 class ReviewOrderForm extends Component {
   render(){
     const { modelName } = this.props.match.params;
+    const { location } = this.props;
     return(
-      <ReviewOrderFormContainer modelName={modelName}/>
-      
+      <ReviewOrderFormContainer 
+        modelName={modelName}
+        location={location}
+      />
     )
   }
 }

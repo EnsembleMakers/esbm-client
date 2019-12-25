@@ -43,11 +43,13 @@ class ReviewOrderContainer extends Component {
             />}
         fixedBar={<ModelInfoFixedBar 
             buttonOn={true}
+            reviewId={reviewById.get('_id')}
             modelById={Map(reviewById.get('modelId'))}
             handleOpenCouponModal={handleOpenCouponModal}
             />}
         fixedBottom={<ModelInfoFixedBottom
           buttonOn={true}
+          reviewId={reviewById.get('_id')}
           modelById={Map(reviewById.get('modelId'))}
           handleOpenCouponModal={handleOpenCouponModal}
           />}
