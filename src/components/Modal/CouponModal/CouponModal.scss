@@ -33,3 +33,58 @@
     color: red;
   }
 }
+
+.coupon-modal-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.coupon-modal-qrcode {
+  margin: 0 auto;
+}
+
+.coupon-modal-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.coupon-modal-button-list {
+  width: 40%;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #549dd9;
+  color: white; 
+  line-height: 40px; 
+  margin-top: 20px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    // transform: translateY(3px);
+    border: 2px solid #549dd9;
+    background-color: white;
+    color: #549dd9;
+  }
+}
+
+.coupon-modal-button-cancel {
+  width: 40%;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #fa6e57; 
+  color: white; 
+  line-height: 40px; 
+  margin-top: 20px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    // transform: translateY(3px);
+    border: 2px solid #fa6e57;
+    background-color: white;
+    color: #fa6e57;
+  }
+}

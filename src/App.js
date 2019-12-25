@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -7,8 +7,13 @@ import PrivateRoute from './PrivateRoute'
 import { 
     Home, Login, User, CustomerInfo, CustomerInfoSuccess,
     OrderManage, ModelManage, Order, Model,
+<<<<<<< HEAD
     ReviewSeries, ReviewSeriesId, ReviewOrder, ReviewOrderForm, Review,
     // CouponList
+=======
+    ReviewSeries, ReviewSeriesId, ReviewOrder, Review,
+    CouponList, CouponDetail
+>>>>>>> 47a0a36d5f2c83857a2a83cebbfa841da4c4e09e
 } from './pages';
 import { HeaderContainer } from './containers/Base';
 import { UserMenuContainer } from './containers/Base';
@@ -43,21 +48,23 @@ class App extends Component {
         return (
             <div>
                 <HeaderContainer/>
-                <Route exact path="/" component={Home}/>
-                <Route path="/user" component={User}/>
-                <Route path="/order/:id" component={Order}/>
-                <Route path="/login" component={Login}/>
-                <Route path="/customerInfo/:id" component={CustomerInfo}/>
-                <Route path="/customerInfoSuccess" component={CustomerInfoSuccess}/>
-                <PrivateRoute path="/orderManage" logged={logged} component={<OrderManage/>}/>
-                <PrivateRoute path="/modelManage" logged={logged} component={<ModelManage/>}/>
-                <Route path="/model/:number/:name" component={Model}/>
-                <Route exact path="/reviewSeries" component={ReviewSeries}/>
-                <Route path="/reviewSeries/:model" component={ReviewSeriesId}/>
-                <Route path="/reviewOrder/:id" component={ReviewOrder}/>
-                <Route path="/reviewOrderForm/:modelName" component={ReviewOrderForm}/>
-                <Route path="/review/:id" component={Review}/>
-                {/* <Route path="/couponList" component={CouponList}/> */}
+                <Switch>
+                    <Route exact path="/" component={Home}/>
+                    <Route path="/user" component={User}/>
+                    <Route path="/order/:id" component={Order}/>
+                    <Route path="/login" component={Login}/>
+                    <Route path="/customerInfo/:id" component={CustomerInfo}/>
+                    <Route path="/customerInfoSuccess" component={CustomerInfoSuccess}/>
+                    <PrivateRoute path="/orderManage" logged={logged} component={OrderManage}/>
+                    <PrivateRoute path="/modelManage" logged={logged} component={ModelManage}/>
+                    <Route path="/model/:number/:name" component={Model}/>
+                    <Route exact path="/reviewSeries" component={ReviewSeries}/>
+                    <Route path="/reviewSeries/:model" component={ReviewSeriesId}/>
+                    <Route path="/reviewOrder/:id" component={ReviewOrder}/>
+                    <Route path="/review/:id" component={Review}/>
+                    <PrivateRoute path="/coupon/:hash" logged={logged} component={CouponDetail}/>
+                    <PrivateRoute path="/myPage" logged={logged} component={User}/>
+                </Switch>
             </div>
         );
     }
