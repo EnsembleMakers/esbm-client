@@ -6,7 +6,7 @@ class CustomerInfoTable extends Component{
   const { children, companyName } = this.props;
     return(
       <div className="customer-info-wrapper">
-        <div className="customer-info-header"><b>{companyName}</b></div>
+        <div className="customer-info-header">{companyName}</div>
         {children}
       </div>
     )

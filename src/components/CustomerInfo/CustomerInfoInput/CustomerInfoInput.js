@@ -5,7 +5,7 @@ import './CustomerInfoInput.scss';
 const Label = styled.div`
   padding-top: 8px;
   padding-bottom: 8px;
-  font-size: ${props => 20*props.times}px;
+  font-size: ${props => 22*props.times}px;
   font-weight: 500;
   color: #484848;
 `
@@ -16,10 +16,12 @@ const Input = styled.input`
   width: 100%;
   border: 1px solid #c3c3c3;
   border-radius: 5px;
-  font-size: ${props => 25*props.times}px;
+  font-size: ${props => 20*props.times}px;
   color: #484848;
-
   outline: none;
+  ::placeholder {
+    color: #bab8b8;
+  }
 `
 
 const ButtonWrapper = styled.div`

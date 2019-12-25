@@ -100,7 +100,8 @@ class ModelInfoFixedBottom extends Component {
               <div className="value">{modelById.getIn(['contents', 'spec', 'price'])}원</div>
             </div>
           </Contents>
-          {buttonOn && <CouponButton onClick={handleOpenCouponModal}>구매티켓 받기</CouponButton>}
+          {/* {buttonOn && <CouponButton onClick={handleOpenCouponModal}>구매티켓 받기</CouponButton>} */}
+          {buttonOn && <CouponButton onClick={() => window.location.href='/reviewOrderForm/'+ modelById.getIn(['contents', 'model'])}>구매티켓 받기</CouponButton>}
         </Inner>
       </div>
     )

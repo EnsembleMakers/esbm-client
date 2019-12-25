@@ -35,6 +35,7 @@ class ReviewOrderContainer extends Component {
         instruction={<ReviewOrderInstruction 
             title={reviewById.get('title')}
             rating={reviewById.get('rating')}
+            date={reviewById.get('createdAt')}
             coverImg={reviewById.get('coverImg')}
             />}
         contents={<ReviewViewer 

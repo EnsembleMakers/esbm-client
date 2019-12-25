@@ -15,7 +15,6 @@ class ModelContainer extends Component {
     const { userNumber, modelName } = this.props;
     OrderActions.getOrderPostFormByModel(modelName);
     UserActions.getUserByNum(userNumber);
-    
   }
 
   // 일반 input change (detail..)
@@ -69,7 +68,7 @@ class ModelContainer extends Component {
       ||!this.validate['phone'](phone)
       ||inputView && !this.validate['address'](address)) {
         return
-      } 
+      }
 
       // customerInfo
       let customerInfo = {}

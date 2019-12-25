@@ -43,7 +43,8 @@ class ModelInfoFixedBar extends Component {
         />
         <div className="model-info-fixed-bar-label">가격</div>
         <div className="model-info-fixed-bar-value"><b>{modelById.getIn(['contents', 'spec', 'price'])}</b> 원</div>
-        {buttonOn && <div className="model-info-fixed-bar-button" onClick={handleOpenCouponModal}>구매티켓 받기</div>}
+        {/* {buttonOn && <div className="model-info-fixed-bar-button" onClick={handleOpenCouponModal}>구매티켓 받기</div>} */}
+        {buttonOn && <div className="model-info-fixed-bar-button" onClick={() => window.location.href='/reviewOrderForm/'+ modelById.getIn(['contents', 'model'])}>구매티켓 받기</div>}
       </div>
 
     )

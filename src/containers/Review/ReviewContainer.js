@@ -16,8 +16,9 @@ import { confirmBox } from '../../lib/confirmBox';
 
 class ReviewContainer extends Component {
 
-  async componentWillReceiveProps(nextProps) {
-    if(this.props.loggedInfo !== nextProps.loggedInfo){
+  // async componentWillReceiveProps(nextProps) {
+  async componentDidMount(){
+    // if(this.props.loggedInfo !== nextProps.loggedInfo){
       const { orderNumber } = this.props;
       const { ReviewActions, OrderActions } = this.props;
       let backend_host = process.env.REACT_APP_BACKEND_HOST;
@@ -32,7 +33,6 @@ class ReviewContainer extends Component {
       this.socket = socketIOClient(backend_host, {secure:true});
       
       await ReviewActions.getReviewByOrder(orderNumber);
-
       if(this.props.reviewData.size == 0) {
         await OrderActions.getOrderByNum(orderNumber)
 
@@ -40,7 +40,8 @@ class ReviewContainer extends Component {
         let modelId = await this.props.orderById.getIn(['modelId', '_id']) ? this.props.orderById.getIn(['modelId', '_id']) : null;
         let data = await {
           orderNumber: orderNumber, // Order Collection에서 documentId가 아닌 orderNumber참조 
-          userId: nextProps.loggedInfo.get('_id'),
+          // userId: nextProps.loggedInfo.get('_id'),
+          userId: null,
           modelId: modelId,
           rating: -1,
           title: '',
@@ -84,7 +85,7 @@ class ReviewContainer extends Component {
         }
       }
       this.socket.emit('join', this.props.roomId);
-    }
+    // }
   }
 
   handleChange = async(e) => {
@@ -126,7 +127,6 @@ class ReviewContainer extends Component {
     ReviewActions.changeCoverImgURL(null);
     ReviewActions.changeCoverImgType(null);
     this.socket.emit('add', { roomId, name: 'tempCoverImg', data: null })
-
   }
 
   handlePost = async() => {

@@ -7,7 +7,7 @@ import PrivateRoute from './PrivateRoute'
 import { 
     Home, Login, User, CustomerInfo, CustomerInfoSuccess,
     OrderManage, ModelManage, Order, Model,
-    ReviewSeries, ReviewSeriesId, ReviewOrder, Review,
+    ReviewSeries, ReviewSeriesId, ReviewOrder, ReviewOrderForm, Review,
     // CouponList
 } from './pages';
 import { HeaderContainer } from './containers/Base';
@@ -16,7 +16,6 @@ import * as userActions from './store/modules/user';
 import storage from './lib/storage';
 
 class App extends Component {
-
     // 로그인 세션 종료
     initializeUserInfo = async() => {
         const loggedInfo = storage.get('loggedInfo');
@@ -56,6 +55,7 @@ class App extends Component {
                 <Route exact path="/reviewSeries" component={ReviewSeries}/>
                 <Route path="/reviewSeries/:model" component={ReviewSeriesId}/>
                 <Route path="/reviewOrder/:id" component={ReviewOrder}/>
+                <Route path="/reviewOrderForm/:modelName" component={ReviewOrderForm}/>
                 <Route path="/review/:id" component={Review}/>
                 {/* <Route path="/couponList" component={CouponList}/> */}
             </div>

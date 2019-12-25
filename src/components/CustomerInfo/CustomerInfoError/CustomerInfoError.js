@@ -9,6 +9,7 @@ const Wrapper = styled.div`
     text-align: center;
     animation: ${transitions.shake} 0.3s ease-in;
     animation-fill-mode: forwards;
+    margin-bottom: 10px;
 `;
 
 const CustomerInfoError = ({children}) => (

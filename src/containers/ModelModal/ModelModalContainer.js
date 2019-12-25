@@ -90,8 +90,6 @@ class ModelModalContainer extends Component {
     const { loggedInfo, preModalContents, modalContents, modelImage } = this.props;
     const { ModalActions, ModelActions, OrderTemplateActions } = this.props;
 
-    const spec = [{"label": "테스트입니다", "value": "테스트"}]
-
     const formData = new FormData();
     formData.append('modelImage', modelImage)
     formData.append('makerId', loggedInfo.get('_id'))
