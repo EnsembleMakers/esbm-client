@@ -4,17 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import PrivateRoute from './PrivateRoute'
-import { 
-    Home, Login, User, CustomerInfo, CustomerInfoSuccess,
-    OrderManage, ModelManage, Order, Model,
-<<<<<<< HEAD
-    ReviewSeries, ReviewSeriesId, ReviewOrder, ReviewOrderForm, Review,
-    // CouponList
-=======
-    ReviewSeries, ReviewSeriesId, ReviewOrder, Review,
-    CouponList, CouponDetail
->>>>>>> 47a0a36d5f2c83857a2a83cebbfa841da4c4e09e
-} from './pages';
+import { Home, Login, User, CustomerInfo, CustomerInfoSuccess,
+    OrderManage, ModelManage, Order, Model, ReviewSeries, ReviewSeriesId, ReviewOrder, Review,
+    CouponList, CouponDetail } from './pages';
 import { HeaderContainer } from './containers/Base';
 import { UserMenuContainer } from './containers/Base';
 import * as userActions from './store/modules/user';
