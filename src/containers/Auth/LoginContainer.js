@@ -58,12 +58,12 @@ class LoginContainer extends Component {
     handleLocalLogin = async () => {
         const { form, AuthActions, UserActions, history } = this.props;
         const { email, password } = form.toJS();
-       
+
         try {
             await AuthActions.localLogin({email, password});
             const loggedInfo = this.props.result.toJS();
             UserActions.setLoggedInfo({ logged: true, loggedInfo: loggedInfo });
-            history.push('/');
+            history.goBack();
             await storage.set('loggedInfo', loggedInfo);
 
         } catch (e) {
