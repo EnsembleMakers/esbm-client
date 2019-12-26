@@ -77,6 +77,7 @@
     "react-icons": "^3.7.0",
     "react-images-upload": "^1.2.6",
     "react-ionicons": "^3.0.1",
+    "react-lottie": "^1.2.3",
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",
     "react-to-print": "^2.1.2",

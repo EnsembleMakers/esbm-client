@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Map } from 'immutable';
 import { ReviewCoupon } from '../../../components/ReviewCoupon';
-import { ReviewCouponError } from '../../../components/ReviewCoupon/ReviewCouponError';
+import { ReviewCouponInfo } from '../../../components/ReviewCoupon/ReviewCouponInfo';
 import { ReviewCouponWrapper } from '../../../components/ReviewCoupon/ReviewCouponWrapper';
 import { ReviewCouponDetail } from '../../../components/ReviewCoupon/ReviewCouponDetail';
 import { ReviewOrderInstruction } from '../../../components/ReviewOrder/ReviewOrderInstruction';
@@ -10,7 +11,7 @@ import { ReviewOrderInstruction } from '../../../components/ReviewOrder/ReviewOr
 import * as couponActions from '../../../store/modules/reviewCoupon';
 import * as reviewActions from '../../../store/modules/review';
 import * as modelActions from '../../../store/modules/model';
-// import { ReviewCouponError } from '../../../components/ReviewCoupon/ReviewCouponError';
+// import { ReviewCouponInfo } from '../../../components/ReviewCoupon/ReviewCouponInfo';
 
 const CryptoJS = require("crypto-js");
 
@@ -27,10 +28,14 @@ class CouponDetailContainer extends Component {
   static async getDerivedStateFromProps(nextProps, prevState) {
     // console.log(nextProps.loggedInfo.size);
     if (nextProps.loggedInfo.size !== 0) {
-      const { reviewById, couponByHash, error } = nextProps;
+      const { reviewById, couponByHash, infoMessage } = nextProps;
       const { CouponActions, ReviewActions } = nextProps;
       const { hash } = nextProps;
       if (couponByHash.size !==0 ) {
+        if (couponByHash.get('isUsed') === true && infoMessage.get('type') !== 'success') {
+          alert('이미 사용한 티켓입니다');
+          window.location = await '/';
+        }
         // const bytes = CryptoJS.AES.decrypt(atob(hash), nextProps.loggedInfo.get('_id'));
         try {
           // console.log('ddd');
@@ -39,16 +44,20 @@ class CouponDetailContainer extends Component {
             await ReviewActions.getReviewById(couponByHash.get('reviewId'));
           }
           return null;
-        } catch (error) {
+        } catch (err) {
           // console.log( error );
-          await CouponActions.setError({message: '잘못된 정보입니다. 다시 확인해주세요.'});
+          await CouponActions.setMessage({type: 'error', message: '잘못된 정보입니다. 다시 확인해주세요.'});
+          return null;
+        }
+      } else {
+        if (infoMessage.get('type') === 'error'){
           return null;
         }
       }
       try {
         await CouponActions.getCouponByHash(hash);
       } catch {
-        await CouponActions.setError({message: '잘못된 정보입니다. 다시 확인해주세요.'});
+        await CouponActions.setMessage({type: 'error', message: '잘못된 정보입니다. 다시 확인해주세요.'});
         return null;
       }
     }
@@ -59,6 +68,10 @@ class CouponDetailContainer extends Component {
     const { couponByHash } = this.props;
     const { CouponActions } = this.props;
 
+    await CouponActions.setMessage({
+      type: 'success',
+      message: '티켓을 성공적으로 사용했습니다'
+    });
     await CouponActions.patchCoupon({
       hash: this.props.hash,
       reviewId: couponByHash.get('reviewId')      
@@ -66,13 +79,12 @@ class CouponDetailContainer extends Component {
   }
 
   render() {
-    const { reviewById, couponByHash, error } = this.props;
+    const { reviewById, couponByHash, infoMessage } = this.props;
     const { hash } = this.props;
 
-    console.log(reviewById);
     return(
       <ReviewCouponWrapper>
-        {!error ? (
+        {infoMessage.get('type')==='' ? (
           <ReviewCouponDetail
             detail={
               <ReviewOrderInstruction 
@@ -83,7 +95,10 @@ class CouponDetailContainer extends Component {
             handleUseCoupon={this.handleUseCoupon}
           />
         ) : (
-          <ReviewCouponError>{error}</ReviewCouponError>
+          <ReviewCouponInfo
+            type={infoMessage.get('type')}
+            message={infoMessage.get('message')}
+          />
         )}
       </ReviewCouponWrapper>
     )
@@ -95,7 +110,7 @@ export default connect(
     loggedInfo: state.user.get('loggedInfo'),
     allCoupons: state.coupon.get('allCoupons'),
     couponByHash: state.coupon.get('couponByHash'),
-    error: state.coupon.get('error'),
+    infoMessage: state.coupon.get('infoMessage'),
     reviewById: state.review.get('reviewById')
   }),
   (dispatch) => ({

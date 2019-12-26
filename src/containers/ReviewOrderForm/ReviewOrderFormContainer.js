@@ -17,7 +17,7 @@ const CryptoJS = require("crypto-js");
 class ReviewOrderFormContainer extends Component {
 
   static async getDerivedStateFromProps(nextProps, prevState) {
-    console.log(nextProps);
+    // console.log(nextProps);
     
     if (nextProps.reviewById.size !== 0) {
       if (nextProps.couponByHash.size !== 0) {
@@ -231,7 +231,7 @@ export default connect(
     error: state.order.get('error'),
     reviewById: state.review.get('reviewById'),
     couponByHash: state.coupon.get('couponByHash'),
-    couponError: state.coupon.get('error')
+    couponError: state.coupon.get('infoMessage').get('message')
   }),
   (dispatch) => ({
     OrderActions: bindActionCreators(orderActions, dispatch),
