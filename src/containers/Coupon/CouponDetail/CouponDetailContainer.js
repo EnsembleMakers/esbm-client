@@ -15,51 +15,40 @@ import * as modelActions from '../../../store/modules/model';
 
 const CryptoJS = require("crypto-js");
 
-function doDecryptData(hash, key, couponByHash) {
-  const bytes = CryptoJS.AES.decrypt(atob(hash), key);
-  var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-  if (decryptedData.reviewId !== couponByHash.get('reviewId')) {
-    throw "Error occured";
-  }
-  return null;
-}
-
 class CouponDetailContainer extends Component {
-  static async getDerivedStateFromProps(nextProps, prevState) {
-    // console.log(nextProps.loggedInfo.size);
-    if (nextProps.loggedInfo.size !== 0) {
-      const { reviewById, couponByHash, infoMessage } = nextProps;
-      const { CouponActions, ReviewActions } = nextProps;
-      const { hash } = nextProps;
-      if (couponByHash.size !==0 ) {
-        if (couponByHash.get('isUsed') === true && infoMessage.get('type') !== 'success') {
-          alert('이미 사용한 티켓입니다');
-          window.location = await '/';
-        }
-        // const bytes = CryptoJS.AES.decrypt(atob(hash), nextProps.loggedInfo.get('_id'));
-        try {
-          // console.log('ddd');
-          doDecryptData(hash, nextProps.loggedInfo.get('_id'), couponByHash);
-          if (nextProps.reviewById.size === 0) {
-            await ReviewActions.getReviewById(couponByHash.get('reviewId'));
-          }
-          return null;
-        } catch (err) {
-          // console.log( error );
-          await CouponActions.setMessage({type: 'error', message: '잘못된 정보입니다. 다시 확인해주세요.'});
-          return null;
-        }
-      } else {
-        if (infoMessage.get('type') === 'error'){
-          return null;
-        }
+  async componentDidMount() {
+    const { reviewById, infoMessage } = this.props;
+    const { hash } = this.props;
+    const { CouponActions, ReviewActions } = this.props;
+    
+    try {
+      let couponByHash = await CouponActions.getCouponByHash(hash);
+      couponByHash = couponByHash.data;
+
+      if (couponByHash.isUsed === true && infoMessage.get('type') !== 'success') {
+        alert('이미 사용한 티켓입니다');
+        window.location = await '/';
       }
-      try {
-        await CouponActions.getCouponByHash(hash);
-      } catch {
-        await CouponActions.setMessage({type: 'error', message: '잘못된 정보입니다. 다시 확인해주세요.'});
-        return null;
+
+      this.doDecryptData(hash, this.props.loggedInfo.get('_id'), couponByHash);
+      if (this.props.reviewById.size === 0) {
+        await ReviewActions.getReviewById(couponByHash.reviewId);
       }
+      return null;
+
+    }catch {
+      await CouponActions.setMessage({type: 'error', message: '잘못된 정보입니다. 다시 확인해주세요.'});
+      return null;
+    }
+  }
+
+  doDecryptData = (hash, key, couponByHash) => {
+    const bytes = CryptoJS.AES.decrypt(atob(hash), key);
+    console.log(bytes)
+    let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    console.log(decryptedData)
+    if (decryptedData.reviewId !== couponByHash.reviewId) {
+      throw "Error occured";
     }
     return null;
   }

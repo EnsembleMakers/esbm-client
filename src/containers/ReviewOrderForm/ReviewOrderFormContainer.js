@@ -85,7 +85,7 @@ class ReviewOrderFormContainer extends Component {
         modelId,
         customerId: userId
       };
-      const key = this.props.postForm.toJS().model._id;//makerId
+      const key = this.props.postForm.toJS().model.makerId; //makerId
       const hash = CryptoJS.AES.encrypt(JSON.stringify(payload), key);
       // const bytes = CryptoJS.AES.decrypt(hash.toString(), key);
       // await CouponActions.getCouponByReviewId(reviewId);
@@ -122,7 +122,6 @@ class ReviewOrderFormContainer extends Component {
       const reviewId = reviewById.get('_id');
       const userId = JSON.stringify(customerInfo);
       const { hash } = await this.handleGenerateHash(customerInfo);
-
       await OrderActions.postOrder({customerInfo, makerId, modelId, contents, modelImage});
       await CouponActions.postCoupon({reviewId, userId, hash});
     } catch(e) {
