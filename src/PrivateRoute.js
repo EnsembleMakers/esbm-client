@@ -9,7 +9,7 @@ class PrivateRoute extends Component {
     if (logged!=null) {
       var result = logged ?
           <Route path={path} component={component}/> :
-          <Redirect to={{pathname: '/login/signin'}} push />
+          <Redirect to={{pathname: '/login/signin', search: `?redirectTo=${path.slice(1)}`}} push />
       return result;
     } else {
       return <></>
