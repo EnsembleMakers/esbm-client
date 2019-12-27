@@ -55,6 +55,7 @@ class App extends Component {
                     <Route path="/review/:id" component={Review}/>
                     <Route path="/reviewOrderForm/:modelName" component={ReviewOrderForm}/>
                     <PrivateRoute path="/coupon/:hash" logged={logged} component={CouponDetail}/>
+                    <PrivateRoute path="/couponList" logged={logged} component={CouponList}/>
                     <PrivateRoute path="/myPage" logged={logged} component={User}/>
                 </Switch>
             </div>

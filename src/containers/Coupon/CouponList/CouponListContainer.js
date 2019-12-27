@@ -7,12 +7,10 @@ import * as couponActions from '../../../store/modules/reviewCoupon';
 
 class CouponListContainer extends Component {
 
-  async componentWillReceiveProps(nextProps) {
-    if(this.props.loggedInfo !== nextProps.loggedInfo){
-      const { CouponActions } = this.props;
+  componentDidMount() {
+    const { CouponActions } = this.props;
 
-      await CouponActions.getAllCoupon();
-    }
+    CouponActions.getAllCoupon();
   }
 
   render() {
