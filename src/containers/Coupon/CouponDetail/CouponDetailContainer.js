@@ -26,6 +26,7 @@ function doDecryptData(hash, key, couponByHash) {
 
 class CouponDetailContainer extends Component {
   static async getDerivedStateFromProps(nextProps, prevState) {
+  // async componentWillReceiveProps(nextProps){
     // console.log(nextProps.loggedInfo.size);
     if (nextProps.loggedInfo.size !== 0) {
       const { reviewById, couponByHash, infoMessage } = nextProps;
