@@ -65,7 +65,11 @@ class LoginContainer extends Component {
             await AuthActions.localLogin({email, password});
             const loggedInfo = this.props.result.toJS();
             UserActions.setLoggedInfo({ logged: true, loggedInfo: loggedInfo });
-            history.replace(`/${query.redirectTo}`);
+            if (query.redirectTo) {
+                history.replace(`/${query.redirectTo}`);
+            } else {
+                history.push('/');
+            }
             await storage.set('loggedInfo', loggedInfo);
 
         } catch (e) {
@@ -78,7 +82,6 @@ class LoginContainer extends Component {
         const { handleChange, handleLocalLogin } = this;
         const { error } = this.props;
 
-        console.log('dddd');
         return (
             <AuthContent title="로그인">
                 <InputWithLabel 
