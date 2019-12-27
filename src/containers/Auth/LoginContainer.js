@@ -56,14 +56,20 @@ class LoginContainer extends Component {
 
 
     handleLocalLogin = async () => {
-        const { form, AuthActions, UserActions, history } = this.props;
+        const { form, AuthActions, UserActions, history, location } = this.props;
         const { email, password } = form.toJS();
-
+        
+        const query = queryString.parse(location.search);
+        // console.log(query.redirectTo);
         try {
             await AuthActions.localLogin({email, password});
             const loggedInfo = this.props.result.toJS();
             UserActions.setLoggedInfo({ logged: true, loggedInfo: loggedInfo });
-            history.goBack();
+            if (query.redirectTo) {
+                history.replace(`/${query.redirectTo}`);
+            } else {
+                history.push('/');
+            }
             await storage.set('loggedInfo', loggedInfo);
 
         } catch (e) {
@@ -75,7 +81,6 @@ class LoginContainer extends Component {
         const { email, password } = this.props.form.toJS(); // form 에서 email 과 password 값을 읽어옴
         const { handleChange, handleLocalLogin } = this;
         const { error } = this.props;
-
 
         return (
             <AuthContent title="로그인">
