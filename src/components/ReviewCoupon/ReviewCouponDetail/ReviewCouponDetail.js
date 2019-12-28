@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import './ReviewCouponDetail.scss';
 
-import { ReviewCoupon } from '..';
+import { ReviewCouponQRCode } from '../ReviewCouponQRCode';
 
 class ReviewCouponDetail extends Component {
   render() {
-    const { detail, hash } = this.props;
+    const { detail } = this.props;
     const { handleUseCoupon } = this.props;
     return(
-      <>
-        {/* <ReviewCoupon 
-          hash={hash}
-        /> */}
+      <div>
         {detail}
         <div className="review-coupon-use-button" onClick={()=>{handleUseCoupon();}}>사용하기</div>
-      </> 
+      </div> 
     )
   }
 }

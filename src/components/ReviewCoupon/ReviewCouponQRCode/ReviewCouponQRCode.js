@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import QRCode from 'qrcode.react';
 
-import './ReviewCoupon.scss';
+import './ReviewCouponQRCode.scss';
 
-class ReviewCoupon extends Component {
+class ReviewCouponQRCode extends Component {
   render() {
     const { hash } = this.props;
     // console.log( hash );
@@ -17,4 +17,4 @@ class ReviewCoupon extends Component {
   }
 }
 
-export default ReviewCoupon;
+export default ReviewCouponQRCode;

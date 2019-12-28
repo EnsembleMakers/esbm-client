@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Map } from 'immutable';
-import { ReviewCoupon } from '../../../components/ReviewCoupon';
+import { ReviewCouponQRCode } from '../../../components/ReviewCoupon/ReviewCouponQRCode';
 import { ReviewCouponInfo } from '../../../components/ReviewCoupon/ReviewCouponInfo';
 import { ReviewCouponWrapper } from '../../../components/ReviewCoupon/ReviewCouponWrapper';
 import { ReviewCouponDetail } from '../../../components/ReviewCoupon/ReviewCouponDetail';
@@ -30,7 +30,7 @@ class CouponDetailContainer extends Component {
         window.location = await '/';
       }
 
-      this.doDecryptData(hash, this.props.loggedInfo.get('_id'), couponByHash);
+      this.doDecryptData(hash, this.props.loggedInfo.get('_id'));
       if (this.props.reviewById.size === 0) {
         await ReviewActions.getReviewById(couponByHash.reviewId);
       }
@@ -42,12 +42,17 @@ class CouponDetailContainer extends Component {
     }
   }
 
-  doDecryptData = (hash, key, couponByHash) => {
+  doDecryptData = (hash, key) => {
     const bytes = CryptoJS.AES.decrypt(atob(hash), key);
-    console.log(bytes)
-    let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-    console.log(decryptedData)
-    if (decryptedData.reviewId !== couponByHash.reviewId) {
+    const { couponByHash } = this.props;
+    // console.log(bytes)
+    try {
+      let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      // console.log(decryptedData)
+      if (decryptedData.reviewId !== couponByHash.reviewId) {
+        throw "Error occured";
+      }
+    } catch (err) {
       throw "Error occured";
     }
     return null;
