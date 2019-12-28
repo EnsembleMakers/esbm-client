@@ -40,7 +40,7 @@ class App extends Component {
             <div>
                 <HeaderContainer/>
                 <Switch>
-                    <Route exact path="/" component={Home}/>
+                    {/* <Route exact path="/" component={Home}/>
                     <Route path="/user" component={User}/>
                     <Route path="/order/:id" component={Order}/>
                     <Route path="/login" component={Login}/>
@@ -54,6 +54,22 @@ class App extends Component {
                     <Route path="/reviewOrder/:id" component={ReviewOrder}/>
                     <Route path="/review/:id" component={Review}/>
                     <Route path="/reviewOrderForm/:modelName" component={ReviewOrderForm}/>
+                    <PrivateRoute path="/coupon/:hash" logged={logged} component={CouponDetail}/>
+                    <PrivateRoute path="/couponList" logged={logged} component={CouponList}/>
+                    <PrivateRoute path="/myPage" logged={logged} component={User}/> */}
+                    <Route exact path="/" component={ReviewSeries}/>
+                    <Route path="/reviewOrder/:id" component={ReviewOrder}/>
+                    <Route path="/reviewOrderForm/:modelName" component={ReviewOrderForm}/>
+                    <Route path="/review/:id" component={Review}/>
+                    
+                    <Route path="/order/:id" component={Order}/>
+                    <Route path="/login" component={Login}/>
+                    <Route path="/customerInfo/:id" component={CustomerInfo}/>
+                    <Route path="/customerInfoSuccess" component={CustomerInfoSuccess}/>
+                    <Route path="/model/:number/:name" component={Model}/>
+                    
+                    <PrivateRoute path="/orderManage" logged={logged} component={OrderManage}/>
+                    <PrivateRoute path="/modelManage" logged={logged} component={ModelManage}/>
                     <PrivateRoute path="/coupon/:hash" logged={logged} component={CouponDetail}/>
                     <PrivateRoute path="/couponList" logged={logged} component={CouponList}/>
                     <PrivateRoute path="/myPage" logged={logged} component={User}/>
