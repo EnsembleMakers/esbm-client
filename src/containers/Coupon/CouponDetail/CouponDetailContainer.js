@@ -49,7 +49,7 @@ class CouponDetailContainer extends Component {
     try {
       let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
       // console.log(decryptedData)
-      if (decryptedData.reviewId !== couponByHash.reviewId) {
+      if (decryptedData.reviewId !== couponByHash.get('reviewId')) {
         throw "Error occured";
       }
     } catch (err) {
