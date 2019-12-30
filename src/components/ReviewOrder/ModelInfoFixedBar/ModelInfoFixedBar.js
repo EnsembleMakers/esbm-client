@@ -42,7 +42,11 @@ class ModelInfoFixedBar extends Component {
           clickable={false}
         />
         <div className="model-info-fixed-bar-label">가격</div>
-        <div className="model-info-fixed-bar-value"><b>{modelById.getIn(['contents', 'spec', 'price'])}</b> 원</div>
+        <div className="model-info-fixed-bar-value" style={{display: 'flex', flexDirection: 'row'}}>
+          <div style={{textDecoration: 'line-through', color: '#8e8e8e', fontWeight: '400'}}>{modelById.getIn(['contents', 'spec', 'price'])}원</div>
+          <div>&nbsp;{modelById.getIn(['contents', 'spec', 'offPrice'])}원</div>    
+          <div style={{fontSize: '10px'}}>&nbsp;(한정)</div>
+        </div>
         {/* {buttonOn && <div className="model-info-fixed-bar-button" onClick={handleOpenCouponModal}>구매티켓 받기</div>} */}
         {buttonOn && <div className="model-info-fixed-bar-button" onClick={() => window.location.href=`/reviewOrderForm/${modelById.getIn(['contents', 'model'])}?rid=${reviewId}`}>구매티켓 받기</div>}
       </div>

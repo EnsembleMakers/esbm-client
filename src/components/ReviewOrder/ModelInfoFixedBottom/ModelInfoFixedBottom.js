@@ -32,7 +32,8 @@ const ExpandButton = styled.div`
 
 const CouponButton = styled.div`
   display: flex;
-  width: 180px;
+  width: 33%;
+  max-width: 180px;
   height: 50px;
   margin-left: 8px;
   border-radius: 5px;
@@ -41,6 +42,7 @@ const CouponButton = styled.div`
   align-items: center;
   background-color: #549dd9; 
   color: white;
+  cursor: pointer;
 `
 
 class ModelInfoFixedBottom extends Component {
@@ -97,7 +99,10 @@ class ModelInfoFixedBottom extends Component {
             }
             <div className="model-info-fixed-bottom-price">
               <div className="label">가격</div>
-              <div className="value">{modelById.getIn(['contents', 'spec', 'price'])}원</div>
+              <div className="value" style={{display: 'flex', flexDirection: 'row'}}><div style={{textDecoration: 'line-through', color: '#8e8e8e', fontWeight: '400'}}>{modelById.getIn(['contents', 'spec', 'price'])}원</div>
+              <div>&nbsp;{modelById.getIn(['contents', 'spec', 'offPrice'])}원</div>    
+              <div style={{fontSize: '10px'}}>&nbsp;(한정)</div>
+              </div>
             </div>
           </Contents>
           {/* {buttonOn && <CouponButton onClick={handleOpenCouponModal}>구매티켓 받기</CouponButton>} */}

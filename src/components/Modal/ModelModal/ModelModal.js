@@ -110,6 +110,14 @@ class ModelModal extends Component {
           value={contents.getIn(['spec', 'price'])||''}
           onChange={handleChangeSpecInput}
         />
+        <DetailInput
+          deleteButton={false}
+          label={'판매가격'}
+          name={'offPrice'}
+          placeholder={'판매가격'}
+          value={contents.getIn(['spec', 'offPrice'])||''}
+          onChange={handleChangeSpecInput}
+        />
         <div className="model-modal-line"/>
         {/* 모델명 */}
         <DetailInput

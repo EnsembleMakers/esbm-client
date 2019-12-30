@@ -20,6 +20,7 @@ import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
 import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
+
 import { get } from 'http';
 
 class ReviewEditor extends Component {
@@ -31,10 +32,12 @@ class ReviewEditor extends Component {
     return (
         <div>
             <div className="review-input-label">제품 스토리를 작성하세요!</div>
+            <div className="review-manual">- 리뷰는 400자 이상, 사진 3장 이상으로 작성해야 합니다.</div>
+            <div className="review-manual">- 사진 업로드 이후 텍스트를 적을 수 없을 때, <b>사진을 클릭한 뒤</b> 줄바꿈(Enter 혹은 Return 키)을 눌러주세요.</div>
+            <div className="review-manual">- 저장하기를 누르면 언제든지 내용을 수정하거나 작성을 이어나갈 수 있습니다.</div>
             <CKEditor
               editor={ ClassicEditor }
               onChange={ ( event, editor ) => { 
-                // console.log( editor.getData() );
                 socket.emit('add', { roomId, name:'tempContent', data: editor.getData() } );
               }}
               onBlur={ ( event, editor ) => {

@@ -6,8 +6,9 @@ import { ReviewCouponQRCode } from '../../../components/ReviewCoupon/ReviewCoupo
 import { ReviewCouponInfo } from '../../../components/ReviewCoupon/ReviewCouponInfo';
 import { ReviewCouponWrapper } from '../../../components/ReviewCoupon/ReviewCouponWrapper';
 import { ReviewCouponDetail } from '../../../components/ReviewCoupon/ReviewCouponDetail';
-import { ReviewOrderInstruction } from '../../../components/ReviewOrder/ReviewOrderInstruction';
+import { LinkReviewInfo } from '../../../components/Order/LinkReviewInfo';
 
+import * as orderActions from '../../../store/modules/order';
 import * as couponActions from '../../../store/modules/reviewCoupon';
 import * as reviewActions from '../../../store/modules/review';
 import * as modelActions from '../../../store/modules/model';
@@ -24,7 +25,6 @@ class CouponDetailContainer extends Component {
     try {
       let couponByHash = await CouponActions.getCouponByHash(hash);
       couponByHash = couponByHash.data;
-
       if (couponByHash.isUsed === true && infoMessage.get('type') !== 'success') {
         alert('이미 사용한 티켓입니다');
         window.location = await '/';
@@ -45,11 +45,10 @@ class CouponDetailContainer extends Component {
   doDecryptData = (hash, key) => {
     const bytes = CryptoJS.AES.decrypt(atob(hash), key);
     const { couponByHash } = this.props;
-    // console.log(bytes)
+    
     try {
       let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-      // console.log(decryptedData)
-      if (decryptedData.reviewId !== couponByHash.reviewId) {
+      if (decryptedData.reviewId !== couponByHash.get('reviewId')) {
         throw "Error occured";
       }
     } catch (err) {
@@ -60,7 +59,7 @@ class CouponDetailContainer extends Component {
 
   handleUseCoupon = async () => {
     const { couponByHash } = this.props;
-    const { CouponActions } = this.props;
+    const { CouponActions, OrderActions } = this.props;
 
     await CouponActions.setMessage({
       type: 'success',
@@ -70,6 +69,11 @@ class CouponDetailContainer extends Component {
       hash: this.props.hash,
       reviewId: couponByHash.get('reviewId')      
     });
+
+    const customerInfo = couponByHash.get('orderForm')
+    const makerId = this.props.loggedInfo.get('_id')
+    await OrderActions.postOrder({customerInfo, makerId})
+
   }
 
   render() {
@@ -81,9 +85,8 @@ class CouponDetailContainer extends Component {
         {infoMessage.get('type')==='' ? (
           <ReviewCouponDetail
             detail={
-              <ReviewOrderInstruction 
-                title={reviewById.get('title')}
-                coverImg={reviewById.get('coverImg')}
+              <LinkReviewInfo
+                reviewData={reviewById}
               />
             }
             handleUseCoupon={this.handleUseCoupon}
@@ -108,6 +111,7 @@ export default connect(
     reviewById: state.review.get('reviewById')
   }),
   (dispatch) => ({
+    OrderActions: bindActionCreators(orderActions, dispatch),
     CouponActions: bindActionCreators(couponActions, dispatch),
     ReviewActions: bindActionCreators(reviewActions, dispatch),
     ModelActions: bindActionCreators(modelActions, dispatch)

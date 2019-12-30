@@ -8,9 +8,9 @@ class ReviewCouponDetail extends Component {
     const { detail } = this.props;
     const { handleUseCoupon } = this.props;
     return(
-      <div>
-        {detail}
-        <div className="review-coupon-use-button" onClick={()=>{handleUseCoupon();}}>사용하기</div>
+      <div className="review-coupon-detail-wrapper">
+        <div>{detail}</div>
+        <div className="review-coupon-detail-post-button" onClick={()=>{handleUseCoupon();}}>사용하기</div>
       </div> 
     )
   }

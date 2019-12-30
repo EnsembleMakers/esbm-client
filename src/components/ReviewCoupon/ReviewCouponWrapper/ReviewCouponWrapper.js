@@ -6,7 +6,7 @@ class ReviewCouponWrapper extends Component {
     const { children } = this.props;
     return(
       <div className="review-coupon-wrapper">
-        <div className="review-coupon-header">할인권 정보</div>
+        <div className="review-coupon-header">구매권 확인</div>
         <div className="review-coupon-body">{children}</div>
       </div>
     )
