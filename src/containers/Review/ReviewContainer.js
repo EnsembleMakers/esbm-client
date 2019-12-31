@@ -137,7 +137,7 @@ class ReviewContainer extends Component {
     await ReviewActions.getReviewByOrder(orderNumber);
     await ReviewActions.changeMode('complete');
     // window.location = await `/order/${reviewData.get('orderNumber')}`;
-    window.location = await `/reviewSeries`;
+    window.location = await `/`;
   }
 
   handleChangeMode = async (mode) => {
