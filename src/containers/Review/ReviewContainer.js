@@ -136,7 +136,8 @@ class ReviewContainer extends Component {
     this.socket.emit('commit', this.props.roomId);
     await ReviewActions.getReviewByOrder(orderNumber);
     await ReviewActions.changeMode('complete');
-    window.location = await `/order/${reviewData.get('orderNumber')}`;
+    // window.location = await `/order/${reviewData.get('orderNumber')}`;
+    window.location = await `/reviewSeries`;
   }
 
   handleChangeMode = async (mode) => {

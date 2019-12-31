@@ -87,7 +87,7 @@ const Header = ({children}) => {
         <Positioner>
             <WhiteBackground>
                 <HeaderContents>
-                    <Logo href="/">ensemble makers</Logo>
+                    <Logo href="/event">ensemble makers</Logo>
                     <Menu></Menu>
                     {children}
                 </HeaderContents>
