@@ -24,6 +24,40 @@ import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleu
 import { get } from 'http';
 
 class ReviewEditor extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      wordCount: 0,
+      imgCount: 0,
+    }
+  }
+
+  componentDidMount() {
+    if(this.props.reviewData.size) {
+      this.setState({'wordCount': this.wordCounting(this.props.reviewData.get('tempContent'))});
+      this.setState({'imgCount': this.imgCounting(this.props.reviewData.get('tempContent'))})
+    }
+  }
+
+  wordCounting = (data) => {
+    let wordCount = 0;
+    if(data) {
+      let rawText = data.replace(/(<([^>]+)>)/ig,"");
+      rawText = rawText.replace(/\r/g,'');
+      rawText = rawText.replace(/\t/g,'');
+      rawText = rawText.replace(/&nbsp;/g,'');
+      wordCount  = rawText.length;
+    }
+    return wordCount;
+  }
+  imgCounting = (data) => {
+    let imgCount = 0;
+    if(data) {
+      let imgTag = /<img src\s*=\s*\\*"(.+?)\\*">/g;
+      imgCount = data.match(imgTag) ? data.match(imgTag).length : 0
+    }
+    return imgCount;
+  }
 
   render() {
     const { socket, roomId, reviewData, reviewMode } = this.props;
@@ -37,7 +71,9 @@ class ReviewEditor extends Component {
             <div className="review-manual">- 저장하기를 누르면 언제든지 내용을 수정하거나 작성을 이어나갈 수 있습니다.</div>
             <CKEditor
               editor={ ClassicEditor }
-              onChange={ ( event, editor ) => { 
+              onChange={ ( event, editor ) => {
+                this.setState({wordCount: this.wordCounting(editor.getData())})
+                this.setState({imgCount: this.imgCounting(editor.getData())})
                 socket.emit('add', { roomId, name:'tempContent', data: editor.getData() } );
               }}
               onBlur={ ( event, editor ) => {
@@ -84,6 +120,7 @@ class ReviewEditor extends Component {
                 reviewData.get('tempContent')
               }
             />
+  <div style={{marginTop: '10px', color: 'rgb(118, 118, 118)', textAlign: 'right', fontSize: '18px'}}>글자수 <b>{`${this.state.wordCount}`}</b>자 이미지 <b>{`${this.state.imgCount}`}</b>개</div>
           </div>
     );
 }

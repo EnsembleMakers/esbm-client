@@ -17,7 +17,7 @@ class ReviewSeriesList extends Component {
     return(
       <div className="review-series-list-wrapper">
         <div className="review-series-list-header">리뷰 확인하기</div>
-        <div style={{'fontSize': '25px', 'color': '#484848', 'fontWeight': 700, 'paddingBottom': '15px'}}>성수동</div>
+        {/* <div style={{'fontSize': '25px', 'color': '#484848', 'fontWeight': 700, 'paddingBottom': '15px'}}>성수동</div> */}
         <div className="review-series-list">{reviewSeriesList}</div>
       </div>
     )

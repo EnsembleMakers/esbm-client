@@ -105,7 +105,7 @@ class LoginContainer extends Component {
                     error && <AuthError>{error}</AuthError>
                 }
                 <AuthButton onClick={handleLocalLogin}>로그인</AuthButton>
-                <RightAlignedLink to="/login/signup">회원가입</RightAlignedLink>
+                {/* <RightAlignedLink to="/login/signup">회원가입</RightAlignedLink> */}
             </AuthContent>
         );
     }

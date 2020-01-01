@@ -6,20 +6,15 @@ import { Link } from 'react-router-dom';
 
 // 화면의 중앙에 위치시킨다
 const Positioner = styled.div`
-    width: 45%;
+    width: 95%;
+    max-width: 768px;
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 20px;
 `;
 
-// 너비, 그림자 설정
-const ShadowedBox = styled.div`
-    ${shadow(2)}
-`;
-
 // 로고
 const LogoWrapper = styled.div`
-    background: #4695D6;
     height: 5rem;
     display: flex;
     align-items: center;
@@ -27,7 +22,7 @@ const LogoWrapper = styled.div`
 `;
 
 const Logo = styled(Link)`
-    color: white;
+    color: #4695D6;
     font-family: 'Rajdhani';
     font-size: 2.4rem;
     letter-spacing: 1px;
@@ -43,14 +38,12 @@ const Contents = styled.div`
 
 const AuthWrapper = ({children}) => (
     <Positioner>
-        <ShadowedBox>
             <LogoWrapper>
                 <Logo to="/">ensemble makers</Logo>
             </LogoWrapper>
             <Contents>
                 {children}
             </Contents>
-        </ShadowedBox>
     </Positioner>
 );
 

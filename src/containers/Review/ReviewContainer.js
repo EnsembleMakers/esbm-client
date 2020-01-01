@@ -16,9 +16,7 @@ import { confirmBox } from '../../lib/confirmBox';
 
 class ReviewContainer extends Component {
 
-  // async componentWillReceiveProps(nextProps) {
   async componentDidMount(){
-    // if(this.props.loggedInfo !== nextProps.loggedInfo){
       const { orderNumber } = this.props;
       const { ReviewActions, OrderActions } = this.props;
       let backend_host = process.env.REACT_APP_BACKEND_HOST;
@@ -48,7 +46,14 @@ class ReviewContainer extends Component {
           content: '',
           isCommit: false
         };
-        await ReviewActions.postReview(data);
+
+        // if not exist order, redirect to home
+        if(!this.props.orderById.size) {
+          await alert('존재하지 않는 주문입니다.');
+          window.location = await `/`;
+        }else {
+          await ReviewActions.postReview(data);
+        }
       }
 
       await ReviewActions.setRoomId(this.props.reviewData.get('_id'));
@@ -170,13 +175,13 @@ class ReviewContainer extends Component {
           handleChangeCoverImg={handleChangeCoverImg}
           handleDeleteCoverImg={handleDeleteCoverImg}
         />
-        <ReviewEditor 
+        {reviewData.size && <ReviewEditor 
           socket={socket}
           roomId={roomId}
           reviewData={reviewData}
           reviewMode={reviewMode}
           handleChangeMode={handleChangeMode}
-        />
+        />}
         <div style={{'height': '40px', 'width': '30%', 'margin': '0 auto', 'borderRadius': '5px', 'backgroundColor': '#549dd9', 'color': 'white', 'lineHeight': '40px', 'marginTop': '23px','fontWeight': 600, 'textAlign': 'center', 'cursor': 'pointer'}} onClick={() => confirmBox("리뷰를 저장하시겠습니까?", () => handlePost())}>저장하기</div>
       </ReviewWrapper>
     )
