@@ -3,6 +3,7 @@ import { pender } from 'redux-pender';
 import { Map, List } from 'immutable';
 import * as ReviewAPI from '../../lib/api/review';
 
+const INIT_REVIEW_SERIES = 'review/INIT_REVIEW_SERIES';
 const CHANGE_MODE = 'review/CHANGE_MODE';
 const CHANGE_INPUT = 'review/CHANGE_INPUT';
 const CHANGE_COVER_IMG = 'review/CHANGE_COVER_IMG';
@@ -16,6 +17,7 @@ const GET_REIVEW_SERIES = 'review/GET_REVIEW_SERIES';
 const POST_REVIEW = 'review/POST_REVIEW';
 const PATCH_REVIEW = 'review/PATCH_REVIEW';
 
+export const initReviewSeries = createAction(INIT_REVIEW_SERIES);
 export const changeMode = createAction(CHANGE_MODE);
 export const changeInput = createAction(CHANGE_INPUT);
 export const changeCoverImg = createAction(CHANGE_COVER_IMG);
@@ -39,6 +41,9 @@ const initialState = Map({
 })
 
 export default handleActions({
+  [INIT_REVIEW_SERIES]: (state, action) => {
+    return state.set('reviewSeries', List())
+  },
   [CHANGE_MODE]: (state, action) => {
     return state.set('mode', action.payload);
   },

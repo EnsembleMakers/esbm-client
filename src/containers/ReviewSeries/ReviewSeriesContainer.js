@@ -9,6 +9,7 @@ class ReviewSeriesContainer extends Component {
   componentDidMount() {
     const { ReviewActions } = this.props;
     window.addEventListener('scroll', this.handleScroll);
+    ReviewActions.initReviewSeries()
     ReviewActions.getReviewSeries(`offset=${0}`)
   }
   componentWillUnmount() {
@@ -26,7 +27,6 @@ class ReviewSeriesContainer extends Component {
     document.body.scrollTop;
 
     if (scrollHeight - innerHeight - scrollTop < 100) {
-      console.log("Almost Bottom Of This Browser");
       if(!lastSeries){
         ReviewActions.getReviewSeries(`offset=${1}`)
       }
