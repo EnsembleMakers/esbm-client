@@ -10,11 +10,11 @@ import * as orderActions from '../../store/modules/order';
 
 class ModelContainer extends Component {
 
-  componentDidMount() {
+  async componentDidMount() {
     const { OrderActions, UserActions } = this.props;
     const { userNumber, modelName } = this.props;
-    OrderActions.getOrderPostFormByModel(modelName);
-    UserActions.getUserByNum(userNumber);
+    const userByNum = await UserActions.getUserByNum(userNumber);
+    await OrderActions.getOrderPostFormByModel(userByNum.data._id, modelName);
   }
 
   // 일반 input change (detail..)

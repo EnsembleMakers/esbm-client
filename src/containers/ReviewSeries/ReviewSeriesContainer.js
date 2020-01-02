@@ -6,14 +6,15 @@ import { ReviewSeriesList } from '../../components/ReviewSeries/ReviewSeriesList
 import * as reviewActions from '../../store/modules/review';
 
 class ReviewSeriesContainer extends Component {
-  componentDidMount() {
+  async componentDidMount() {
     const { ReviewActions } = this.props;
-    window.addEventListener('scroll', this.handleScroll);
-    ReviewActions.initReviewSeries()
-    ReviewActions.getReviewSeries(`offset=${0}`)
+    await ReviewActions.initReviewSeries()
+    await ReviewActions.getReviewSeries(`offset=${0}`)
+    await window.addEventListener('scroll', this.handleScroll);
+    
   }
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
+  async componentWillUnmount() {
+    await window.removeEventListener('scroll', this.handleScroll)
   }
 
   handleScroll = throttle(() => {
@@ -26,8 +27,10 @@ class ReviewSeriesContainer extends Component {
     (document.documentElement && document.documentElement.scrollTop) ||
     document.body.scrollTop;
 
+    console.log(scrollHeight)
     if (scrollHeight - innerHeight - scrollTop < 100) {
       if(!lastSeries){
+        console.log('HELLO')
         ReviewActions.getReviewSeries(`offset=${1}`)
       }
     }

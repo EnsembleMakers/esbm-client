@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getModelById = (id) => axios.get('/api/models/'+id);
 export const getModelsByMakerId = (id) => axios.get('/api/models/byId/'+id);
-export const getModelByModelName = (name) => axios.get('/api/models/byName/'+name);
+export const getModelByModelName = (makerId, name) => axios.get('/api/models/byName/'+makerId+'/'+name);
 export const postModel = (formData) => axios.post('/api/models/', formData);
 export const patchModel = ({id, contents, makerId}) => axios.patch('/api/models/'+id, {contents: contents, makerId: makerId});
 export const deleteModel = ({id, modelImage}) => axios.delete('/api/models/'+id, { data: { modelImage: modelImage }});
