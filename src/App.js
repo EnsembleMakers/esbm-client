@@ -12,6 +12,7 @@ import * as userActions from './store/modules/user';
 import storage from './lib/storage';
 
 class App extends Component {
+
     // 로그인 세션 종료
     initializeUserInfo = async() => {
         const loggedInfo = storage.get('loggedInfo');
