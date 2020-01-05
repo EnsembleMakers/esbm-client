@@ -103,7 +103,7 @@ class ReviewOrderFormContainer extends Component {
     const modelId = this.props.postForm.toJS().model._id;
     let { contents, makerId } = this.props.postForm.toJS().model;
     // spec은 삭제하고 order post
-    delete contents.spec;
+    //delete contents.spec;
     const modelImage = this.props.postForm.toJS().model.modelImage;
 
     try {
