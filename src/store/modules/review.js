@@ -43,6 +43,7 @@ const initialState = Map({
 export default handleActions({
   [INIT_REVIEW_SERIES]: (state, action) => {
     return state.set('reviewSeries', List())
+                .set('lastSeries', false)
   },
   [CHANGE_MODE]: (state, action) => {
     return state.set('mode', action.payload);
