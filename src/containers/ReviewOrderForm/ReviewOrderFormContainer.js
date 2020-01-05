@@ -32,7 +32,7 @@ class ReviewOrderFormContainer extends Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { OrderActions, ReviewActions } = this.props;
     const { modelName } = this.props;
     const { location } = this.props;
@@ -46,7 +46,8 @@ class ReviewOrderFormContainer extends Component {
         return;
       } else {
         // console.log(`rid = ${query.rid}`);
-        ReviewActions.getReviewById(query.rid);
+        const reviewById = await ReviewActions.getReviewById(query.rid);
+        await OrderActions.getOrderPostFormByModel(reviewById.data.modelId.makerId, modelName);
       }
     } else {
       alert('리뷰를 보고 구매티켓을 받아주세요');
@@ -54,8 +55,8 @@ class ReviewOrderFormContainer extends Component {
       window.location = '/reviewSeries';
       return;
     }
-
-    OrderActions.getOrderPostFormByModel(modelName);
+    // console.log(modelById.data)
+    // OrderActions.getOrderPostFormByModel(modelName);
   }
 
   handleChangeCustomerInfoInput = (e) => {
