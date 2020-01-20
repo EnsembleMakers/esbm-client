@@ -73,7 +73,10 @@
     "react-dev-utils": "^9.0.3",
     "react-dom": "^16.8.3",
     "react-draft-wysiwyg": "^1.13.2",
+<<<<<<< HEAD
     "react-ga": "^2.7.0",
+=======
+>>>>>>> 524e70a66cb873c6dc587aafd09f9bc968f16d73
     "react-hot-loader": "^4.5.3",
     "react-icons": "^3.7.0",
     "react-images-upload": "^1.2.6",
