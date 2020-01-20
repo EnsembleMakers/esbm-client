@@ -58,23 +58,9 @@ class CouponDetailContainer extends Component {
   }
 
   handleUseCoupon = async () => {
-<<<<<<< HEAD
-    const { couponByHash, reviewById } = this.props;
-    const { CouponActions, OrderActions } = this.props;
-
-    const customerInfo = couponByHash.get('orderForm')
-    const makerId = this.props.loggedInfo.get('_id')
-    const modelId = reviewById.getIn(['modelId', '_id'])
-    const contents = reviewById.getIn(['modelId', 'contents'])
-    delete contents.spec
-    const modelImage = reviewById.getIn(['modelId', 'modelImage'])
-    await OrderActions.postOrder({customerInfo, makerId, modelId, contents, modelImage});
-
-=======
     const { couponByHash } = this.props;
     const { CouponActions, OrderActions } = this.props;
 
->>>>>>> 524e70a66cb873c6dc587aafd09f9bc968f16d73
     await CouponActions.setMessage({
       type: 'success',
       message: '티켓을 성공적으로 사용했습니다'
@@ -84,13 +70,6 @@ class CouponDetailContainer extends Component {
       reviewId: couponByHash.get('reviewId')      
     });
 
-<<<<<<< HEAD
-=======
-    const customerInfo = couponByHash.get('orderForm')
-    const makerId = this.props.loggedInfo.get('_id')
-    await OrderActions.postOrder({customerInfo, makerId})
-
->>>>>>> 524e70a66cb873c6dc587aafd09f9bc968f16d73
   }
 
   render() {
