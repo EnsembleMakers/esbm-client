@@ -1,0 +1,40 @@
+.review-coupon-list-wrapper {
+  padding-top: 65px;
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+.review-coupon-list {
+  display: grid;
+  // phone
+  @media screen and (min-width: 320px) {
+    grid-template-columns: 49% 49%;
+    column-gap: calc(2%/1);
+  }
+  // tablet
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 32.33% 32.33% 32.33%;
+    column-gap: calc(3%/2);
+  }
+  // desktop
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: 24% 24% 24% 24%;
+    column-gap: calc(4%/3);
+  }
+  // wide
+  @media screen and (min-width: 1440px) {
+    grid-template-columns: 19% 19% 19% 19% 19%;
+    column-gap: calc(5%/4);
+  }
+  // grid-template-rows: 50px 50px;
+  row-gap: 30px;
+}
+
+.review-coupon-list-header {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  font-size: 35px;
+  color: #484848;
+  font-weight: 700;
+  text-align: center;
+}

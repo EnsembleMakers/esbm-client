@@ -1,7 +1,5 @@
 Ducks 구조 사용
 
-
-
 # createAction
 
 사실 action 생성자는 post = { type: POST, payload: {...}}과 같은 형식으로 만들었다. payload와 함께 해당 액션을 만들어 보낸다는 뜻이다. 하지만 post = createAction(POST)와 같이하면 " [POST]: (state, action) => return payload객체들 " 의 내용을 가지고 액션을 생성한다. 

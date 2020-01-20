@@ -1,44 +1,114 @@
+.calendar-controll-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &.select-box {
+    width: 40%;
+    height: 30px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
+
+  &.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 40%;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
+}
+
+.calendar-save-button {
+  width: 45%;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #009e8e;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: #027063;
+  }
+}
+
+.calendar-cancel-button {
+  width: 45%;
+  border-radius: 5px;
+  text-align: center;
+  border: 2px solid #009e8e;
+  color: #009e8e;
+  cursor: pointer;
+  &:hover {
+    border: 2px solid #027063;
+    color: #027063;
+  }
+}
+
+.calendar-arrow-button {
+  color: #4695D6;
+  cursor: pointer;
+  &:hover{
+    color: #484848;
+  }
+}
+
 .calendar-wrapper {
-  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px 0px #767676;
+  padding: 5px;
 }
 
 .calendar-header {
   display: flex;
   flex-direction: row;
+  margin-top: 10px;
+  margin-bottom: 10px;
   width: 100%;
   text-align: center;
+  font-weight: 800;
 }
 
 .calendar-navi {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 10px;
   width: 100%;
   text-align: center;
+  
 }
 
 .calendar-table {
-  width: 100%;
+  width: 100%;  
+  border-collapse: collapse;
+  user-select: none;
 }
 
 .calendar-day {
-  border: 1px solid blue;
   text-align: center;
+  width: 30px;
+  height: 24px;
+  line-height: 24px;
+  font-weight: 800;
+  padding: 5px;
   &.empty {
-    border: 1px solid pink;
+    border: 1px solid white;
   }
   &.today {
-    border: 1px solid red;
+    background-color: #fa6e57;
+    color: white;
   }
   &.deadline {
-    border: 1px solid peru;
+    background-color: #4695D6;
+    color: white;
+  }
+  &.new-deadline {
+    background-color: #009e8e;
+    color: white;
   }
 }
 
-.calendar-select-box {
-  width: 100px;
-  height: 30px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-}
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './ModelModal.scss';
 import { FaTimes } from 'react-icons/fa';
 import { DetailInput } from '../DetailInput';
+import { CheckBox } from '../CheckBox';
 import { ModalError } from '../ModalError';
 
 import styled from 'styled-components';
@@ -11,24 +12,21 @@ import PropTypes from 'prop-types';
 class ModelModal extends Component {
   render() {
     const { mode, addMode, addContent, detail, contents, modelImageURL, error } = this.props;
-    const { onChangeTemplateInput, onChangeModelImg, onDeleteModelImg, onChangeAddMode, onChangeAddInput, onAddList, onDeleteList } = this.props;
+    const { handleChangeTemplateInput, handleChangeSpecInput, handleChangeSpecButton, handleChangeMainInput, handleChangeModelImg, handleDeleteModelImg, handleChangeAddMode, handleChangeAddInput, handleAddList, handleDeleteList } = this.props;
     const { handlePost, handlePatch, handleHide } = this.props;
 
-    let buttonOn;
     const templateInputList = contents.get('template').map(
       (content, i) => {
-        // 카테고리가 "모델"일 경우 삭제버튼 비활성화
-        i === 0 ? buttonOn = false : buttonOn = true;
         return <DetailInput
           key={i}
           name={i}
-          deleteButton={buttonOn}
+          deleteButton={true}
           label={content.label}
           placeholder={content.label}
           // only id, name, value, type are valid with input tags.
           value={content.value || ''}
-          onChange={(e, kind) => onChangeTemplateInput(e, 'template')}
-          onDeleteList={() => onDeleteList(i, 'template')}
+          onChange={handleChangeTemplateInput}
+          handleDeleteList={() => handleDeleteList(i, 'template')}
         />
       }
     )
@@ -53,28 +51,97 @@ class ModelModal extends Component {
             <div style={{display: 'flex', flexDirection: 'row'}}>
               <div className="model-modal-image-button-box">
                 <label htmlFor="ex_file">사진선택</label>
-                <input type="file" id="ex_file" onChange={onChangeModelImg}/>
+                <input type="file" id="ex_file" onChange={handleChangeModelImg}/>
               </div>
               <div className="model-modal-image-delete-button-box">
-                <label onClick={onDeleteModelImg}>사진삭제</label>
+                <label onClick={handleDeleteModelImg}>사진삭제</label>
               </div>
             </div>
           </div>
         </div>
         <div className="model-modal-line"/>
+        <DetailInput
+          deleteButton={false}
+          label={'제품이름'}
+          name={'name'}
+          placeholder={'제품이름'}
+          value={contents.getIn(['spec', 'name'])||''}
+          onChange={handleChangeSpecInput}
+        />
+        <DetailInput
+          deleteButton={false}
+          label={'가죽소재'}
+          name={'leather'}
+          placeholder={'가죽소재'}
+          value={contents.getIn(['spec', 'leather'])||''}
+          onChange={handleChangeSpecInput}
+        />
+        <CheckBox
+          label={'굽조절'}
+          name={'heelCustom'}
+          list_1={'가능'}
+          list_2={'불가능'}
+          value={contents.getIn(['spec', 'heelCustom']) || 0}
+          clickable={true}
+          handleChangeSpecButton={handleChangeSpecButton}
+        />
+        <DetailInput
+          deleteButton={false}
+          label={'밑창소재'}
+          name={'soleMaterial'}
+          placeholder={'밑창소재'}
+          value={contents.getIn(['spec', 'soleMaterial'])||''}
+          onChange={handleChangeSpecInput}
+        />
+        <CheckBox
+          label={'사이즈 측정'}
+          name={'sizeCustom'}
+          list_1={'직접측정'}
+          list_2={'측정안함'}
+          value={contents.getIn(['spec', 'sizeCustom']) || 0}
+          clickable={true}
+          handleChangeSpecButton={handleChangeSpecButton}
+        />
+        <DetailInput
+          deleteButton={false}
+          label={'가격'}
+          name={'price'}
+          placeholder={'가격'}
+          value={contents.getIn(['spec', 'price'])||''}
+          onChange={handleChangeSpecInput}
+        />
+        <DetailInput
+          deleteButton={false}
+          label={'판매가격'}
+          name={'offPrice'}
+          placeholder={'판매가격'}
+          value={contents.getIn(['spec', 'offPrice'])||''}
+          onChange={handleChangeSpecInput}
+        />
+        <div className="model-modal-line"/>
+        {/* 모델명 */}
+        <DetailInput
+          deleteButton={false}
+          label={'모델명'}
+          name={'model'}
+          placeholder={'모델명'}
+          value={contents.get('model')||''}
+          onChange={handleChangeMainInput}
+        />
+        {/* 템플릿 */}
         {templateInputList}
-        {addMode === false && <div className="model-modal-open-add-input-button" onClick={() => onChangeAddMode(true)}> 작성 목록 추가하기 </div>}
+        {addMode === false && <div className="model-modal-open-add-input-button" onClick={() => handleChangeAddMode(true)}> 작성 목록 추가하기 </div>}
         {addMode === true && 
           <div className="model-modal-add-wrapper">
             <input 
               className="model-modal-add-input"
               placeholder="추가할 목록을 작성하세요"
               value={addContent || ''}
-              onChange={onChangeAddInput}
+              onChange={handleChangeAddInput}
             />
-            <div className="model-modal-add-button" onClick={() => onAddList(addContent)}>추가하기</div>
+            <div className="model-modal-add-button" onClick={() => handleAddList(addContent)}>추가하기</div>
             
-            <div className="model-modal-add-cancel-button" onClick={() => onChangeAddMode(false)}>X</div>
+            <div className="model-modal-add-cancel-button" onClick={() => handleChangeAddMode(false)}>X</div>
           </div>
         }
         <ModalError>{error.get('message')}</ModalError>

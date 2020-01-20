@@ -1,34 +1,32 @@
 .customer-info-post-button-wrapper {
-  padding-top: 1rem;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
 }
 
 .customer-info-post-button {
-  position: relative;
-
-  left: 50%;
-  transform: translate(-50%, 0%);
-  margin-top: 1.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  margin-top: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   border: 2px solid #1d79c4;
-  color: #1d79c4;
-
-  font-size: 20px;
+  border-radius: 5px;
+  color: hsl(207, 74%, 44%);
   text-align: center;
+  font-size: 20px;
   cursor: pointer;
 
-  // phone
-  @media screen and (min-width: 320px) {
-    width: 130px;
-  }
-  // desktop
-  @media screen and (min-width: 992px) {
-    width: 170px;
-  }
-  // tablet
-  @media screen and (min-width: 768px) {
-    width: 170px;
-  }
+  // // phone
+  // @media screen and (min-width: 320px) {
+  //   width: 130px;
+  // }
+  // // desktop
+  // @media screen and (min-width: 992px) {
+  //   width: 170px;
+  // }
+  // // tablet
+  // @media screen and (min-width: 768px) {
+  //   width: 170px;
+  // }
 
   &:hover {
     color: white;

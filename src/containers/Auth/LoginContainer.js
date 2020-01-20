@@ -23,6 +23,12 @@ class LoginContainer extends Component {
         }
     }
 
+    handleKeyDown = async (e) => {
+        if (e.key === 'Enter') {
+           await this.handleLocalLogin(e);
+        }
+    }
+
     handleChange = (e) => {
         const { AuthActions } = this.props;
         const { name, value } = e.target;
@@ -50,14 +56,20 @@ class LoginContainer extends Component {
 
 
     handleLocalLogin = async () => {
-        const { form, AuthActions, UserActions, history } = this.props;
+        const { form, AuthActions, UserActions, history, location } = this.props;
         const { email, password } = form.toJS();
-       
+        
+        const query = queryString.parse(location.search);
+        // console.log(query.redirectTo);
         try {
             await AuthActions.localLogin({email, password});
             const loggedInfo = this.props.result.toJS();
-            UserActions.setLoggedInfo(loggedInfo);
-            history.push('/');
+            UserActions.setLoggedInfo({ logged: true, loggedInfo: loggedInfo });
+            if (query.redirectTo) {
+                history.replace(`/${query.redirectTo}`);
+            } else {
+                history.push('/');
+            }
             await storage.set('loggedInfo', loggedInfo);
 
         } catch (e) {
@@ -70,7 +82,6 @@ class LoginContainer extends Component {
         const { handleChange, handleLocalLogin } = this;
         const { error } = this.props;
 
-
         return (
             <AuthContent title="로그인">
                 <InputWithLabel 
@@ -79,6 +90,7 @@ class LoginContainer extends Component {
                     placeholder="이메일" 
                     value={email} 
                     onChange={handleChange}
+                    onKeyDown={this.handleKeyDown} 
                 />
                 <InputWithLabel 
                     label="비밀번호" 
@@ -87,12 +99,13 @@ class LoginContainer extends Component {
                     type="password" 
                     value={password} 
                     onChange={handleChange}
+                    onKeyDown={this.handleKeyDown} 
                 />
                 {
                     error && <AuthError>{error}</AuthError>
                 }
                 <AuthButton onClick={handleLocalLogin}>로그인</AuthButton>
-                <RightAlignedLink to="/login/signup">회원가입</RightAlignedLink>
+                {/* <RightAlignedLink to="/login/signup">회원가입</RightAlignedLink> */}
             </AuthContent>
         );
     }

@@ -37,7 +37,7 @@ class EditorModal extends Component {
 
   render() {
     const { addMode, addContent, name, state, contents, modelImageURL } = this.props;
-    const { handleChangeTemplateInput, handleChangeModelImg, handleDeleteModelImg, handleChangeAddMode, handleChangeAddInput, handleAddList, handleDeleteList } = this.props;
+    const { handleChangeTemplateInput, handleChangeMainInput, handleChangeModelImg, handleDeleteModelImg, handleChangeAddMode, handleChangeAddInput, handleAddList, handleDeleteList } = this.props;
     const { handlePatch, handleHide } = this.props;
     let stateText;
     stateText = state=="ordered" ? "주문완료" 
@@ -47,8 +47,6 @@ class EditorModal extends Component {
     let buttonOn;
     const templateInputList = contents.get('template').map(
       (content, i) => {
-        // 카테고리가 "모델"일 경우 삭제버튼 비활성화
-        i === 0 ? buttonOn = false : buttonOn = true;
         return <DetailInput
           key={i}
           name={i}
@@ -57,8 +55,8 @@ class EditorModal extends Component {
           placeholder={content.label}
           // only id, name, value, type are valid with input tags.
           value={content.value || ''}
-          onChange={(e, kind) => handleChangeTemplateInput(e, 'template')}
-          onDeleteList={() => handleDeleteList(i, 'template')}
+          onChange={(e, kind) => handleChangeTemplateInput(e)}
+          handleDeleteList={() => handleDeleteList(i, 'template')}
         />
       }
     )
@@ -94,6 +92,16 @@ class EditorModal extends Component {
           </div>
         </div>
         <div className="editor-modal-line"/>
+        {/* 모델명 */}
+        <DetailInput
+          deleteButton={false}
+          label={'모델명'}
+          name={'model'}
+          placeholder={'모델명'}
+          // only id, name, value, type are valid with input tags.
+          value={contents.get('model')||''}
+          onChange={handleChangeMainInput}
+        />
         {/* 템플릿 */}
         {templateInputList}
         {/* 특이사항 */}
@@ -104,7 +112,7 @@ class EditorModal extends Component {
           placeholder={'특이사항'}
           // only id, name, value, type are valid with input tags.
           value={contents.get('detail')}
-          onChange={handleChangeAddInput}
+          onChange={handleChangeMainInput}
         />
 
         {addMode === false && <div className="editor-modal-open-add-input-button" onClick={() => handleChangeAddMode(true)}> 작성 목록 추가하기 </div>}

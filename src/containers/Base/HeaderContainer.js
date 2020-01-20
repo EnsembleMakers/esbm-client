@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Header from '../../components/Base/Header';
 import { LoginButton } from '../../components/Base/LoginButton';
-import { UserButtonContainer } from '../../containers/Base';
+import { UserButtonContainer, UserMenuContainer } from '../../containers/Base';
 import * as authActions from '../../store/modules/auth';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -28,7 +28,8 @@ class HeaderContainer extends Component {
         return (
             <Header>
                 { user.get('logged')
-                    ? <UserButtonContainer/> : <LoginButton/>
+                    ? <Fragment><UserButtonContainer/><UserMenuContainer/></Fragment>
+                    : <LoginButton/>
                 }
             </Header>
         );

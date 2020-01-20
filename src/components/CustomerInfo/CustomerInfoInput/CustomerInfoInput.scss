@@ -1,14 +1,5 @@
-.customer-info-label {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  font-size: 20px;
-}
-
-.customer-info-input {
-  padding: 0.5rem;
+.customer-info-input-wrapper {
   width: 100%;
-  border: 1px solid #c3c3c3;
-  border-radius: 0.5rem;
-  font-size: 25px;
-  outline: none;
+  max-width: 340px;
+  margin: 0 auto;
 }

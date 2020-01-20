@@ -1,0 +1,53 @@
+.model-info-fixed-bottom-wrapper {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  border-top: 1px solid #EBEBEB;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 3px 9px 3px;
+
+  // desktop
+  @media screen and (min-width: 1024px) {
+    display: none;
+  }
+}
+
+.model-info-fixed-bottom-name {
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #484848;
+}
+
+.model-info-fixed-bottom-detail {
+  font-size: 12px;
+  margin-bottom: 1.1em;
+
+  .label {
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    color: #767676;
+  }
+  .value {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #484848;
+  }
+}
+
+.model-info-fixed-bottom-price {
+  font-size: 15px;
+
+  .label {
+    font-size: 1em;
+    margin-bottom: 0.1em;
+    font-weight: 500;
+    color: #767676;
+  }
+  .value {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #484848;
+  }
+}

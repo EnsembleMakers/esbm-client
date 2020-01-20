@@ -1,0 +1,20 @@
+.check-box-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.1em;
+}
+
+.check-box-label {
+  position: relative;
+  text-align: left;
+  font-size: 1em;
+  font-weight: 600;
+  color: #767676;
+  margin-bottom: 0.5em;
+}
+
+.check-box-value {
+  display: flex;
+  flex-direction: row;
+  font-size: 1.1em;
+}

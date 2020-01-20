@@ -1,0 +1,28 @@
+.review-series-id-wrapper {
+  margin-top: 60px;
+  margin-right: 40px;
+  margin-left: 40px;
+}
+
+.review-series-id-header {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  font-size: 35px;
+  color: #484848;
+  font-weight: 700;
+  text-align: center;
+}
+
+.review-series-id-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.review-series-id-left {
+  width: 65%;
+}
+
+.review-series-id-right {
+  width: 30%;
+}

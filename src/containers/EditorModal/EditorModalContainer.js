@@ -12,13 +12,20 @@ import { stringify } from 'querystring';
 
 class EditorModalContainer extends Component {
 
-  handleChangeTemplateInput = (e, kind) => {
+  handleChangeTemplateInput = (e) => {
     const { ModalActions } = this.props;
     ModalActions.changeTemplateInput({
       name: e.target.name,
-      value: e.target.value,
-      kind: kind
+      value: e.target.value
     });
+  }
+
+  handleChangeMainInput = (e) => {
+    const { ModalActions } = this.props;
+    ModalActions.changeMainInput({
+      name: e.target.name,
+      value: e.target.value
+    })
   }
 
   handleChangeAddInput = (e) => {
@@ -141,12 +148,13 @@ class EditorModalContainer extends Component {
     const { ModalActions } = this.props;
     ModalActions.hide()
     ModalActions.initModelImgURL()
+    ModalActions.changeAddMode(false)
   }
 
   render() {
     const { orderContents, modalContents, visible, mode, addMode, addContent, modelImageURL } = this.props;
 
-    const { handleChangeTemplateInput, handleChangeModelImg, handleChangeAddInput, handleDeleteModelImg, handleChangeAddMode, handleAddList, handleDeleteList, handlePatch, handleHide } = this;
+    const { handleChangeTemplateInput, handleChangeMainInput, handleChangeModelImg, handleChangeAddInput, handleDeleteModelImg, handleChangeAddMode, handleAddList, handleDeleteList, handlePatch, handleHide } = this;
 
     return(
       visible==='editor' && mode==='modify' &&
@@ -160,6 +168,7 @@ class EditorModalContainer extends Component {
           contents={modalContents}
           modelImageURL={modelImageURL}
           handleChangeTemplateInput={handleChangeTemplateInput}
+          handleChangeMainInput={handleChangeMainInput}
           handleChangeAddInput={handleChangeAddInput}
           handleChangeModelImg={handleChangeModelImg}
           handleDeleteModelImg={handleDeleteModelImg}

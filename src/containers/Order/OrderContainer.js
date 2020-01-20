@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { OrderWrapper } from '../../components/Order/OrderWrapper';
 import { ProcessingControll } from '../../components/Order/ProcessingControll';
+import { ModelInfo } from '../../components/Order/ModelInfo';
 import { MakerInfo } from '../../components/Order/MakerInfo';
+import { LinkReviewInfo } from '../../components/Order/LinkReviewInfo';
+import { MyReview } from '../../components/Order/MyReview';
 import { ReviewPost } from '../../components/Order/ReviewPost';
 import { ReviewRead } from '../../components/Order/ReviewRead';
 import * as orderActions from '../../store/modules/order';
@@ -15,19 +18,13 @@ class OrderContainer extends Component {
   async componentDidMount() {
     const { OrderActions, ReviewActions } = this.props;
     const orderNumber = this.props.id;
-    // getOrderByNum 결과 객체로 저장
-    let orderId = await OrderActions.getOrderByNum(orderNumber);
-    await ReviewActions.getReviewById(orderId.data._id);
+    await OrderActions.getOrderByNum(orderNumber);
+    await ReviewActions.getReviewByOrder(orderNumber)
   }
 
   handleChangeMode = (mode) => {
     const { ReviewActions } = this.props;
     ReviewActions.changeMode(mode);
-  }
-
-  handleChangeReviewInput = (value) => {
-    const { ReviewActions } = this.props;
-    ReviewActions.changeInput(value);
   }
 
   handleChangeReviewRating = (rating) => {
@@ -77,14 +74,17 @@ class OrderContainer extends Component {
   }
 
   render() {
-    const { orderById, review } = this.props;
-    const state = orderById.get('state');
-    const mode = review.get('mode');
-    const { handleChangeMode, handleChangeReviewInput, handleChangeReviewRating, handlePostReview, handlePatchReview, handlePatchProcessingNext, handlePatchProcessingPre } = this;
+    const { orderById, reviewData } = this.props;
+    // const state = orderById.get('state');
+    // const mode = review.get('mode');
+    const { handleChangeMode, handleChangeReviewRating, handlePostReview, handlePatchReview, handlePatchProcessingNext, handlePatchProcessingPre } = this;
 
     return(
-      <OrderWrapper>
-        <ProcessingControll
+      <OrderWrapper
+        date={formatDate(orderById.get('createdAt'))}
+      >
+        {/* 임시 보류 */}
+        {/* <ProcessingControll
           id={orderById.get('_id')}
           orderNumber={orderById.get('orderNumber')}
           name={orderById.getIn(['customerInfo', 'name'])}
@@ -114,13 +114,20 @@ class OrderContainer extends Component {
             mode={mode}
             reviewRating={review.getIn(['data', 'rating'])}
             reviewContent={review.getIn(['data', 'content'])}
-            onChangeReviewInput={handleChangeReviewInput}
             onChangeReviewRating={handleChangeReviewRating}
             onPostReview={handlePostReview}
             onPatchReview={handlePatchReview}
             onChangeMode={handleChangeMode}
           />
-        }
+        } */}
+        <ModelInfo
+          orderById={orderById}
+        />
+        <LinkReviewInfo/>
+        <MyReview
+          reviewData={reviewData}
+        />
+        <MakerInfo/>
       </OrderWrapper>
     )
   }
@@ -129,7 +136,7 @@ class OrderContainer extends Component {
 export default connect(
   (state) => ({
     orderById: state.order.get('orderById'),
-    review: state.review,
+    reviewData: state.review.get('data'),
   }),
   (dispatch) => ({
     OrderActions: bindActionCreators(orderActions, dispatch),

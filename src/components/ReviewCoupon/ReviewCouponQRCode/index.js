@@ -1,0 +1,1 @@
+export { default as ReviewCouponQRCode } from './ReviewCouponQRCode';

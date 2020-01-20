@@ -36,8 +36,8 @@ class OrderManageDetail extends Component {
   render() {
     const { imgTextView, detailView, review } = this.props;
     const { lastComplete, cutComplete, upperComplete, soleComplete, processingState } = this.props;
-    const { id , orderNumber, name, date, phone, address, state, contents, images, modelImage } = this.props;
-    const { handleChangeState, handleChangeImgText, handleOpenEditorModal, handleOpenImageModal, handlePatchProcessingNext, handlePatchProcessingPre, handleDeleteOrder } = this.props;
+    const { id , orderNumber, name, date, phone, address, state, contents, images, modelImage, deadline, orderDay, dateObject } = this.props;
+    const { handleChangeState, handleChangeImgText, handleOpenEditorModal, handleOpenImageModal, handlePatchOrderDeadline, handleDeleteOrder } = this.props;
     let stateText;
     stateText = state=="ordered" ? "주문완료" 
     : state=="processing" ? "제작중" 
@@ -54,14 +54,12 @@ class OrderManageDetail extends Component {
             <div className="header-date">주문날짜 {date}</div>
             <hr className="order-manage-detail-line"/>
             {state == "processing" && <ProcessingTable
-              id={id}
               lastComplete={lastComplete}
               cutComplete={cutComplete}
               upperComplete={upperComplete}
               soleComplete={soleComplete}
               processingState={processingState}
-              handlePatchProcessingNext={handlePatchProcessingNext}
-              handlePatchProcessingPre={handlePatchProcessingPre}/>}
+              />}
             {state == "finished" && <FinishedTable
               lastComplete={lastComplete}
               cutComplete={cutComplete}
@@ -69,10 +67,13 @@ class OrderManageDetail extends Component {
               soleComplete={soleComplete}/>}
             <div className="detail-contents-wrapper">
               <DetailContentsTable
+                id={id}
                 address={address}
                 contents={contents}
-                images={images}
                 imgTextView={imgTextView}
+                deadline={deadline}
+                orderDay={orderDay}
+                handlePatchOrderDeadline={handlePatchOrderDeadline}
               />
               <DetailFixedbar
                 state={state}
@@ -92,8 +93,8 @@ class OrderManageDetail extends Component {
                 handleDeleteOrder={handleDeleteOrder}
               />
             </div>
-            { // state가 finished일 때, 리뷰창 보이기
-              state==="finished" ? <Review review={review}/> : null}
+            {/* { // state가 finished일 때, 리뷰창 보이기
+              state==="finished" ? <Review review={review}/> : null} */}
           </div>
           // 이름을 클릭하지 않았을 때 나타나는 내용
           : <div className="detail-default-content">고객 주문서를 확인하려면 왼쪽에 있는 해당 <b>주문상태</b>와 <b>고객이름</b>을 클릭하세요.</div>}

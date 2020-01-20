@@ -1,5 +1,7 @@
 import axios from 'axios';
 
-export const getReviewById = (id) => axios.get('/api/reviews/'+id);
+export const getReviewById = (id) => axios.get('/api/reviews/'+id)
+export const getReviewByOrder = (id) => axios.get('/api/reviews/order/'+id);
+export const getReviewSeries = (queryString) => axios.get('/api/reviews/series/next?'+ queryString)
 export const postReview = (data) => axios.post('/api/reviews', data);
-export const patchReview = ({id, data}) => axios.patch('/api/reviews/'+id, data)
+export const patchReview = ({id, data}) => axios.patch('/api/reviews/'+id, data);

@@ -16,22 +16,27 @@ export const checkStatus = createAction(CHECK_STATUS, AuthAPI.checkStatus);
 export const getUserByNum = createAction(GET_USER_BY_NUM, UserAPI.getUserByNum);
 
 const initialState = Map({
-    loggedInfo: Map({ // 현재 로그인중인 유저의 정보
-        thumbnail: null,
-        email: null
-    }),
+    loggedInfo: Map({}),
     loadedUserInfo: Map({}),
-    logged: false, // 현재 로그인중인지 알려준다
+    logged: null, // 현재 로그인중인지 알려준다
     validated: false // 이 값은 현재 로그인중인지 아닌지 한번 서버측에 검증했음을 의미
 });
 
 export default handleActions({
-    [SET_LOGGED_INFO]: (state, action) => state.set('loggedInfo', Map(action.payload)).set('logged', true),
+    [SET_LOGGED_INFO]: (state, action) => {
+        const { logged, loggedInfo } = action.payload;
+        return state.set('logged', logged)
+                    .set('loggedInfo', Map(loggedInfo))
+    },
     [SET_VALIDATED]: (state, action) => state.set('validated', action.payload),
     ...pender({
         type: CHECK_STATUS,
-        onSuccess: (state, action) => state.set('loggedInfo', Map(action.payload.data)).set('validated', true), 
-        onFailure: (state, action) => initialState
+        onSuccess: (state, action) => { 
+            return state.set('loggedInfo', Map(action.payload.data)).set('validated', true)
+        }, 
+        onFailure: (state, action) => {  
+            return initialState
+        }
     }),
     ...pender({
         type: GET_USER_BY_NUM,

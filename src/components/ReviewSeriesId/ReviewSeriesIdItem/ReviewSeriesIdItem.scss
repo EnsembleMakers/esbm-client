@@ -1,0 +1,14 @@
+.image{
+  text-align: center;
+  margin: 1em auto;
+  &.image-style-align-right {
+    float: right;
+    margin-left: var(--ck-image-style-spacing);
+  }
+
+  &.image-style-align-left {
+    float: left;
+    margin-left: var(--ck-image-style-spacing);
+  }
+
+}

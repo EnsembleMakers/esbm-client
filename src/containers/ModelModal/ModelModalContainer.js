@@ -11,16 +11,39 @@ import * as orderTemplateActions from '../../store/modules/orderTemplate';
 
 class ModelModalContainer extends Component {
 
-  handleChangeTemplateInput = (e, kind) => {
+  handleChangeTemplateInput = (e) => {
     const { ModalActions } = this.props;
     ModalActions.changeTemplateInput({
       name: e.target.name,
       value: e.target.value,
-      kind: kind
     });
   }
 
-  handleChangeModelImg = async(e) => {
+  handleChangeSpecInput = (e) => {
+    const { ModalActions } = this.props;
+    ModalActions.changeSpecInput({
+      name: e.target.name,
+      value: e.target.value,
+    });
+  }
+
+  handleChangeSpecButton = (name, value) => {
+    const { ModalActions } = this.props;
+    ModalActions.changeSpecButton({
+      name: name,
+      value: value
+    })
+  }
+
+  handleChangeMainInput = (e) => {
+    const { ModalActions } = this.props;
+    ModalActions.changeMainInput({
+      name: e.target.name,
+      value: e.target.value
+    })
+  }
+
+  handleChangeModelImg = (e) => {
     const { ModalActions } = this.props;
     ModalActions.changeModelImg(e.target.files[0])
     // images URL를 만들기 위한 action
@@ -106,7 +129,8 @@ class ModelModalContainer extends Component {
     try{
       await ModelActions.patchModel({
         id: modelById.get('_id'),
-        contents: modalContents
+        contents: modalContents,
+        makerId: loggedInfo.get('_id'),
       })
 
       // modelImage 변경
@@ -177,10 +201,11 @@ class ModelModalContainer extends Component {
 
   handleHide = () => {
     const { ModalActions, ModelActions } = this.props;
-    ModalActions.hide();
+    ModalActions.changeAddMode(false)
     ModalActions.initModelImgURL();
     ModelActions.initModelById();
     ModalActions.setError({})
+    ModalActions.hide();
   }
 
   setError = (message) => {
@@ -188,13 +213,12 @@ class ModelModalContainer extends Component {
     ModalActions.setError({
       message
     })
-
   }
 
   render() {
     const { orderContents, modalContents, visible, mode, addMode, addContent, modelImageURL, error } = this.props;
 
-    const { handleChangeTemplateInput, handleChangeModelImg, handleChangeAddInput, handleDeleteModelImg, handleChangeAddMode, handleAddList, handleDeleteList, handlePost, handlePatch, handleHide } = this;
+    const { handleChangeTemplateInput, handleChangeSpecInput, handleChangeSpecButton, handleChangeMainInput, handleChangeModelImg, handleChangeAddInput, handleDeleteModelImg, handleChangeAddMode, handleAddList, handleDeleteList, handlePost, handlePatch, handleHide } = this;
 
     return(
       visible==="model" &&
@@ -208,13 +232,16 @@ class ModelModalContainer extends Component {
             detail={modalContents.toJS().detail}
             error={error}
             modelImageURL={modelImageURL}
-            onChangeTemplateInput={handleChangeTemplateInput}
-            onChangeModelImg={handleChangeModelImg}
-            onDeleteModelImg={handleDeleteModelImg}
-            onChangeAddInput={handleChangeAddInput}
-            onChangeAddMode={handleChangeAddMode}
-            onAddList={handleAddList}
-            onDeleteList={handleDeleteList}
+            handleChangeTemplateInput={handleChangeTemplateInput}
+            handleChangeSpecInput={handleChangeSpecInput}
+            handleChangeSpecButton={handleChangeSpecButton}
+            handleChangeMainInput={handleChangeMainInput}
+            handleChangeModelImg={handleChangeModelImg}
+            handleDeleteModelImg={handleDeleteModelImg}
+            handleChangeAddInput={handleChangeAddInput}
+            handleChangeAddMode={handleChangeAddMode}
+            handleAddList={handleAddList}
+            handleDeleteList={handleDeleteList}
             handlePost={handlePost}
             handlePatch={handlePatch}
             handleHide={handleHide}

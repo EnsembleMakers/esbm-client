@@ -1,0 +1,42 @@
+.review-rating-plain-wrapper {
+}
+
+// rating star
+%visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px; width: 1px;
+  margin: -1px; padding: 0; border: 0;
+}
+
+.review-plain {
+  &__star {
+    display: inline-block;
+    margin-right: 4px;
+    color: #D7DBE6;
+    transition: color .2s ease-out;
+
+    @media screen and (min-width: 320px) {
+      font-size: 1em
+    }
+    // desktop
+    @media screen and (min-width: 1024px) {
+      font-size: 1.5em
+    }
+    // tablet
+    @media screen and (min-width: 768px) {
+      font-size: 1.5em
+    }
+
+    &.is-selected {
+      color: #F9D543;
+    }
+    &.is-disabled:hover {
+      cursor: default;
+    }
+  }
+  &__checkbox {
+    @extend %visually-hidden;
+  }
+}

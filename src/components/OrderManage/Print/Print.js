@@ -49,6 +49,10 @@ class Print extends Component {
           </div>
           <div className="order-table-wrapper">
             <div className="order-table-view">
+              <div className="print-contents-row">
+                <div className="print-contents-label">모델명</div>
+                <div className="print-contents-value">{contents.model}</div>
+              </div>
               {contentsList}
             </div>
             <div className="order-table-view">

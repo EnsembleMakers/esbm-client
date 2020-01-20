@@ -10,14 +10,14 @@ class ModelList extends Component {
   
     const modelList = allModels
       .filter(
-        c => c.contents.template[0].value.indexOf(search) !== -1
+        c => c.contents.model.indexOf(search) !== -1
       ).map(
         (modelListItem, i) =>
           <ModelListItem 
             key={i}
             id={modelListItem._id}
             userNumber={userNumber}
-            modelName={modelListItem.contents.template[0].value}
+            modelName={modelListItem.contents.model}
             modelImage={modelListItem.modelImage}
             onOpenModelModal={onOpenModelModal}
             handleDelete={handleDelete}

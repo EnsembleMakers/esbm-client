@@ -6,23 +6,22 @@ import { ModelBanner } from '../../components/Model/ModelBanner';
 import { ModelPreview } from '../../components/Model/ModelPreview';
 
 import * as userActions from '../../store/modules/user';
-import * as modelActions from '../../store/modules/model';
 import * as orderActions from '../../store/modules/order';
 
 class ModelContainer extends Component {
 
-  componentDidMount() {
-    const { ModelActions, UserActions } = this.props;
+  async componentDidMount() {
+    const { OrderActions, UserActions } = this.props;
     const { userNumber, modelName } = this.props;
-    ModelActions.getModelByModelName(modelName);
-    UserActions.getUserByNum(userNumber);
+    const userByNum = await UserActions.getUserByNum(userNumber);
+    await OrderActions.getOrderPostFormByModel(userByNum.data._id, modelName);
   }
 
   // 일반 input change (detail..)
-  handleChangeModelAddInput = (e) => {
-    const { ModelActions } = this.props;
+  handleChangeModelMainInput = (e) => {
+    const { OrderActions } = this.props;
     const { name, value } = e.target;
-    ModelActions.changeModelAddInput({
+    OrderActions.changeModelMainInput({
       name,
       value,
     });
@@ -30,36 +29,46 @@ class ModelContainer extends Component {
 
   // template input change (last, sole, size...)
   handleChangeModelTemplateInput = (e) => {
-    const { ModelActions } = this.props;
+    const { OrderActions } = this.props;
     const { name, value, id } = e.target;
-    ModelActions.changeModelTemplateInput({
+    OrderActions.changeModelTemplateInput({
       name,
       value,
       id,
     });
   }
 
-  handleChangeInfoInput = (e) => {
-    const { ModelActions } = this.props;
+  handleChangeCustomerInfoInput = (e) => {
+    const { OrderActions } = this.props;
     const { name, value } = e.target;
-
-    ModelActions.changeInfoInput({
+    OrderActions.changeCustomerInfoInput({
       name,
       value,
     });
   }
 
+  handleChangeInputView = (button) => {
+    const { OrderActions } = this.props;
+    OrderActions.changeInputView(button)
+  }
+
   handlePost = async(e) => {
     const { OrderActions } = this.props;
-    const { postForm, history } = this.props;
+    const { postForm, inputView } = this.props;
     const { name, phone, address } = postForm.toJS().customerInfo;
     const makerId = this.props.loadedUserInfo.get('_id');
-    let contents = this.props.postForm.toJS().model.contents;
+    const modelId = this.props.postForm.toJS().model._id;
+    let { contents } = this.props.postForm.toJS().model;
+    // spec은 삭제하고 order post
+    delete contents.spec;
     const modelImage = this.props.postForm.toJS().model.modelImage;
 
     try {
-      // concat addContents + model.contents.template
-      contents = Object.assign(contents, postForm.toJS().addContents)
+      if(!this.validate['name'](name)
+      ||!this.validate['phone'](phone)
+      ||inputView && !this.validate['address'](address)) {
+        return
+      }
 
       // customerInfo
       let customerInfo = {}
@@ -67,24 +76,56 @@ class ModelContainer extends Component {
       customerInfo['phone'] = phone;
       customerInfo['address'] = address;
       
-      await OrderActions.postOrder({customerInfo, makerId, contents, modelImage});
+      await OrderActions.postOrder({customerInfo, makerId, modelId, contents, modelImage});
       window.location = await '/customerInfoSuccess/';
     } catch(e) {
       console.log(e);
     }
   }
 
+  validate = {
+    name: (name) => {
+      if(!name) {
+        const { OrderActions } = this.props;
+        OrderActions.setError({ message: "이름을 입력하세요."})
+        return false;
+      }
+      return true;
+    },
+    phone: (phone) => {
+      if(!phone) {
+        const { OrderActions } = this.props;
+        OrderActions.setError({ message: "전화번호을 입력하세요."})
+        return false;
+      }
+      return true;
+    },
+    address: (address) => {
+      if(!address) {
+        const { OrderActions } = this.props;
+        OrderActions.setError({ message: "주소 입력하세요."})
+        return false;
+      }
+      return true;
+    }
+  }
+
+
   render() {
-    const { postForm } = this.props;
-    const { handleChangeModelAddInput, handleChangeModelTemplateInput, handleChangeInfoInput, handlePost } = this;
+    const { postForm, inputView, error } = this.props;
+    const { handleChangeModelMainInput, handleChangeModelTemplateInput, handleChangeCustomerInfoInput, handleChangeInputView, handlePost } = this;
+
     return(
       <ModelWrapper>
         <ModelBanner/>
         <ModelPreview 
           postForm={postForm}
-          handleChangeModelAddInput={handleChangeModelAddInput}
+          inputView={inputView}
+          error={error}
+          handleChangeModelMainInput={handleChangeModelMainInput}
           handleChangeModelTemplateInput={handleChangeModelTemplateInput}
-          handleChangeInfoInput={handleChangeInfoInput}
+          handleChangeCustomerInfoInput={handleChangeCustomerInfoInput}
+          handleChangeInputView={handleChangeInputView}
           handlePost={handlePost}
         />
       </ModelWrapper>
@@ -95,11 +136,12 @@ class ModelContainer extends Component {
 export default connect(
   (state) => ({
     loadedUserInfo: state.user.get('loadedUserInfo'),
-    postForm: state.model.get('postForm')
+    postForm: state.order.get('postForm'),
+    inputView: state.order.get('inputView'),
+    error: state.order.get('error')
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),
-    ModelActions: bindActionCreators(modelActions, dispatch),
     OrderActions: bindActionCreators(orderActions, dispatch)
   })
 )(ModelContainer);
