@@ -1,0 +1,1 @@
+export { default as ModelInfoFixedBar } from './ModelInfoFixedBar';

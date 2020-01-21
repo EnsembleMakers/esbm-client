@@ -14,3 +14,5 @@ export { default as ReviewOrderForm } from './ReviewOrderForm';
 export { default as Review } from './Review';
 export { default as CouponList } from './CouponList';
 export { default as CouponDetail } from './CouponDetail';
+export { default as StorySeries } from './StorySeries';
+export { default as StoryOrder } from './StoryOrder';

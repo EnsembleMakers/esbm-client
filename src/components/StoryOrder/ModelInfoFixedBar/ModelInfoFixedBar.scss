@@ -1,0 +1,60 @@
+.model-info-fixed-bar-wrapper {
+  position: sticky;
+  top: 120px;
+  background-color: white;
+
+  // phone
+  @media screen and (min-width: 320px) {
+    display: none;
+  }
+  // tablet
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+  // desktop
+  @media screen and (min-width: 1024px) {
+    display: block;
+  }
+}
+
+.model-info-fixed-bar-name {
+  font-size: 20px;
+  text-align: center;
+  font-weight: 800;
+  color: #484848;
+  margin-bottom: 15px;
+}
+
+.model-info-fixed-bar-img {
+  margin-bottom: 20px;
+}
+
+.model-info-fixed-bar-label {
+  position: relative;
+  font-size: 15px;
+  margin-bottom: 5px;
+  text-align: left;
+  font-weight: 600;
+  color: #767676;
+}
+
+.model-info-fixed-bar-value {
+  display: flex;
+  flex-direction: row;
+  font-size: 17px;
+  margin-bottom: 20px;
+  font-weight: 800;
+  color: #484848;
+}
+
+.model-info-fixed-bar-button {
+  height: 40px;
+  border-radius: 5px;
+  background-color: #549dd9; 
+  color: white;
+  line-height: 40px; 
+  margin-top: 20px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
