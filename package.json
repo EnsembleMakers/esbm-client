@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "browserify-css": "^0.15.0",
     "classnames": "^2.2.6",
     "immutable": "^4.0.0-rc.12",
