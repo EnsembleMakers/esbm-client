@@ -9,7 +9,7 @@
     "immutable": "^4.0.0-rc.12",
     "include-media": "^1.4.9",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "node-sass": "^4.11.0",
     "open-color": "^1.6.3",
     "query-string": "^6.4.0",
